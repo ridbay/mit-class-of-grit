@@ -23,45 +23,62 @@ export const HomePage = () => {
       {/* Features Quick Look */}
       <section className="py-24 px-6 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.15
+                }
+              }
+            }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
             {[
               {
-                icon: <Trophy />,
+                icon: <Trophy size={28} />,
                 title: "Excellence Awards",
                 desc: "Recognizing the top achievers in our department.",
                 target: "/categories",
               },
               {
-                icon: <Camera />,
+                icon: <Camera size={28} />,
                 title: "Memorable Moments",
                 desc: "Capturing the spirit of our academic journey.",
                 target: "/gallery",
               },
               {
-                icon: <Vote />,
+                icon: <Vote size={28} />,
                 title: "Your Voice Matters",
                 desc: "Participate in our strict-mode voting system.",
                 target: "/vote",
               },
             ].map((item, i) => (
-              <div
+              <motion.div
                 key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+                }}
                 onClick={() => navigate(item.target)}
-                className="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all group cursor-pointer hover:-translate-y-2"
+                className="glass-card p-10 group cursor-pointer border-transparent hover:border-brand-teal/30 hover:bg-white/90"
               >
-                <div className="w-14 h-14 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-6 group-hover:scale-110 transition-transform">
+                <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center text-slate-400 mb-8 transition-all duration-500 group-hover:bg-gradient-to-br group-hover:from-brand-blue group-hover:to-blue-600 group-hover:text-white shadow-inner group-hover:shadow-xl group-hover:shadow-brand-blue/30 group-hover:scale-110 group-hover:-rotate-6">
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-black mb-3 text-black">{item.title}</h3>
-                <p className="text-black font-medium leading-relaxed text-sm">
+                <h3 className="text-2xl font-black mb-4 text-slate-900 group-hover:text-brand-blue transition-colors duration-300 tracking-tight">{item.title}</h3>
+                <p className="text-slate-600 font-medium leading-relaxed text-base mb-8">
                   {item.desc}
                 </p>
-                <div className="mt-6 flex items-center gap-2 text-brand-blue font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                  Explore <ChevronRight size={14} />
+                <div className="flex items-center gap-2 text-slate-400 font-bold text-xs uppercase tracking-[0.2em] group-hover:text-brand-teal transition-colors">
+                  Explore <ChevronRight size={16} className="transition-transform duration-500 group-hover:translate-x-2" />
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 

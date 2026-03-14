@@ -171,12 +171,11 @@ export const HERO_SLIDES = [
 ];
 
 export const SPONSORS = [
-  { name: "TechCorp", logo: "https://picsum.photos/seed/techcorp/200/100" },
-  { name: "InnoSystems", logo: "https://picsum.photos/seed/inno/200/100" },
-  { name: "FutureLabs", logo: "https://picsum.photos/seed/future/200/100" },
-  { name: "GlobalIT", logo: "https://picsum.photos/seed/global/200/100" },
-  { name: "NexusSolutions", logo: "https://picsum.photos/seed/nexus/200/100" },
-  { name: "CloudPeak", logo: "https://picsum.photos/seed/cloud/200/100" },
+  { name: "Tech Corp", logo: "https://picsum.photos/seed/techcorp/200/100" },
+  { name: "Innovation Labs", logo: "https://picsum.photos/seed/inno/200/100" },
+  { name: "Future Systems", logo: "https://picsum.photos/seed/future/200/100" },
+  { name: "Digital Ventures", logo: "https://picsum.photos/seed/global/200/100" },
+  { name: "Smart Solutions", logo: "https://picsum.photos/seed/nexus/200/100" },
 ];
 
 export const FAQS = [

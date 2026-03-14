@@ -12,14 +12,14 @@ export const SponsorsSection = () => (
       {[...SPONSORS, ...SPONSORS].map((s, i) => (
         <div
           key={i}
-          className="flex items-center gap-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer"
+          className="flex items-center gap-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer drop-shadow-sm hover:drop-shadow-lg"
         >
           <img
             src={s.logo}
             alt={s.name}
             className="h-12 w-auto object-contain"
           />
-          <span className="text-xl font-black text-slate-400 dark:text-slate-600">
+          <span className="text-xl font-black text-slate-800">
             {s.name}
           </span>
         </div>
