@@ -242,20 +242,17 @@ const GALLERY_ITEMS: GalleryItem[] = [
 
 const HERO_SLIDES = [
   {
-    image:
-      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&q=80&w=2070",
+    image: "/banner.jpeg",
     title: "Celebrating Academic Excellence",
     subtitle: "Join us for a night of recognition and achievement.",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=2069",
+    image: "/banner.jpeg",
     title: "Innovation at its Finest",
     subtitle: "Witness the most groundbreaking projects of the year.",
   },
   {
-    image:
-      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=2012",
+    image: "/banner.jpeg",
     title: "A Community of Grit",
     subtitle: "Honoring the masters of IT and their journey.",
   },
