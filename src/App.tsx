@@ -28,6 +28,7 @@ import { FeedbackPage } from "./pages/FeedbackPage";
 import { NominatePage } from "./pages/NominatePage";
 import { VotePage } from "./pages/VotePage";
 import { PaymentPage } from "./pages/PaymentPage";
+import { GlobalLoader } from "./components/GlobalLoader";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -294,6 +295,7 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
+      <GlobalLoader />
       <div className="min-h-screen flex flex-col">
         <Navigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
