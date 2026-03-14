@@ -39,26 +39,61 @@ To run this project locally, ensure you have Node.js installed, then follow thes
    ```
 
 4. **Set up environment variables**:
-   Copy the example environment file and configure any necessary variables.
+1.  **Clone the repository**:
 
-   ```bash
-   cp .env.example .env
-   ```
+    ```bash
+    git clone https://github.com/ridbay/mit-class-of-grit.git
+    ```
 
-4. **Start the development server**:
+2.  **Navigate to the project directory**:
 
-   ```bash
-   npm run dev
-   ```
-   The application will start concurrently with the Vite frontend middleware and express backend at `http://localhost:3000`.
+    ```bash
+    cd mit-class-of-grit
+    ```
+
+3.  **Install dependencies**:
+
+    ```bash
+    npm install
+    ```
+
+4.  **Set up environment variables**:
+    Copy the example environment file and configure any necessary variables.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+5.  **Start the development server**:
+
+    ```bash
+    npm run dev
+    ```
+    The application will start concurrently with the Vite frontend middleware and express backend at `http://localhost:3000`.
+
+## How to Deploy
+
+To deploy this application, follow these steps:
+
+1.  **Building the Application for Production:**
+
+    ```bash
+    npm run build
+    ```
+
+2.  **Expand the Build settings section:**
+    -   Framework preset: `Vite` (or `None` if Vite is not listed)
+    -   Build command: `npm run build`
+    -   Build output directory: `dist`
+3.  Click **Save and Deploy**.
 
 ## Scripts
 
-- `npm run dev` - Starts the development server using `tsx`.
-- `npm run build` - Builds the Vite application for production.
-- `npm run preview` - Previews the production build locally.
-- `npm run lint` - Runs TypeScript type checking.
-- `npm run clean` - Removes the `dist` directory.
+-   `npm run dev` - Starts the development server using `tsx`.
+-   `npm run build` - Builds the Vite application for production.
+-   `npm run preview` - Previews the production build locally.
+-   `npm run lint` - Runs TypeScript type checking.
+-   `npm run clean` - Removes the `dist` directory.
 
 ## Contributing
 
