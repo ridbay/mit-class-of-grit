@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import {
   Menu,
   X,
@@ -73,10 +79,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             </Link>
           ))}
 
-          <Link
-            to="/payment"
-            className="btn-primary py-2 px-6 text-sm"
-          >
+          <Link to="/payment" className="btn-primary py-2 px-6 text-sm">
             Get Tickets
           </Link>
         </div>
@@ -205,8 +208,8 @@ const Footer = () => {
                 awards@classofgrit.edu
               </li>
               <li className="flex items-center gap-3">
-                <MapPin size={18} className="text-brand-teal" /> IT Building,
-                Room 402
+                <MapPin size={18} className="text-brand-teal" /> MIT, DEPARTMENT
+                OF COMPUTER SCIENCES UNIVERSITY OF LAGOS
               </li>
             </ul>
           </div>
