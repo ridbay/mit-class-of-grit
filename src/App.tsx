@@ -225,11 +225,11 @@ const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
           transition={{ delay: 0.5 }}
           className="max-w-4xl"
         >
-          <h1 className="text-5xl md:text-7xl font-black text-white leading-tight mb-6 tracking-tighter">
+          <h1 className="text-5xl md:text-7xl font-black text-white leading-tight mb-6 tracking-tighter drop-shadow-lg">
             Class of Grit Awards Night <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-teal">Celebrating Excellence</span>
           </h1>
-          <p className="text-lg md:text-xl text-white/80 mb-12 font-medium max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/90 drop-shadow mb-12 font-medium max-w-2xl mx-auto">
             {HERO_SLIDES[currentSlide].subtitle}
           </p>
           
@@ -238,10 +238,10 @@ const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={onVoteClick} className="btn-primary flex items-center gap-2 px-10 py-4 text-lg">
+            <button onClick={onVoteClick} className="btn-primary flex items-center gap-2 px-10 py-4 text-lg drop-shadow-md">
               Vote Now <ChevronRight size={20} />
             </button>
-            <button className="px-10 py-4 text-lg font-bold text-white hover:text-brand-teal transition-colors flex items-center gap-2">
+            <button className="px-10 py-4 text-lg font-bold text-white hover:text-brand-teal drop-shadow-md transition-colors flex items-center gap-2">
               <Play size={20} fill="currentColor" /> View Highlights
             </button>
           </div>
@@ -1095,7 +1095,7 @@ export default function App() {
                         ))}
                       </div>
 
-                      <div className="text-white">
+                      <div className="text-white drop-shadow-md">
                         <div className="flex items-center gap-2 mb-2">
                           {item.type === 'video' ? <Play size={16} className="fill-brand-teal text-brand-teal" /> : <Camera size={16} className="text-brand-teal" />}
                           <span className="text-[10px] font-bold uppercase tracking-widest text-brand-teal">{item.type}</span>
