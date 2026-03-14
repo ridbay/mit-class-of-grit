@@ -3,17 +3,38 @@
 
 @theme {
   --font-sans: "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  --color-brand-blue: #007bff;
-  --color-brand-teal: #00c9b1;
-  --color-brand-gradient-start: #007bff;
-  --color-brand-gradient-end: #00c9b1;
+  --color-brand-blue: #1E6FD9;
+  --color-brand-teal: #1EC7B6;
+  --color-brand-slate: #2F3A4A;
+  --color-brand-muted: #7A8A99;
+  --color-brand-gradient-start: #1E6FD9;
+  --color-brand-gradient-end: #1EC7B6;
+  --color-bg-light: #FFFFFF;
+  --color-bg-section: #F6F8FB;
+
+  /* Map standard slate colors to our new brand identity */
+  --color-slate-900: #1E6FD9; /* Deep Blue for Headings/Dark Backgrounds */
+  --color-slate-800: #2F3A4A; /* Dark Slate */
+  --color-slate-700: #2F3A4A; /* Dark Slate */
+  --color-slate-600: #2F3A4A; /* Dark Slate for body/links */
+  --color-slate-500: #7A8A99; /* Muted Light Gray */
+  --color-slate-400: #7A8A99; /* Muted Light Gray */
+  --color-slate-50: #F6F8FB;  /* Section background */
 }
 
 @layer base {
   body {
-    @apply font-sans bg-white text-slate-900 antialiased transition-colors duration-300;
+    @apply font-sans bg-[var(--color-bg-light)] text-[var(--color-brand-slate)] antialiased transition-colors duration-300;
   }
   
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-extrabold text-[var(--color-brand-blue)];
+  }
+
+  p {
+    @apply font-normal;
+  }
+
   .dark body {
     @apply bg-slate-950 text-slate-50;
   }
@@ -21,11 +42,15 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 shadow-sm rounded-3xl;
+    @apply bg-white/90 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 shadow-md rounded-3xl;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-brand-blue to-brand-teal text-white font-bold py-3 px-8 rounded-full transition-all hover:scale-105 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-gradient-to-r from-[var(--color-brand-blue)] to-[#155BB5] text-white font-semibold py-3 px-8 rounded-full transition-all hover:scale-105 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-gradient-to-r from-[var(--color-brand-teal)] to-[#15A89A] text-white font-semibold py-3 px-8 rounded-full transition-all hover:scale-105 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
   .section-title {
