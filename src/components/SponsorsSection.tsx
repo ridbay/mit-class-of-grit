@@ -9,21 +9,22 @@ export const SponsorsSection = () => (
       </h4>
     </div>
     <div className="flex gap-12 animate-marquee whitespace-nowrap">
-      {[...SPONSORS, ...SPONSORS].map((s, i) => (
-        <div
-          key={i}
-          className="flex items-center gap-4 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 hover:-translate-y-1 hover:scale-105 transition-all duration-300 cursor-pointer drop-shadow-sm hover:drop-shadow-lg"
-        >
-          <img
-            src={s.logo}
-            alt={s.name}
-            className="h-12 w-auto object-contain"
-          />
-          <span className="text-xl font-black text-slate-800">
-            {s.name}
-          </span>
-        </div>
-      ))}
+      {[...SPONSORS, ...SPONSORS].map((s, i) => {
+        const initials = s.name.split(" ").map(w => w[0]).join("").substring(0, 2).toUpperCase();
+        return (
+          <div
+            key={i}
+            className="flex items-center gap-4 bg-[#242938] border border-slate-700/50 rounded-2xl p-4 pr-6 transition-all duration-300 cursor-pointer shadow-md hover:shadow-lg hover:border-brand-teal/40 group"
+          >
+            <div className="w-12 h-12 rounded-full border-2 border-brand-teal/50 flex flex-shrink-0 items-center justify-center group-hover:border-brand-teal group-hover:bg-brand-teal/10 transition-colors duration-300">
+              <span className="text-sm font-medium text-[#1EC7B6] tracking-wide">{initials}</span>
+            </div>
+            <span className="text-sm font-medium text-slate-300 group-hover:text-white transition-colors duration-300 tracking-wide whitespace-nowrap">
+              {s.name}
+            </span>
+          </div>
+        );
+      })}
     </div>
   </section>
 );

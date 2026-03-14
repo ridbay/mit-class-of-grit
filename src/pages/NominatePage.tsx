@@ -64,21 +64,44 @@ export const NominatePage = ({
   }
 
   return (
-    <section className="py-24 px-6 min-h-screen bg-slate-50">
+    <section className="py-24 px-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <span className="inline-block py-2 px-4 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4">
-            Nomination Phase
-          </span>
-          <h2 className="section-title">Nominate Your Peers</h2>
-          <p className="text-slate-500 max-w-xl mx-auto">
+        <div className="text-center mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <span className="inline-block py-2 px-4 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-[0.3em] mb-4 shadow-sm border border-brand-blue/20">
+              Nomination Phase
+            </span>
+          </motion.div>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="section-title text-5xl md:text-6xl"
+          >
+            Nominate Your Peers
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed mt-6 font-medium"
+          >
             Help us identify the stars of our class. You can nominate any
             student for any category.
-          </p>
+          </motion.p>
 
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <span className="text-xs font-bold text-brand-teal bg-brand-teal/10 px-4 py-2 rounded-full border border-brand-teal/20">
-              Nominating as: {middleName} ({matricNumber})
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mt-8 flex items-center justify-center gap-4"
+          >
+            <span className="text-xs font-bold text-brand-teal bg-brand-teal/10 px-5 py-2.5 rounded-full border border-brand-teal/20 shadow-sm flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-brand-teal animate-pulse"></div>
+              Nominating as: <span className="text-slate-700">{middleName}</span> <span className="text-slate-400 font-mono">({matricNumber})</span>
             </span>
             <button
               onClick={onLogout}
@@ -86,39 +109,52 @@ export const NominatePage = ({
             >
               Change Details
             </button>
-          </div>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Categories Sidebar */}
-          <div className="lg:col-span-1 space-y-4">
-            <h3 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-2">
-              <Filter size={20} className="text-brand-blue" /> Select Category
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4 }}
+            className="lg:col-span-1 space-y-4"
+          >
+            <h3 className="text-lg font-black text-slate-900 mb-6 flex items-center gap-3">
+              <div className="p-2 bg-brand-blue/10 rounded-xl">
+                 <Filter size={18} className="text-brand-blue" /> 
+              </div>
+              Select Category
             </h3>
-            <div className="space-y-2">
+            <div className="space-y-3">
               {CATEGORIES.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`w-full text-left p-4 rounded-2xl font-bold transition-all flex items-center justify-between ${
+                  className={`w-full text-left p-5 rounded-2xl font-bold transition-all duration-300 flex items-center justify-between border ${
                     selectedCategory === cat
-                      ? "bg-brand-blue text-white shadow-lg shadow-brand-blue/20"
-                      : "bg-white text-slate-600 hover:bg-slate-100"
+                      ? "bg-gradient-to-r from-brand-blue to-[#155BB5] text-white shadow-lg shadow-brand-blue/20 border-transparent scale-[1.02]"
+                      : "glass-card text-slate-600 hover:border-brand-blue/30 hover:bg-white/60 hover:-translate-y-1"
                   }`}
                 >
                   {cat}
-                  {selectedCategory === cat && <ChevronRight size={18} />}
+                  {selectedCategory === cat && <ChevronRight size={18} className="animate-in slide-in-from-left-2 duration-300" />}
                 </button>
               ))}
             </div>
-          </div>
+          </motion.div>
 
           {/* Student Selection */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="glass-card p-8">
-              <div className="relative mb-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="lg:col-span-2"
+          >
+            <div className="glass-card p-8 lg:p-10 shadow-xl shadow-brand-blue/5 border-white/60">
+              <div className="relative mb-8 group">
                 <Filter
-                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                  className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 transition-colors group-focus-within:text-brand-blue"
                   size={20}
                 />
                 <input
@@ -126,61 +162,72 @@ export const NominatePage = ({
                   placeholder="Search students by name or matric number..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 border-transparent focus:border-brand-blue focus:bg-white outline-none transition-all font-bold text-slate-900"
+                  className="w-full pl-14 pr-6 py-5 rounded-2xl bg-white/50 border-2 border-slate-100 focus:border-brand-blue focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,111,217,0.1)] outline-none transition-all font-bold text-slate-900 placeholder:font-medium placeholder:text-slate-400"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {filteredStudents.map((student) => {
-                  const isNominated = (
-                    nominations[selectedCategory] || []
-                  ).includes(student.id);
-                  return (
-                    <div
-                      key={student.id}
-                      className={`p-6 rounded-3xl border-2 transition-all flex items-center justify-between ${
-                        isNominated
-                          ? "border-emerald-500 bg-emerald-50"
-                          : "border-slate-100 bg-white hover:border-brand-blue"
-                      }`}
-                    >
-                      <div>
-                        <h4 className="font-bold text-slate-900">
-                          {student.name}
-                        </h4>
-                        <p className="text-xs text-slate-400 font-mono">
-                          {student.matric}
-                        </p>
-                      </div>
-                      <button
-                        onClick={() => handleNominate(student.id)}
-                        disabled={isNominated}
-                        className={`p-3 rounded-xl transition-all ${
+              <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <AnimatePresence mode="popLayout">
+                  {filteredStudents.map((student) => {
+                    const isNominated = (
+                      nominations[selectedCategory] || []
+                    ).includes(student.id);
+                    return (
+                      <motion.div
+                        layout
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.9 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                        key={student.id}
+                        className={`p-6 rounded-3xl border-2 transition-all duration-300 flex items-center justify-between group ${
                           isNominated
-                            ? "bg-emerald-500 text-white"
-                            : "bg-brand-blue/10 text-brand-blue hover:bg-brand-blue hover:text-white"
+                            ? "border-brand-teal bg-brand-teal/5 shadow-md shadow-brand-teal/10"
+                            : "border-slate-100 bg-white hover:border-brand-blue/30 hover:shadow-lg hover:shadow-brand-blue/5 hover:-translate-y-1"
                         }`}
                       >
-                        {isNominated ? (
-                          <CheckCircle2 size={20} />
-                        ) : (
-                          <UserPlus size={20} />
-                        )}
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
+                        <div>
+                          <h4 className="font-bold text-slate-900 group-hover:text-brand-blue transition-colors">
+                            {student.name}
+                          </h4>
+                          <p className="text-xs text-slate-400 font-mono mt-1">
+                            {student.matric}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => handleNominate(student.id)}
+                          disabled={isNominated}
+                          className={`p-3 rounded-xl transition-all duration-300 ${
+                            isNominated
+                              ? "bg-brand-teal text-white shadow-md"
+                              : "bg-slate-50 text-slate-400 group-hover:bg-brand-blue group-hover:text-white group-hover:shadow-md group-hover:scale-110"
+                          }`}
+                        >
+                          {isNominated ? (
+                            <CheckCircle2 size={20} className="animate-in zoom-in duration-300" />
+                          ) : (
+                            <UserPlus size={20} />
+                          )}
+                        </button>
+                      </motion.div>
+                    );
+                  })}
+                </AnimatePresence>
+              </motion.div>
 
               {filteredStudents.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-slate-400 font-bold">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-16 bg-white/40 rounded-3xl border-2 border-dashed border-slate-200 mt-4"
+                >
+                  <p className="text-slate-400 font-bold text-lg">
                     No students found matching your search.
                   </p>
-                </div>
+                </motion.div>
               )}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -188,12 +235,14 @@ export const NominatePage = ({
       <AnimatePresence>
         {showSuccess && (
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed bottom-8 right-8 bg-emerald-500 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 font-bold z-[100]"
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            className="fixed bottom-8 right-8 bg-gradient-to-r from-brand-teal to-[#15a89a] text-white px-8 py-5 rounded-2xl shadow-[0_20px_40px_rgba(30,199,182,0.3)] flex items-center gap-4 font-bold z-[100] border border-white/20"
           >
-            <CheckCircle2 size={24} />
+            <div className="bg-white/20 p-2 rounded-full">
+              <CheckCircle2 size={24} />
+            </div>
             Nomination submitted successfully!
           </motion.div>
         )}

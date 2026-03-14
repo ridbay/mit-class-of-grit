@@ -91,21 +91,44 @@ export const VotePage = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="py-20 px-6 max-w-7xl mx-auto"
+      className="py-24 px-6 max-w-7xl mx-auto min-h-screen"
     >
-      <div className="text-center mb-16">
-        <span className="inline-block py-2 px-4 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4">
-          Strict Mode Enabled
-        </span>
-        <h2 className="section-title">Vote for Nominees</h2>
-        <p className="text-slate-500 max-w-xl mx-auto">
+      <div className="text-center mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <span className="inline-block py-2 px-4 rounded-full bg-brand-teal/10 text-brand-teal text-[10px] font-bold uppercase tracking-[0.3em] mb-4 shadow-sm border border-brand-teal/20">
+            Strict Mode Enabled
+          </span>
+        </motion.div>
+        <motion.h2 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="section-title text-5xl md:text-6xl"
+        >
+          Vote for Nominees
+        </motion.h2>
+        <motion.p 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed mt-6 font-medium"
+        >
           One vote per category. Your selection is final once submitted.
-        </p>
+        </motion.p>
 
         {matricNumber && middleName && (
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <span className="text-xs font-bold text-brand-teal bg-brand-teal/10 px-4 py-2 rounded-full border border-brand-teal/20">
-              Voting as: {middleName} ({matricNumber})
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mt-8 flex items-center justify-center gap-4"
+          >
+            <span className="text-xs font-bold text-brand-teal bg-brand-teal/10 px-5 py-2.5 rounded-full border border-brand-teal/20 shadow-sm flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-brand-teal animate-pulse"></div>
+              Voting as: <span className="text-slate-700">{middleName}</span> <span className="text-slate-400 font-mono">({matricNumber})</span>
             </span>
             <button
               onClick={onLogout}
@@ -113,7 +136,7 @@ export const VotePage = ({
             >
               Change Details
             </button>
-          </div>
+          </motion.div>
         )}
       </div>
 
@@ -125,22 +148,29 @@ export const VotePage = ({
           description="Please enter your 9-digit Matric Number and Middle Name to proceed with voting. This ensures a fair and strict voting process."
         />
       ) : (
-        <>
-          <div className="space-y-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <div className="space-y-24">
             {CATEGORIES.map((category) => (
-              <div key={category}>
-                <div className="flex items-center justify-between mb-8 border-b border-slate-100 pb-4">
-                  <h3 className="text-2xl font-black text-slate-900 flex items-center gap-3">
-                    <Trophy className="text-brand-blue" /> {category}
+              <div key={category} className="glass-card p-8 lg:p-12 shadow-xl shadow-brand-blue/5 border-white/60">
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 border-b border-slate-100/50 pb-6 gap-4">
+                  <h3 className="text-3xl font-black text-slate-900 flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-br from-brand-blue/20 to-brand-teal/20 rounded-2xl">
+                       <Trophy className="text-brand-blue" size={28} /> 
+                    </div>
+                    {category}
                   </h3>
                   {votes[category] && (
-                    <div className="flex items-center gap-2 text-emerald-500 font-bold text-sm">
+                    <div className="flex items-center gap-2 text-brand-teal font-black text-sm bg-brand-teal/10 px-4 py-2 rounded-full border border-brand-teal/20">
                       <CheckCircle2 size={18} /> Vote Recorded
                     </div>
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   {NOMINEES.filter((n) => n.category === category).map(
                     (nominee) => (
                       <motion.div
@@ -158,23 +188,23 @@ export const VotePage = ({
                             votes[category] === nominee.id ? 1.02 : 1,
                           boxShadow:
                             votes[category] === nominee.id
-                              ? "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)"
-                              : "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+                              ? "0 20px 40px rgba(30,199,182,0.15)"
+                              : "0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
                         }}
-                        className={`group relative p-6 rounded-[2.5rem] border-2 transition-all duration-300 ${
+                        className={`group relative p-6 lg:p-8 rounded-[2.5rem] border-2 transition-all duration-300 ${
                           votes[category] === nominee.id
-                            ? "border-brand-blue bg-brand-blue/5 z-10"
+                            ? "border-brand-teal bg-gradient-to-br from-white to-brand-teal/5 z-10"
                             : votes[category]
-                              ? "border-slate-100 opacity-50 grayscale"
-                              : "border-slate-100 hover:border-brand-teal cursor-pointer"
+                              ? "border-slate-100 opacity-50 grayscale bg-white"
+                              : "border-slate-100 bg-white hover:border-brand-blue/30 cursor-pointer shadow-sm hover:shadow-lg hover:shadow-brand-blue/5"
                         }`}
                       >
                         <div className="flex items-center gap-6">
-                          <div className="w-24 h-24 rounded-3xl overflow-hidden shadow-lg relative">
+                          <div className="w-24 h-24 lg:w-32 lg:h-32 rounded-3xl overflow-hidden shadow-md group-hover:shadow-xl transition-shadow relative flex-shrink-0">
                             <img
                               src={nominee.image}
                               alt={nominee.name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                               referrerPolicy="no-referrer"
                             />
                             <AnimatePresence>
@@ -183,15 +213,16 @@ export const VotePage = ({
                                   initial={{ opacity: 0, scale: 0.5 }}
                                   animate={{ opacity: 1, scale: 1 }}
                                   exit={{ opacity: 0, scale: 0.5 }}
-                                  className="absolute inset-0 bg-brand-blue/40 flex items-center justify-center backdrop-blur-[2px]"
+                                  className="absolute inset-0 bg-brand-teal/40 flex items-center justify-center backdrop-blur-[2px]"
                                 >
                                   <motion.div
                                     initial={{ y: 10, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.1 }}
+                                    className="bg-white rounded-full p-2 shadow-lg"
                                   >
                                     <CheckCircle2
-                                      className="text-white"
+                                      className="text-brand-teal"
                                       size={32}
                                     />
                                   </motion.div>
@@ -200,10 +231,10 @@ export const VotePage = ({
                             </AnimatePresence>
                           </div>
                           <div className="flex-grow">
-                            <h4 className="text-xl font-bold text-slate-900 mb-1">
+                            <h4 className="text-2xl font-black text-slate-900 mb-2 tracking-tight group-hover:text-brand-blue transition-colors">
                               {nominee.name}
                             </h4>
-                            <p className="text-slate-400 text-sm mb-4">
+                            <p className="text-slate-500 text-sm mb-6 font-medium">
                               Nominee for {category}
                             </p>
                             <AnimatePresence mode="wait">
@@ -212,44 +243,29 @@ export const VotePage = ({
                                   key="selected"
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
-                                  className="flex items-center gap-2"
+                                  className="flex items-center gap-3"
                                 >
-                                  <span className="text-xs font-black text-brand-blue uppercase tracking-widest">
+                                  <span className="text-xs font-black text-brand-teal uppercase tracking-[0.2em] bg-brand-teal/10 px-3 py-1.5 rounded-full">
                                     Selected
                                   </span>
-                                  <div className="w-2 h-2 rounded-full bg-brand-blue animate-pulse" />
+                                  <div className="w-2 h-2 rounded-full bg-brand-teal animate-pulse" />
                                 </motion.div>
                               ) : (
                                 <motion.button
                                   key="select"
                                   initial={{ opacity: 0 }}
                                   animate={{ opacity: 1 }}
-                                  className="text-xs font-bold text-brand-blue group-hover:underline flex items-center gap-1"
+                                  className="text-[10px] font-black uppercase tracking-widest text-brand-blue flex items-center gap-2 group-hover:gap-3 transition-all"
                                 >
                                   {votes[category]
                                     ? "Change Selection"
                                     : "Cast Vote"}{" "}
-                                  <ChevronRight size={14} />
+                                  <ChevronRight size={14} className="bg-brand-blue/10 rounded-full p-0.5" />
                                 </motion.button>
                               )}
                             </AnimatePresence>
                           </div>
                         </div>
-
-                        {/* Selection Ring Effect */}
-                        {votes[category] === nominee.id && (
-                          <motion.div
-                            layoutId={`ring-${category}`}
-                            className="absolute -inset-1 border-2 border-brand-blue rounded-[2.6rem] pointer-events-none"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{
-                              type: "spring",
-                              stiffness: 300,
-                              damping: 30,
-                            }}
-                          />
-                        )}
                       </motion.div>
                     ),
                   )}
@@ -258,7 +274,7 @@ export const VotePage = ({
             ))}
           </div>
 
-          <div className="mt-20 text-center">
+          <div className="mt-24 text-center">
             {isSubmitted ? (
               <div className="glass-card p-12 max-w-2xl mx-auto border-emerald-100 bg-emerald-50/30">
                 <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center text-white mx-auto mb-6 shadow-lg shadow-emerald-200">
@@ -437,7 +453,7 @@ export const VotePage = ({
               </div>
             )}
           </AnimatePresence>
-        </>
+        </motion.div>
       )}
     </motion.div>
   );
