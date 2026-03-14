@@ -83,7 +83,7 @@
   }
   
   .nav-link {
-    @apply text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-brand-blue transition-colors relative py-2;
+    @apply text-sm font-bold text-white hover:text-white/80 transition-colors relative py-2;
   }
   
   .nav-link-active {

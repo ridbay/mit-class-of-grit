@@ -112,7 +112,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`text-left text-lg font-bold ${currentPath === item.path ? "text-brand-blue" : "text-slate-600 dark:text-slate-400"}`}
+                  className={`text-left text-lg font-bold ${currentPath === item.path ? "text-brand-blue" : "text-white hover:text-white/80"}`}
                 >
                   {item.label}
                 </Link>
@@ -153,7 +153,7 @@ const Footer = () => {
                 </span>
               </div>
             </div>
-            <p className="text-slate-400 max-w-sm mb-10 font-medium leading-relaxed">
+            <p className="text-white max-w-sm mb-10 font-medium leading-relaxed">
               Celebrating the resilience, innovation, and excellence of our
               department's finest. Join us in honoring the masters of IT.
             </p>
