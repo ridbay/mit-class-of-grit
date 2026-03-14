@@ -9,10 +9,32 @@ export const FAQSection = () => {
   return (
     <section className="py-24 px-6 max-w-4xl mx-auto">
       <div className="text-center mb-16">
-        <h2 className="section-title">Common Questions</h2>
-        <p className="text-slate-500">
+        <motion.span
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="inline-block py-2 px-4 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-widest mb-4"
+        >
+          Insights & Details
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="section-title"
+        >
+          Common Questions
+        </motion.h2>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed font-medium"
+        >
           Everything you need to know about the Awards Night.
-        </p>
+        </motion.p>
       </div>
       <div className="space-y-6">
         {FAQS.map((faq, i) => {
