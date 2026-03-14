@@ -881,7 +881,7 @@ export default function App() {
             <div className="w-10 h-10 bg-gradient-to-br from-brand-blue to-brand-teal rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-blue/20 group-hover:scale-110 transition-transform">G</div>
             <div className="flex flex-col items-start leading-none">
               <span className="font-black text-lg tracking-tighter text-slate-900 dark:text-white">CLASS OF <span className="text-brand-blue">GRIT</span></span>
-              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-slate-400">Masters of IT</span>
+              <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Masters of IT</span>
             </div>
           </button>
 
@@ -914,7 +914,7 @@ export default function App() {
           </div>
 
           {/* Mobile Toggle */}
-          <button className="md:hidden text-slate-800 dark:text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button className="md:hidden text-slate-900 dark:text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
@@ -1442,7 +1442,7 @@ export default function App() {
                               </button>
                               <button 
                                 onClick={() => setShowVoteModal(false)}
-                                className="w-full py-4 text-slate-400 font-bold hover:text-slate-600 transition-colors"
+                                className="w-full py-4 text-slate-500 dark:text-slate-400 font-bold hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
                               >
                                 Go Back & Edit
                               </button>
