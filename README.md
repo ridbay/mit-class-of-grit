@@ -21,18 +21,21 @@
 To run this project locally, ensure you have Node.js installed, then follow these steps:
 
 1. **Clone the repository** (if you haven't already):
+
    ```bash
-   git clone <repository-url>
-   cd class-of-grit
+   git clone https://github.com/ridbay/mit-class-of-grit.git
+   cd mit-class-of-grit
    ```
 
 2. **Install dependencies**:
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**:
    Copy the example environment file and configure any necessary variables.
+
    ```bash
    cp .env.example .env
    ```
@@ -53,9 +56,10 @@ To run this project locally, ensure you have Node.js installed, then follow thes
 
 ## Contributing
 
-We welcome contributions to make the Class of Grit Awards Night even better! 
+We welcome contributions to make the Class of Grit Awards Night even better!
 
 To contribute:
+
 1. Fork the repository.
 2. Create a new branch for your feature or bugfix:
    ```bash
@@ -72,6 +76,7 @@ To contribute:
 5. Open a Pull Request detailing your changes.
 
 ### Development Guidelines
+
 - Ensure your code passes TypeScript checks by running `npm run lint`.
 - Follow the existing design language (Tailwind classes, glassmorphism patterns).
 - Test UI changes in both Light and Dark modes.
