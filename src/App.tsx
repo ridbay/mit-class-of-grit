@@ -43,7 +43,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
   const currentPath = location.pathname;
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
+    <nav className="fixed top-0 w-full z-50 bg-slate-950 text-white border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-3 group">
           <img
@@ -52,10 +52,10 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             className="w-10 h-10 object-contain group-hover:scale-110 transition-transform drop-shadow"
           />
           <div className="flex flex-col items-start leading-none">
-            <span className="font-black text-lg tracking-tighter text-slate-900 dark:text-white">
+            <span className="font-black text-lg tracking-tighter text-white">
               CLASS OF <span className="text-brand-blue">GRIT</span>
             </span>
-            <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-white">
               Masters of IT
             </span>
           </div>
@@ -87,7 +87,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden text-slate-900 dark:text-white"
+          className="md:hidden text-white"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
         >
           {isMenuOpen ? <X /> : <Menu />}
@@ -101,7 +101,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white dark:bg-slate-950 border-t border-slate-100 dark:border-slate-800 overflow-hidden"
+            className="md:hidden bg-slate-950 border-t border-slate-800 overflow-hidden"
           >
             <div className="p-6 flex flex-col gap-4">
               {[
@@ -138,7 +138,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-900 text-white pt-24 pb-12 px-6">
+    <footer className="bg-slate-950 text-white pt-24 pb-12 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
           <div className="md:col-span-2">
@@ -152,7 +152,7 @@ const Footer = () => {
                 <span className="font-black text-xl tracking-tighter">
                   CLASS OF <span className="text-brand-teal">GRIT</span>
                 </span>
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40">
+                <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white">
                   Masters of IT
                 </span>
               </div>
@@ -175,7 +175,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white/40 mb-8">
+            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white mb-8">
               Navigation
             </h4>
             <ul className="space-y-4 font-bold">
@@ -200,10 +200,10 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white/40 mb-8">
+            <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white mb-8">
               Contact
             </h4>
-            <ul className="space-y-4 font-bold text-slate-400">
+            <ul className="space-y-4 font-bold text-white">
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-brand-teal" />{" "}
                 awards@classofgrit.edu
@@ -216,7 +216,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">
+        <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
           <p>© 2026 Class of Grit Department. All rights reserved.</p>
           <div className="flex gap-12">
             <a href="#" className="hover:text-white transition-colors">
