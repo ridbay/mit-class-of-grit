@@ -20,20 +20,25 @@
 
 To run this project locally, ensure you have Node.js installed, then follow these steps:
 
-1. **Clone the repository** (if you haven't already):
+1. **Clone the repository**:
 
    ```bash
    git clone https://github.com/ridbay/mit-class-of-grit.git
+   ```
+
+2. **Navigate to the project directory**:
+
+   ```bash
    cd mit-class-of-grit
    ```
 
-2. **Install dependencies**:
+3. **Install dependencies**:
 
    ```bash
    npm install
    ```
 
-3. **Set up environment variables**:
+4. **Set up environment variables**:
    Copy the example environment file and configure any necessary variables.
 
    ```bash
@@ -41,6 +46,7 @@ To run this project locally, ensure you have Node.js installed, then follow thes
    ```
 
 4. **Start the development server**:
+
    ```bash
    npm run dev
    ```
@@ -62,17 +68,23 @@ To contribute:
 
 1. Fork the repository.
 2. Create a new branch for your feature or bugfix:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
+
 3. Commit your changes with clear, descriptive messages:
+
    ```bash
    git commit -m "feat: add new gallery component"
    ```
+
 4. Push to your branch:
+
    ```bash
    git push origin feature/your-feature-name
    ```
+
 5. Open a Pull Request detailing your changes.
 
 ### Development Guidelines

@@ -24,7 +24,22 @@
 
 @layer base {
   body {
-    @apply font-sans bg-[var(--color-bg-light)] text-[var(--color-brand-slate)] antialiased transition-colors duration-300;
+    @apply font-sans bg-[var(--color-bg-light)] text-[var(--color-brand-slate)] antialiased transition-colors duration-300 relative min-h-screen overflow-x-hidden;
+  }
+  
+  /* Energetic Background Blobs */
+  body::before, body::after {
+    content: '';
+    @apply absolute rounded-full blur-[120px] -z-10 opacity-[0.15] mix-blend-multiply pointer-events-none;
+  }
+  body::before {
+    @apply w-[600px] h-[600px] bg-[var(--color-brand-blue)] -top-[200px] -left-[200px] animate-pulse;
+    animation-duration: 8s;
+  }
+  body::after {
+    @apply w-[500px] h-[500px] bg-[var(--color-brand-teal)] top-[20%] right-[10%] animate-pulse;
+    animation-duration: 12s;
+    animation-delay: 2s;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -42,15 +57,25 @@
 
 @layer components {
   .glass-card {
-    @apply bg-white/90 dark:bg-slate-900/80 backdrop-blur-md border border-slate-100 dark:border-slate-800 shadow-md rounded-3xl;
+    @apply bg-white/80 backdrop-blur-xl border border-white/60 shadow-[0_8px_30px_rgb(30,111,217,0.06)] rounded-3xl hover:shadow-[0_20px_40px_rgb(30,199,182,0.12)] transition-all duration-500 relative overflow-hidden;
+  }
+  
+  /* Subtle inner glow for glass cards */
+  .glass-card::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-white/60 to-transparent pointer-events-none opacity-50 z-0;
+  }
+
+  .glass-card > * {
+    @apply relative z-10;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-[var(--color-brand-blue)] to-[#155BB5] text-white font-semibold py-3 px-8 rounded-full transition-all hover:scale-105 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-gradient-to-r from-[var(--color-brand-blue)] to-[#155BB5] text-white font-black py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_25px_rgba(30,111,217,0.4)] hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide;
   }
 
   .btn-secondary {
-    @apply bg-gradient-to-r from-[var(--color-brand-teal)] to-[#15A89A] text-white font-semibold py-3 px-8 rounded-full transition-all hover:scale-105 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-gradient-to-r from-[var(--color-brand-teal)] to-[#15A89A] text-white font-black py-4 px-10 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_25px_rgba(30,199,182,0.4)] hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide;
   }
 
   .section-title {

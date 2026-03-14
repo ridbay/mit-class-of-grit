@@ -327,7 +327,7 @@ const CountdownTimer = () => {
     <div className="flex gap-4 md:gap-8 justify-center">
       {Object.entries(timeLeft).map(([label, value]) => (
         <div key={label} className="flex flex-col items-center">
-          <div className="w-16 h-16 md:w-24 md:h-24 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl flex items-center justify-center text-2xl md:text-4xl font-black text-white shadow-xl">
+          <div className="w-16 h-16 md:w-24 md:h-24 bg-white/20 backdrop-blur-xl border-2 border-white/40 rounded-2xl flex items-center justify-center text-3xl md:text-5xl font-black text-white shadow-[0_8px_32px_rgba(0,0,0,0.15)]">
             {value.toString().padStart(2, "0")}
           </div>
           <span className="mt-2 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-white/70">
@@ -360,7 +360,7 @@ const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
           transition={{ duration: 1 }}
           className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-black/50 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/80 to-brand-teal/80 mix-blend-multiply z-10" />
           <img
             src={HERO_SLIDES[currentSlide].image}
             alt="Hero"
@@ -379,7 +379,7 @@ const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
         >
           <h1 className="text-5xl md:text-7xl font-black text-white leading-tight mb-6 tracking-tighter drop-shadow-lg">
             Class of Grit Awards Night <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-teal">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-100 drop-shadow-sm">
               Celebrating Excellence
             </span>
           </h1>
@@ -398,8 +398,11 @@ const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
             >
               Vote Now <ChevronRight size={20} />
             </button>
-            <button className="px-10 py-4 text-lg font-bold text-white hover:text-brand-teal drop-shadow-md transition-colors flex items-center gap-2">
-              <Play size={20} fill="currentColor" /> View Highlights
+            <button className="px-10 py-4 text-lg font-black text-white hover:text-teal-200 drop-shadow-md transition-colors flex items-center gap-2 group">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
+                <Play size={20} fill="currentColor" />
+              </div> 
+              View Highlights
             </button>
           </div>
         </motion.div>
@@ -421,9 +424,9 @@ const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
 // --- Page Components ---
 
 const SponsorsSection = () => (
-  <section className="py-20 overflow-hidden bg-slate-50 dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
+  <section className="py-20 overflow-hidden border-y border-white/20 bg-white/30 backdrop-blur-sm relative z-10">
     <div className="max-w-7xl mx-auto px-6 mb-12 text-center">
-      <h4 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-4">
+      <h4 className="text-xs font-black uppercase tracking-[0.3em] text-slate-500 mb-4">
         Our Prestigious Partners
       </h4>
     </div>
@@ -483,7 +486,7 @@ const StudentSpotlight = () => {
             when the code fails. I'm honored to be nominated for{" "}
             {spotlight.category}."
           </p>
-          <div className="flex items-center gap-4 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-3xl border border-slate-100 dark:border-slate-700">
+          <div className="flex items-center gap-4 p-6 bg-white/50 backdrop-blur-sm border border-white/60 rounded-3xl shadow-sm">
             <div className="w-12 h-12 bg-brand-blue/10 rounded-xl flex items-center justify-center text-brand-blue">
               <Award size={24} />
             </div>
@@ -518,7 +521,7 @@ const FAQSection = () => {
           <div key={i} className="glass-card overflow-hidden">
             <button
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
-              className="w-full p-8 flex items-center justify-between text-left hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+              className="w-full p-8 flex items-center justify-between text-left hover:bg-white/50 transition-colors"
             >
               <span className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-4">
                 <HelpCircle className="text-brand-blue" size={20} /> {faq.q}
@@ -1392,7 +1395,7 @@ export default function App() {
               <SponsorsSection />
 
               {/* Features Quick Look */}
-              <section className="py-24 px-6 bg-slate-50 dark:bg-slate-900/50">
+              <section className="py-24 px-6 relative z-10">
                 <div className="max-w-7xl mx-auto">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[
@@ -1418,13 +1421,13 @@ export default function App() {
                       <div
                         key={i}
                         onClick={() => navigate(item.target as Page)}
-                        className="glass-card p-10 hover:shadow-xl transition-all group cursor-pointer hover:-translate-y-2"
+                        className="bg-white p-10 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl transition-all group cursor-pointer hover:-translate-y-2"
                       >
-                        <divyes className="w-14 h-14 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-6 group-hover:scale-110 transition-transform">
+                        <div className="w-14 h-14 bg-brand-blue/10 rounded-2xl flex items-center justify-center text-brand-blue mb-6 group-hover:scale-110 transition-transform">
                           {item.icon}
-                        </divyes>
-                        <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                        <p className="text-slate-500 leading-relaxed text-sm">
+                        </div>
+                        <h3 className="text-xl font-black mb-3 text-black">{item.title}</h3>
+                        <p className="text-black font-medium leading-relaxed text-sm">
                           {item.desc}
                         </p>
                         <div className="mt-6 flex items-center gap-2 text-brand-blue font-bold text-xs uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
@@ -1461,10 +1464,10 @@ export default function App() {
                 {CATEGORIES.map((category) => (
                   <div
                     key={category}
-                    className="glass-card p-10 text-center group hover:shadow-2xl transition-all"
+                    className="bg-white p-10 rounded-[2.5rem] border border-brand-teal/20 text-center group hover:shadow-[0_20px_40px_rgba(30,199,182,0.15)] hover:-translate-y-3 transition-all duration-500 cursor-pointer"
                   >
-                    <div className="w-20 h-20 bg-brand-blue/10 rounded-3xl flex items-center justify-center text-brand-blue mx-auto mb-6 group-hover:scale-110 transition-transform">
-                      <Trophy size={40} />
+                    <div className="w-24 h-24 bg-gradient-to-br from-brand-blue/10 to-brand-teal/10 rounded-[2rem] flex items-center justify-center text-brand-teal mx-auto mb-8 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-inner">
+                      <Trophy size={44} />
                     </div>
                     <h3 className="text-2xl font-black text-slate-900 mb-4">
                       {category}
@@ -1475,7 +1478,7 @@ export default function App() {
                     </p>
                     <button
                       onClick={() => navigate("vote")}
-                      className="text-brand-blue font-bold flex items-center gap-2 mx-auto hover:gap-3 transition-all"
+                      className="text-brand-teal font-black uppercase tracking-widest text-xs flex items-center gap-2 mx-auto group-hover:gap-4 transition-all"
                     >
                       View Nominees <ChevronRight size={16} />
                     </button>
@@ -1641,9 +1644,9 @@ export default function App() {
                 {TESTIMONIALS.map((t) => (
                   <motion.div
                     key={t.id}
-                    whileHover={{ y: -5, scale: 1.01 }}
+                    whileHover={{ y: -8, scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    className="glass-card p-10 flex flex-col md:flex-row gap-8 items-center md:items-start hover:shadow-lg transition-shadow"
+                    className="bg-white rounded-[2rem] border border-white/60 p-10 flex flex-col md:flex-row gap-8 items-center md:items-start shadow-[0_10px_30px_rgba(30,111,217,0.06)] hover:shadow-[0_20px_40px_rgba(30,199,182,0.12)] transition-shadow"
                   >
                     <img
                       src={t.image}
@@ -2153,7 +2156,7 @@ export default function App() {
                             disabled
                             type="text"
                             value="45.00"
-                            className="w-full bg-slate-100 border border-slate-100 rounded-2xl px-10 py-4 font-bold text-slate-900"
+                            className="w-full bg-white border-2 border-slate-100 rounded-2xl px-10 py-4 font-black text-slate-900 shadow-sm"
                           />
                         </div>
                       </div>
