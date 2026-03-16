@@ -23,7 +23,7 @@ export const SponsorshipTierCard: React.FC<SponsorshipTierProps> = ({
   popular,
   exclusive,
 }) => {
-  const isPremium = popular || exclusive || level === "Platinum" || level === "Silver";
+  const isPremium = popular || exclusive || level === "Platinum" || level === "Silver" || level === "Bronze";
   const highlightColor = exclusive 
     ? "#2DD4BF" 
     : popular 
@@ -32,7 +32,9 @@ export const SponsorshipTierCard: React.FC<SponsorshipTierProps> = ({
         ? "#818CF8" 
         : level === "Silver"
           ? "#CBD5E1"
-          : "#94A3B8";
+          : level === "Bronze"
+            ? "#B87333"
+            : "#94A3B8";
 
   return (
     <motion.div
@@ -67,7 +69,7 @@ export const SponsorshipTierCard: React.FC<SponsorshipTierProps> = ({
           <div className="relative z-10 flex flex-col items-start gap-4">
             <div className={`text-[11px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full ${
               isPremium 
-                ? level === "Platinum" ? "text-white bg-black/20" : "text-brand-blue bg-white/20" 
+                ? (level === "Platinum" || level === "Bronze") ? "text-white bg-black/20" : "text-brand-blue bg-white/20" 
                 : "text-slate-400 bg-white/5"
             }`}>
               {level} Sponsorship
@@ -76,14 +78,14 @@ export const SponsorshipTierCard: React.FC<SponsorshipTierProps> = ({
             <div className="flex flex-col gap-1">
               <h3 className={`text-4xl font-black tracking-tighter ${
                 isPremium 
-                  ? level === "Platinum" ? "text-white" : "text-brand-blue" 
+                  ? (level === "Platinum" || level === "Bronze") ? "text-white" : "text-brand-blue" 
                   : "text-white"
               }`}>
                 {price}
               </h3>
               <p className={`text-[12px] font-bold ${
                 isPremium 
-                  ? level === "Platinum" ? "text-white/80" : "text-brand-blue/70" 
+                  ? (level === "Platinum" || level === "Bronze") ? "text-white/80" : "text-brand-blue/70" 
                   : "text-slate-500"
               }`}>
                 {tagline}
