@@ -178,6 +178,89 @@ export const SPONSORS = [
   { name: "Smart Solutions", logo: "https://picsum.photos/seed/nexus/200/100" },
 ];
 
+export const SPONSORSHIP_TIERS = [
+  {
+    level: "Bronze",
+    icon: "🥉",
+    price: "₦75,000",
+    tagline: "Community Supporter",
+    color: "from-[#CD7F32] via-[#B87333] to-[#804A00]",
+    benefits: [
+      "Logo on event banner + digital flyer",
+      "Name listed on event website (permanent)",
+      "1× dedicated post on class platform (200+ IT professionals)",
+    ],
+  },
+  {
+    level: "Silver",
+    icon: "🥈",
+    price: "₦120,000",
+    tagline: "Event Supporter",
+    color: "from-[#CBD5E1] via-[#94A3B8] to-[#475569]",
+    benefits: [
+      "Logo on event banner + digital flyer",
+      "Name listed on event website",
+      "MC mention at event",
+      "2× promo posts on class platform (200+ IT professionals) leading up to the event",
+      "Logo on the event programme / printed materials",
+    ],
+  },
+  {
+    level: "Gold",
+    icon: "🥇",
+    price: "₦200,000",
+    tagline: "Event Co-presenter · Most Popular",
+    color: "from-[#FDE047] via-[#EAB308] to-[#854D0E]",
+    popular: true,
+    benefits: [
+      "Everything in Silver",
+      "Prominent logo on all event materials",
+      "Brand logo + 60-sec reel played during event (no talking required)",
+      "3× promo posts on class platform leading up to event",
+      "Featured brand section on event website",
+      "Logo embedded in all event promo video clips",
+      "Multiple MC mentions throughout event",
+    ],
+  },
+  {
+    level: "Platinum",
+    icon: "💎",
+    price: "₦450,000",
+    tagline: "Official Partner · Limited to 3 slots",
+    color: "from-[#F8FAFC] via-[#CBD5E1] to-[#64748B]",
+    benefits: [
+      "Everything in Gold",
+      "Recognized as Official Platinum Sponsor",
+      "5-min brand moment (90-sec video reel + 2-min MC-led introduction)",
+      "Branded activation stand / display table at venue",
+      "Option to include branded items in guest packs",
+      "Weekly promo posts on class platform until event date",
+      "Dedicated brand page on event website",
+      "Logo on all recap/highlight videos post-event",
+      "Priority MC mentions throughout the entire event",
+    ],
+  },
+  {
+    level: "Headline",
+    icon: "👑",
+    price: "₦1,000,000",
+    tagline: "The Presenting Partner · 1 slot only · Most Exclusive",
+    color: "from-[#2DD4BF] via-[#14B8A6] to-[#0D9488]",
+    exclusive: true,
+    benefits: [
+      "Everything in Platinum",
+      'Event co-branded as "[Your Brand] presents: MIT Class of Grit Awards Night"',
+      "Brand name in the event title on all materials",
+      "Opening acknowledgement as presenting partner",
+      "Branded welcome message / video played at the start",
+      'Exclusive "Headline Sponsor" recognition on all digital promotions',
+      "Brand logo as the most prominent element on every piece of material",
+      "Post-event thank-you campaign naming the Headline Sponsor",
+    ],
+  },
+];
+
+
 export const FAQS = [
   {
     q: "How are the winners decided?",

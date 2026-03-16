@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
-import { SPONSORS } from "../data/constants";
+import { SPONSORS, SPONSORSHIP_TIERS } from "../data/constants";
+import { SponsorshipTierCard } from "../components/SponsorshipTierCard";
 
 export const SponsorsPage = () => (
   <section className="py-24 px-6 max-w-7xl mx-auto min-h-screen">
@@ -46,7 +47,7 @@ export const SponsorsPage = () => (
           }
         }
       }}
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-24"
+      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-32"
     >
       {SPONSORS.map((s, i) => {
         // Generate initials for the circle (e.g., "Tech Corp" -> "TC")
@@ -69,6 +70,58 @@ export const SponsorsPage = () => (
         );
       })}
     </motion.div>
+
+    {/* Sponsorship Tiers Section */}
+    <div className="mb-32">
+      <div className="text-center mb-16">
+        <motion.h3
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl font-black text-white mb-6"
+        >
+          Sponsorship Tiers
+        </motion.h3>
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="text-slate-500 max-w-2xl mx-auto text-lg"
+        >
+          Partner with us to support the next generation of IT leaders and gain visibility among top talent.
+        </motion.p>
+      </div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.1
+            }
+          }
+        }}
+        className="space-y-8"
+      >
+        {/* Top Tiers (Headline, Platinum, Gold) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          {[...SPONSORSHIP_TIERS].reverse().slice(0, 3).map((tier, idx) => (
+            <SponsorshipTierCard key={idx} {...tier} />
+          ))}
+        </div>
+        
+        {/* Bottom Tiers (Silver, Bronze) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {[...SPONSORSHIP_TIERS].reverse().slice(3).map((tier, idx) => (
+            <SponsorshipTierCard key={idx} {...tier} />
+          ))}
+        </div>
+      </motion.div>
+    </div>
     
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -79,13 +132,14 @@ export const SponsorsPage = () => (
     >
       <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-overlay"></div>
       
-      <h3 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight relative z-10">Become a Sponsor</h3>
+      <h3 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight relative z-10">Become a Partner Today</h3>
       <p className="max-w-2xl mx-auto mb-10 text-white/90 font-medium text-lg leading-relaxed relative z-10">
-        Interested in supporting the next generation of IT leaders? We offer various sponsorship packages giving you excellent visibility among top graduate talent.
+        Ready to make an impact? Download our sponsorship brochure or contact us directly to discuss how we can partner for the Class of Grit Awards Night.
       </p>
       <button className="bg-white text-brand-blue font-black py-5 px-12 rounded-full hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95 text-lg relative z-10">
-        Download Sponsor Pack
+        Contact Partnership Team
       </button>
     </motion.div>
   </section>
 );
+
