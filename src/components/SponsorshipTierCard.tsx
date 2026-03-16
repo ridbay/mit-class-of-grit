@@ -23,14 +23,16 @@ export const SponsorshipTierCard: React.FC<SponsorshipTierProps> = ({
   popular,
   exclusive,
 }) => {
-  const isPremium = popular || exclusive || level === "Platinum";
+  const isPremium = popular || exclusive || level === "Platinum" || level === "Silver";
   const highlightColor = exclusive 
     ? "#2DD4BF" 
     : popular 
       ? "#FDE047" 
       : level === "Platinum" 
         ? "#818CF8" 
-        : "#94A3B8";
+        : level === "Silver"
+          ? "#CBD5E1"
+          : "#94A3B8";
 
   return (
     <motion.div
