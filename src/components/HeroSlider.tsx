@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronRight, Play } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { HERO_SLIDES } from "../data/constants";
 
 export const CountdownTimer = () => {
@@ -53,6 +54,7 @@ export const CountdownTimer = () => {
 
 export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -120,7 +122,10 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
             >
               Vote Now <ChevronRight size={20} />
             </button>
-            <button className="px-8 sm:px-10 py-4 text-base sm:text-lg font-black text-white hover:text-teal-200 drop-shadow-md transition-colors flex items-center justify-center gap-3 group w-full sm:w-auto">
+            <button
+              onClick={() => navigate("/gallery")}
+              className="px-8 sm:px-10 py-4 text-base sm:text-lg font-black text-white hover:text-teal-200 drop-shadow-md transition-colors flex items-center justify-center gap-3 group w-full sm:w-auto"
+            >
               <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
                 <Play size={18} fill="currentColor" />
               </div>

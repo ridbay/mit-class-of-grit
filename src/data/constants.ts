@@ -594,21 +594,75 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     category: "Photos",
   },
   {
-    id: "3",
+    id: "v1",
     type: "video",
-    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_0632.MOV?alt=media&token=d8ed73cb-9745-4f49-80ea-b053c9e6e2c9",
+    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_0651.MOV?alt=media&token=a81a368c-e4c3-4cdc-9e47-1ec61bea7973",
     thumbnail:
-      "https://lh3.googleusercontent.com/d/1e4MTiH-8h27eu3c2dGCs5gCFvD-6d3D6",
-    caption: "Moments of Grit: Performance",
+      "https://lh3.googleusercontent.com/d/152OtWQXcINO0AxF0KtYHGLExGd0Di1Ct",
+    caption: "Moments of Grit: Highlight 1",
     category: "Videos",
   },
   {
-    id: "8",
+    id: "v2",
     type: "video",
     url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_0646.MOV?alt=media&token=f31e16c5-8e54-486e-a1d7-ec3350979069",
     thumbnail:
-      "https://lh3.googleusercontent.com/d/1EUPBEsDF5oxZjhy_aQznLaqxuaWj2IXX",
-    caption: "Moments of Grit: Awards",
+      "https://lh3.googleusercontent.com/d/1KclGk0eJ2qeYddOH_sZCgUnVHnKOh84r",
+    caption: "Moments of Grit: Highlight 2",
+    category: "Videos",
+  },
+  {
+    id: "v3",
+    type: "video",
+    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_0632.MOV?alt=media&token=d8ed73cb-9745-4f49-80ea-b053c9e6e2c9",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1X0y6hLq-SL_ZQMbXc8kvROOwEtrrzH0Y",
+    caption: "Moments of Grit: Highlight 3",
+    category: "Videos",
+  },
+  {
+    id: "v4",
+    type: "video",
+    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/C1765813-AB3D-4A1A-8ED2-F26D4D5362FE.MP4?alt=media&token=025e2d5c-0103-4754-8bab-f1e94c9225d3",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1jQOnylAxBKpkIqw4V7cqHRY_vKwzImTR",
+    caption: "Moments of Grit: Highlight 4",
+    category: "Videos",
+  },
+  {
+    id: "v5",
+    type: "video",
+    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/24495647-C28B-44F9-8EA1-A86454E4531C.MP4?alt=media&token=f146e150-c31b-467f-9724-2fac0dc38a84",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1qKBBPRVxbwK341NinArkmu0XqwCs-ToW",
+    caption: "Moments of Grit: Highlight 5",
+    category: "Videos",
+  },
+  // {
+  //   id: "v6",
+  //   type: "video",
+  //   url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/24495647-C28B-44F9-8EA1-A86454E4531C.MP4?alt=media&token=f146e150-c31b-467f-9724-2fac0dc38a84",
+  //   thumbnail:
+  //     "https://lh3.googleusercontent.com/d/1yX4kh7DvcEdjBv17G31b3XYU67SlYgCJ",
+  //   caption: "Moments of Grit: Highlight 6",
+  //   category: "Videos",
+  // },
+  {
+    id: "v7",
+    type: "video",
+    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_7553.mov?alt=media&token=ce70d378-cbef-4b3c-bb28-f0e742a9fcc0",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1A_Jo4uQFyaKpxPTVTVsWhSLJWxv4E16M",
+    caption: "Moments of Grit: Highlight 7",
+    category: "Videos",
+  },
+  {
+    id: "v8",
+    type: "video",
+    url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_7419.MOV?alt=media&token=39747a10-e0d6-48db-9070-975075a25350",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1Mf88m3RLqpeIqfma57CFFDz6eD5Gf97P",
+    caption: "Moments of Grit: Highlight 8",
     category: "Videos",
   },
 ];
