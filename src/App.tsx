@@ -15,6 +15,7 @@ import {
   Facebook,
   Mail,
   MapPin,
+  Phone,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
@@ -28,6 +29,7 @@ import { FeedbackPage } from "./pages/FeedbackPage";
 import { NominatePage } from "./pages/NominatePage";
 import { VotePage } from "./pages/VotePage";
 import { PaymentPage } from "./pages/PaymentPage";
+import { ContactPage } from "./pages/ContactPage";
 import { GlobalLoader } from "./components/GlobalLoader";
 
 const ScrollToTop = () => {
@@ -70,6 +72,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             { path: "/vote", label: "Voting" },
             { path: "/gallery", label: "Gallery" },
             { path: "/sponsors", label: "Sponsors" },
+            { path: "/contact", label: "Contact" },
           ].map((item) => (
             <Link
               key={item.path}
@@ -108,9 +111,11 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
                 { path: "/", label: "Home" },
                 { path: "/about", label: "About" },
                 { path: "/categories", label: "Awards" },
+                { path: "/nominate", label: "Nominate" },
                 { path: "/vote", label: "Voting" },
                 { path: "/gallery", label: "Gallery" },
                 { path: "/sponsors", label: "Sponsors" },
+                { path: "/contact", label: "Contact" },
               ].map((item) => (
                 <Link
                   key={item.path}
@@ -161,7 +166,7 @@ const Footer = () => {
               Celebrating the resilience, innovation, and excellence of our
               department's finest. Join us in honoring the masters of IT.
             </p>
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               {[Instagram, Twitter, Facebook].map((Icon, i) => (
                 <a
                   key={i}
@@ -171,21 +176,24 @@ const Footer = () => {
                   <Icon size={20} />
                 </a>
               ))}
-            </div>
+            </div> */}
           </div>
 
           <div>
             <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white mb-8">
               Navigation
             </h4>
-            <ul className="space-y-4 font-bold">
+            <ul className="grid grid-cols-2 gap-x-8 gap-y-4 font-bold">
               {[
                 { path: "/", label: "Home" },
                 { path: "/about", label: "About" },
-                { path: "/sponsors", label: "Sponsors" },
+                { path: "/categories", label: "Awards" },
+                { path: "/nominate", label: "Nominate" },
+                { path: "/vote", label: "Voting" },
                 { path: "/gallery", label: "Gallery" },
-                { path: "/vote", label: "Vote" },
+                { path: "/sponsors", label: "Sponsors" },
                 { path: "/payment", label: "Payment" },
+                { path: "/contact", label: "Contact" },
               ].map((link) => (
                 <li key={link.path}>
                   <Link
@@ -206,17 +214,27 @@ const Footer = () => {
             <ul className="space-y-4 font-bold text-white">
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-brand-teal" />{" "}
-                awards@classofgrit.edu
+                awards@classofgrit.com
+              </li>
+              <li className="flex flex-col gap-2">
+                <div className="flex items-center gap-3 group">
+                  <Phone size={18} className="text-brand-teal group-hover:scale-110 transition-transform" />
+                  <span>Barry: <a href="tel:+2348164845671" className="hover:text-brand-teal transition-colors">+234 816 484 5671</a></span>
+                </div>
+                <div className="flex items-center gap-3 group">
+                  <Phone size={18} className="text-brand-teal group-hover:scale-110 transition-transform" />
+                  <span>Priscilla: <a href="tel:+2349074549591" className="hover:text-brand-teal transition-colors">+234 907 454 9591</a></span>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin size={18} className="text-brand-teal" /> MIT, DEPARTMENT
-                OF COMPUTER SCIENCES UNIVERSITY OF LAGOS
+                OF COMPUTER SCIENCES <br /> UNIVERSITY OF LAGOS
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+        {/* <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
           <p>© 2026 Class of Grit Department. All rights reserved.</p>
           <div className="flex gap-12">
             <a href="#" className="hover:text-white transition-colors">
@@ -226,7 +244,7 @@ const Footer = () => {
               Terms of Service
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );
@@ -335,6 +353,7 @@ export default function App() {
                 }
               />
               <Route path="/payment" element={<PaymentPage />} />
+              <Route path="/contact" element={<ContactPage />} />
             </Routes>
           </AnimatePresence>
         </main>

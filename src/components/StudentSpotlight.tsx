@@ -3,11 +3,12 @@ import { Award } from "lucide-react";
 import { motion } from "motion/react";
 
 export const StudentSpotlight = () => {
-  const governor = {
-    name: "Ekwebelem Barry",
-    role: "MIT Class Governor (the 001)",
-    image: "/mit_class_governor.jpg",
-    intro: "As the 001 and MIT Class Governor, Ekwebelem Barry embodies the mantle of leadership through consistent grit and a vision that transcends the ordinary. He serves as a vital bridge between innovation and legacy, representing the pulse and excellence of the MIT Class of 2026."
+  const governance = {
+    title: "Meet Barry & Hannah",
+    role: "Class Governance",
+    image: "/Barry_Hannah.jpeg",
+    intro:
+      "Barry Ekwebelem serves as the MIT Class Governor of the 2024-2026 cohort at the University of Lagos; elected by his peers to lead, represent, and champion the collective excellence of the MIT Class. Alongside him, Hannah Ochim serves as his assistant, ensuring that every vision is translated into action with precision and dedication. Together, they lead with purpose, integrity, and grit; committed to the growth and celebration of every member of this class. The Class of Grit Awards Night is a celebration of this class; every member, every struggle, every breakthrough.",
   };
 
   return (
@@ -23,8 +24,8 @@ export const StudentSpotlight = () => {
           <motion.img
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            src={governor.image}
-            alt={governor.name}
+            src={governance.image}
+            alt={governance.title}
             className="w-full h-full object-contain object-center"
             referrerPolicy="no-referrer"
           />
@@ -56,7 +57,7 @@ export const StudentSpotlight = () => {
             transition={{ delay: 0.3 }}
             className="text-4xl lg:text-5xl font-black text-slate-900 mb-8 leading-tight tracking-tight"
           >
-            Meet {governor.name}
+            {governance.title}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -65,7 +66,7 @@ export const StudentSpotlight = () => {
             transition={{ delay: 0.4 }}
             className="text-xl text-slate-600 mb-10 leading-relaxed italic font-medium"
           >
-            "{governor.intro}"
+            "{governance.intro}"
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -78,11 +79,11 @@ export const StudentSpotlight = () => {
               <Award size={28} />
             </div>
             <div>
-              <h4 className="font-black text-slate-900 text-lg">
-                {governor.role}
+              <h4 className="font-black text-slate-900 text-lg uppercase tracking-tight">
+                {governance.role}
               </h4>
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mt-1">
-                The 001
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">
+                Governor & Assistant
               </p>
             </div>
           </motion.div>

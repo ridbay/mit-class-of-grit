@@ -13,7 +13,7 @@ export const CountdownTimer = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date("2026-10-31T23:59:59").getTime();
+    const targetDate = new Date("2026-11-01T00:00:00").getTime();
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
@@ -93,29 +93,29 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 sm:px-6 pb-16 md:pb-32">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-40 sm:pt-48 md:pt-64 pb-24 md:pb-32 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
           className="max-w-4xl w-full"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-4 md:mb-6 tracking-tighter drop-shadow-lg px-2">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-6 md:mb-8 tracking-tighter drop-shadow-lg px-2">
             Class of GRIT Networking, Awards & Dinner Night
             <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-100 drop-shadow-sm inline-block mt-2 sm:mt-0">
-              THEME: Celebrating Excellence & Innovation
+              Celebrating Excellence & Innovation
             </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow mb-8 md:mb-12 font-medium max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow mb-10 md:mb-14 font-medium max-w-2xl mx-auto px-4">
             {HERO_SLIDES[currentSlide].subtitle}
           </p>
 
-          <div className="mb-10 md:mb-16">
+          <div className="mb-12 md:mb-20">
             <CountdownTimer />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4 sm:px-0">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full px-4 sm:px-0 mb-8 sm:mb-0">
             <button
               onClick={onVoteClick}
               className="btn-primary flex items-center justify-center gap-2 px-8 sm:px-10 py-4 text-base sm:text-lg drop-shadow-md w-full sm:w-auto"
@@ -135,7 +135,7 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
         </motion.div>
       </div>
 
-      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+      <div className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 z-30 flex gap-2">
         {HERO_SLIDES.map((_, i) => (
           <button
             key={i}

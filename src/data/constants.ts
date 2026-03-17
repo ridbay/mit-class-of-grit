@@ -670,32 +670,34 @@ export const GALLERY_ITEMS: GalleryItem[] = [
 export const HERO_SLIDES = [
   {
     image: "/banner.jpeg",
-    title: "THEME: Celebrating Excellence & Innovation",
+    title: "Celebrating Excellence & Innovation",
     subtitle:
-      "Join us for an unforgettable evening of recognition, connection, and celebration as we honour the resilience, brilliance, and innovation of the MIT Class.",
+      "An evening to celebrate the resilience, brilliance, and innovation of the MIT Class.",
   },
-  {
-    image: "/banner.jpeg",
-    title: "Innovation at its Finest",
-    subtitle:
-      "A night dedicated to celebrating the brilliant minds, hard work, and unyielding determination of our IT students.",
-  },
-  {
-    image: "/banner.jpeg",
-    title: "A Class of Grit",
-    subtitle: "Honoring the masters of IT and their journey.",
-  },
+  // {
+  //   image: "/banner.jpeg",
+  //   title: "Innovation at its Finest",
+  //   subtitle:
+  //     "A night dedicated to celebrating the brilliant minds, hard work, and unyielding determination of our IT students.",
+  // },
+  // {
+  //   image: "/banner.jpeg",
+  //   title: "A Class of Grit",
+  //   subtitle: "Honoring the masters of IT and their journey.",
+  // },
 ];
 
 export const SPONSORS = [
-  { name: "Tech Corp", logo: "https://picsum.photos/seed/techcorp/200/100" },
-  { name: "Innovation Labs", logo: "https://picsum.photos/seed/inno/200/100" },
-  { name: "Future Systems", logo: "https://picsum.photos/seed/future/200/100" },
-  {
-    name: "Digital Ventures",
-    logo: "https://picsum.photos/seed/global/200/100",
-  },
-  { name: "Smart Solutions", logo: "https://picsum.photos/seed/nexus/200/100" },
+  { name: "University of Lagos", logo: "/unilag_logo.jpeg" },
+  { name: "Bmoni", logo: "/bmoni_logo.jpeg" },
+  // { name: "Tech Corp", logo: "https://picsum.photos/seed/techcorp/200/100" },
+  // { name: "Innovation Labs", logo: "https://picsum.photos/seed/inno/200/100" },
+  // { name: "Future Systems", logo: "https://picsum.photos/seed/future/200/100" },
+  // {
+  //   name: "Digital Ventures",
+  //   logo: "https://picsum.photos/seed/global/200/100",
+  // },
+  // { name: "Smart Solutions", logo: "https://picsum.photos/seed/nexus/200/100" },
 ];
 
 export const SPONSORSHIP_TIERS = [

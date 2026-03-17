@@ -29,7 +29,7 @@ export const SponsorsPage = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium mt-6 text-justify"
+        className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium mt-6"
       >
         We are grateful to the organizations and individuals who are already
         standing with us to make the Class of Grit Networking, Awards & Dinner
@@ -52,17 +52,10 @@ export const SponsorsPage = () => (
           },
         },
       }}
-      className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-32"
+      className="flex flex-wrap justify-center gap-6 mb-32"
     >
       {SPONSORS.map((s, i) => {
-        // Generate initials for the circle (e.g., "Tech Corp" -> "TC")
-        const initials = s.name
-          .split(" ")
-          .map((w) => w[0])
-          .join("")
-          .substring(0, 2)
-          .toUpperCase();
-
+        const initials = s.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
         return (
           <motion.div
             key={i}
@@ -75,12 +68,14 @@ export const SponsorsPage = () => (
                 transition: { type: "spring", stiffness: 200, damping: 20 },
               },
             }}
-            className="bg-[#242938] border border-slate-700/50 rounded-[1.5rem] p-8 flex flex-col items-center justify-center text-center group transition-all duration-300 hover:-translate-y-2 hover:border-brand-teal/40 cursor-pointer shadow-lg hover:shadow-[0_10px_30px_rgba(30,199,182,0.1)]"
+            className="bg-[#242938] border border-slate-700/50 rounded-[1.5rem] p-8 flex flex-col items-center justify-center text-center group transition-all duration-300 hover:-translate-y-2 hover:border-brand-teal/40 cursor-pointer shadow-lg hover:shadow-[0_10px_30px_rgba(30,199,182,0.1)] overflow-hidden w-full max-w-[240px]"
           >
-            <div className="w-20 h-20 rounded-full border-2 border-brand-teal/50 flex items-center justify-center mb-5 group-hover:border-brand-teal group-hover:bg-brand-teal/10 transition-colors duration-300">
-              <span className="text-xl font-medium text-[#1EC7B6] tracking-wide">
-                {initials}
-              </span>
+            <div className="w-20 h-20 rounded-full border-2 border-brand-teal/50 flex items-center justify-center mb-5 group-hover:border-brand-teal group-hover:bg-brand-teal/10 transition-colors duration-300 overflow-hidden bg-slate-800">
+              {s.logo ? (
+                <img src={s.logo} alt={s.name} className="w-full h-full object-contain p-2" />
+              ) : (
+                <span className="text-xl font-medium text-[#1EC7B6] tracking-wide">{initials}</span>
+              )}
             </div>
             <h4 className="text-[13px] font-medium text-slate-300 group-hover:text-white transition-colors duration-300 tracking-wide">
               {s.name}
