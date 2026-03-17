@@ -228,7 +228,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g1",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/11WLjCuKNJUOptI7zVEEDwhmTj5sJ-f0V",
-    thumbnail: "https://lh3.googleusercontent.com/d/11WLjCuKNJUOptI7zVEEDwhmTj5sJ-f0V",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/11WLjCuKNJUOptI7zVEEDwhmTj5sJ-f0V",
     caption: "Memories of Grit 1",
     category: "Photos",
   },
@@ -236,7 +237,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g2",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/12HD6g-gy_Hp0pqQ91eMKlcpTuYyDX1_K",
-    thumbnail: "https://lh3.googleusercontent.com/d/12HD6g-gy_Hp0pqQ91eMKlcpTuYyDX1_K",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/12HD6g-gy_Hp0pqQ91eMKlcpTuYyDX1_K",
     caption: "Memories of Grit 2",
     category: "Photos",
   },
@@ -244,7 +246,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g3",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/13k41Yd96I0hnIriGXBPDNi9RnWOvbueP",
-    thumbnail: "https://lh3.googleusercontent.com/d/13k41Yd96I0hnIriGXBPDNi9RnWOvbueP",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/13k41Yd96I0hnIriGXBPDNi9RnWOvbueP",
     caption: "Memories of Grit 3",
     category: "Photos",
   },
@@ -252,7 +255,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g4",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/14_9K7d0YcFDbm_hQ3_LqO10BC9IMrFd4",
-    thumbnail: "https://lh3.googleusercontent.com/d/14_9K7d0YcFDbm_hQ3_LqO10BC9IMrFd4",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/14_9K7d0YcFDbm_hQ3_LqO10BC9IMrFd4",
     caption: "Memories of Grit 4",
     category: "Photos",
   },
@@ -260,7 +264,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g5",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/152OtWQXcINO0AxF0KtYHGLExGd0Di1Ct",
-    thumbnail: "https://lh3.googleusercontent.com/d/152OtWQXcINO0AxF0KtYHGLExGd0Di1Ct",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/152OtWQXcINO0AxF0KtYHGLExGd0Di1Ct",
     caption: "Memories of Grit 5",
     category: "Photos",
   },
@@ -268,7 +273,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g6",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/18LmNpmK7yoGdnI89sxGt0maT9wdGG2v6",
-    thumbnail: "https://lh3.googleusercontent.com/d/18LmNpmK7yoGdnI89sxGt0maT9wdGG2v6",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/18LmNpmK7yoGdnI89sxGt0maT9wdGG2v6",
     caption: "Memories of Grit 6",
     category: "Photos",
   },
@@ -276,7 +282,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g7",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1A_Jo4uQFyaKpxPTVTVsWhSLJWxv4E16M",
-    thumbnail: "https://lh3.googleusercontent.com/d/1A_Jo4uQFyaKpxPTVTVsWhSLJWxv4E16M",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1A_Jo4uQFyaKpxPTVTVsWhSLJWxv4E16M",
     caption: "Memories of Grit 7",
     category: "Photos",
   },
@@ -284,7 +291,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g8",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1EO_OorSMxs1UnOr4OIaIgROveU698tuI",
-    thumbnail: "https://lh3.googleusercontent.com/d/1EO_OorSMxs1UnOr4OIaIgROveU698tuI",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1EO_OorSMxs1UnOr4OIaIgROveU698tuI",
     caption: "Memories of Grit 8",
     category: "Photos",
   },
@@ -292,7 +300,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g9",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1EUPBEsDF5oxZjhy_aQznLaqxuaWj2IXX",
-    thumbnail: "https://lh3.googleusercontent.com/d/1EUPBEsDF5oxZjhy_aQznLaqxuaWj2IXX",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1EUPBEsDF5oxZjhy_aQznLaqxuaWj2IXX",
     caption: "Memories of Grit 9",
     category: "Photos",
   },
@@ -300,7 +309,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g10",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1FpZCU-uTkwA8YOybV__bnY6CmcOTreHe",
-    thumbnail: "https://lh3.googleusercontent.com/d/1FpZCU-uTkwA8YOybV__bnY6CmcOTreHe",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1FpZCU-uTkwA8YOybV__bnY6CmcOTreHe",
     caption: "Memories of Grit 10",
     category: "Photos",
   },
@@ -308,7 +318,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g11",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1Jr5FqJ8f0-lp_CepC844Zcp1ITLZRpHs",
-    thumbnail: "https://lh3.googleusercontent.com/d/1Jr5FqJ8f0-lp_CepC844Zcp1ITLZRpHs",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1Jr5FqJ8f0-lp_CepC844Zcp1ITLZRpHs",
     caption: "Memories of Grit 11",
     category: "Photos",
   },
@@ -316,7 +327,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g12",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1KclGk0eJ2qeYddOH_sZCgUnVHnKOh84r",
-    thumbnail: "https://lh3.googleusercontent.com/d/1KclGk0eJ2qeYddOH_sZCgUnVHnKOh84r",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1KclGk0eJ2qeYddOH_sZCgUnVHnKOh84r",
     caption: "Memories of Grit 12",
     category: "Photos",
   },
@@ -324,7 +336,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g13",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1LcjM0idKZeuKyBy-2Yk1ehDoeKtO_QgK",
-    thumbnail: "https://lh3.googleusercontent.com/d/1LcjM0idKZeuKyBy-2Yk1ehDoeKtO_QgK",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1LcjM0idKZeuKyBy-2Yk1ehDoeKtO_QgK",
     caption: "Memories of Grit 13",
     category: "Photos",
   },
@@ -332,7 +345,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g14",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1Mf88m3RLqpeIqfma57CFFDz6eD5Gf97P",
-    thumbnail: "https://lh3.googleusercontent.com/d/1Mf88m3RLqpeIqfma57CFFDz6eD5Gf97P",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1Mf88m3RLqpeIqfma57CFFDz6eD5Gf97P",
     caption: "Memories of Grit 14",
     category: "Photos",
   },
@@ -340,7 +354,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g15",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1QWND3c8CpLxqdhCNhdMUUcaunVPp6vb1",
-    thumbnail: "https://lh3.googleusercontent.com/d/1QWND3c8CpLxqdhCNhdMUUcaunVPp6vb1",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1QWND3c8CpLxqdhCNhdMUUcaunVPp6vb1",
     caption: "Memories of Grit 15",
     category: "Photos",
   },
@@ -348,7 +363,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g16",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1QlRWKXfnUSLmp_pKax4s0X5OL2by7bMm",
-    thumbnail: "https://lh3.googleusercontent.com/d/1QlRWKXfnUSLmp_pKax4s0X5OL2by7bMm",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1QlRWKXfnUSLmp_pKax4s0X5OL2by7bMm",
     caption: "Memories of Grit 16",
     category: "Photos",
   },
@@ -356,7 +372,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g17",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1VDr3NjQn0GuGHQVeQwZWGpIA7URknFSR",
-    thumbnail: "https://lh3.googleusercontent.com/d/1VDr3NjQn0GuGHQVeQwZWGpIA7URknFSR",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1VDr3NjQn0GuGHQVeQwZWGpIA7URknFSR",
     caption: "Memories of Grit 17",
     category: "Photos",
   },
@@ -364,7 +381,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g18",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1W7-0-XGTqmdrqcfY00BUfkU6Q8fsXQIg",
-    thumbnail: "https://lh3.googleusercontent.com/d/1W7-0-XGTqmdrqcfY00BUfkU6Q8fsXQIg",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1W7-0-XGTqmdrqcfY00BUfkU6Q8fsXQIg",
     caption: "Memories of Grit 18",
     category: "Photos",
   },
@@ -372,7 +390,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g19",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1X0y6hLq-SL_ZQMbXc8kvROOwEtrrzH0Y",
-    thumbnail: "https://lh3.googleusercontent.com/d/1X0y6hLq-SL_ZQMbXc8kvROOwEtrrzH0Y",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1X0y6hLq-SL_ZQMbXc8kvROOwEtrrzH0Y",
     caption: "Memories of Grit 19",
     category: "Photos",
   },
@@ -380,7 +399,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g20",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1Y3HeoyVSFbwMdEEsuGpp2XWsU8fe1JX4",
-    thumbnail: "https://lh3.googleusercontent.com/d/1Y3HeoyVSFbwMdEEsuGpp2XWsU8fe1JX4",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1Y3HeoyVSFbwMdEEsuGpp2XWsU8fe1JX4",
     caption: "Memories of Grit 20",
     category: "Photos",
   },
@@ -388,7 +408,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g21",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1YAjI3uf-W2lKjkyoHunE57Xmd9n3K_jE",
-    thumbnail: "https://lh3.googleusercontent.com/d/1YAjI3uf-W2lKjkyoHunE57Xmd9n3K_jE",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1YAjI3uf-W2lKjkyoHunE57Xmd9n3K_jE",
     caption: "Memories of Grit 21",
     category: "Photos",
   },
@@ -396,7 +417,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g22",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1YNbR7XgnHWvtl68LAxS9fHWvWHesZ4ru",
-    thumbnail: "https://lh3.googleusercontent.com/d/1YNbR7XgnHWvtl68LAxS9fHWvWHesZ4ru",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1YNbR7XgnHWvtl68LAxS9fHWvWHesZ4ru",
     caption: "Memories of Grit 22",
     category: "Photos",
   },
@@ -404,7 +426,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g23",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1aWq0EsQFpYqf_nuNEiAV2OivvRhN2TO0",
-    thumbnail: "https://lh3.googleusercontent.com/d/1aWq0EsQFpYqf_nuNEiAV2OivvRhN2TO0",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1aWq0EsQFpYqf_nuNEiAV2OivvRhN2TO0",
     caption: "Memories of Grit 23",
     category: "Photos",
   },
@@ -412,7 +435,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g24",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1e4MTiH-8h27eu3c2dGCs5gCFvD-6d3D6",
-    thumbnail: "https://lh3.googleusercontent.com/d/1e4MTiH-8h27eu3c2dGCs5gCFvD-6d3D6",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1e4MTiH-8h27eu3c2dGCs5gCFvD-6d3D6",
     caption: "Memories of Grit 24",
     category: "Photos",
   },
@@ -420,7 +444,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g25",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1fIcokdAEkDPnXfgEqcZY_v1Xn8az6eBW",
-    thumbnail: "https://lh3.googleusercontent.com/d/1fIcokdAEkDPnXfgEqcZY_v1Xn8az6eBW",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1fIcokdAEkDPnXfgEqcZY_v1Xn8az6eBW",
     caption: "Memories of Grit 25",
     category: "Photos",
   },
@@ -428,7 +453,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g26",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1jQOnylAxBKpkIqw4V7cqHRY_vKwzImTR",
-    thumbnail: "https://lh3.googleusercontent.com/d/1jQOnylAxBKpkIqw4V7cqHRY_vKwzImTR",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1jQOnylAxBKpkIqw4V7cqHRY_vKwzImTR",
     caption: "Memories of Grit 26",
     category: "Photos",
   },
@@ -436,7 +462,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g27",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1jsuli_ceas7KlMjBu9JZt1TLNJyzrVxD",
-    thumbnail: "https://lh3.googleusercontent.com/d/1jsuli_ceas7KlMjBu9JZt1TLNJyzrVxD",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1jsuli_ceas7KlMjBu9JZt1TLNJyzrVxD",
     caption: "Memories of Grit 27",
     category: "Photos",
   },
@@ -444,7 +471,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g28",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1kGo5kyeHNfHO6e8gNCXMRSbtfHWavLlk",
-    thumbnail: "https://lh3.googleusercontent.com/d/1kGo5kyeHNfHO6e8gNCXMRSbtfHWavLlk",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1kGo5kyeHNfHO6e8gNCXMRSbtfHWavLlk",
     caption: "Memories of Grit 28",
     category: "Photos",
   },
@@ -452,7 +480,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g29",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1lG7mQhuICvG0fsdl1sPX7zkwwpZPjIlJ",
-    thumbnail: "https://lh3.googleusercontent.com/d/1lG7mQhuICvG0fsdl1sPX7zkwwpZPjIlJ",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1lG7mQhuICvG0fsdl1sPX7zkwwpZPjIlJ",
     caption: "Memories of Grit 29",
     category: "Photos",
   },
@@ -460,7 +489,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g30",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1lmUBFebPMNjSztdf2rArDiDz4ZgZ52Qy",
-    thumbnail: "https://lh3.googleusercontent.com/d/1lmUBFebPMNjSztdf2rArDiDz4ZgZ52Qy",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1lmUBFebPMNjSztdf2rArDiDz4ZgZ52Qy",
     caption: "Memories of Grit 30",
     category: "Photos",
   },
@@ -468,7 +498,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g31",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1mWopkD0Eko2WDM7PpKHXpoeTKyVwwHdu",
-    thumbnail: "https://lh3.googleusercontent.com/d/1mWopkD0Eko2WDM7PpKHXpoeTKyVwwHdu",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1mWopkD0Eko2WDM7PpKHXpoeTKyVwwHdu",
     caption: "Memories of Grit 31",
     category: "Photos",
   },
@@ -476,7 +507,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g32",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1ox_oEjUhNbc1ME-3-0uizMFaGIaR0C44",
-    thumbnail: "https://lh3.googleusercontent.com/d/1ox_oEjUhNbc1ME-3-0uizMFaGIaR0C44",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1ox_oEjUhNbc1ME-3-0uizMFaGIaR0C44",
     caption: "Memories of Grit 32",
     category: "Photos",
   },
@@ -484,7 +516,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g33",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1qKBBPRVxbwK341NinArkmu0XqwCs-ToW",
-    thumbnail: "https://lh3.googleusercontent.com/d/1qKBBPRVxbwK341NinArkmu0XqwCs-ToW",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1qKBBPRVxbwK341NinArkmu0XqwCs-ToW",
     caption: "Memories of Grit 33",
     category: "Photos",
   },
@@ -492,7 +525,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g34",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1qajkR1oVwlaP7HAFVllICjh9ZIXjHMfT",
-    thumbnail: "https://lh3.googleusercontent.com/d/1qajkR1oVwlaP7HAFVllICjh9ZIXjHMfT",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1qajkR1oVwlaP7HAFVllICjh9ZIXjHMfT",
     caption: "Memories of Grit 34",
     category: "Photos",
   },
@@ -500,7 +534,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g35",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1qwWTnjrM9DbEIxVL9-jIzRhAlYoe_W19",
-    thumbnail: "https://lh3.googleusercontent.com/d/1qwWTnjrM9DbEIxVL9-jIzRhAlYoe_W19",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1qwWTnjrM9DbEIxVL9-jIzRhAlYoe_W19",
     caption: "Memories of Grit 35",
     category: "Photos",
   },
@@ -508,7 +543,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g36",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1rni-v0gG0ecS_B0uVSpq8R_c7o6UKOg_",
-    thumbnail: "https://lh3.googleusercontent.com/d/1rni-v0gG0ecS_B0uVSpq8R_c7o6UKOg_",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1rni-v0gG0ecS_B0uVSpq8R_c7o6UKOg_",
     caption: "Memories of Grit 36",
     category: "Photos",
   },
@@ -516,7 +552,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g37",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1sx4Z8kxOoX4oUpvJtiGPf0QqFYdpFyck",
-    thumbnail: "https://lh3.googleusercontent.com/d/1sx4Z8kxOoX4oUpvJtiGPf0QqFYdpFyck",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1sx4Z8kxOoX4oUpvJtiGPf0QqFYdpFyck",
     caption: "Memories of Grit 37",
     category: "Photos",
   },
@@ -524,7 +561,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g38",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1vYRdOo9bNAG9ijImnbd1CSJSNRyIdufv",
-    thumbnail: "https://lh3.googleusercontent.com/d/1vYRdOo9bNAG9ijImnbd1CSJSNRyIdufv",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1vYRdOo9bNAG9ijImnbd1CSJSNRyIdufv",
     caption: "Memories of Grit 38",
     category: "Photos",
   },
@@ -532,7 +570,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g39",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1wTeFNFLnLwWx1UJOtjejskAW8gIFR9bM",
-    thumbnail: "https://lh3.googleusercontent.com/d/1wTeFNFLnLwWx1UJOtjejskAW8gIFR9bM",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1wTeFNFLnLwWx1UJOtjejskAW8gIFR9bM",
     caption: "Memories of Grit 39",
     category: "Photos",
   },
@@ -540,7 +579,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g40",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1yX4kh7DvcEdjBv17G31b3XYU67SlYgCJ",
-    thumbnail: "https://lh3.googleusercontent.com/d/1yX4kh7DvcEdjBv17G31b3XYU67SlYgCJ",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1yX4kh7DvcEdjBv17G31b3XYU67SlYgCJ",
     caption: "Memories of Grit 40",
     category: "Photos",
   },
@@ -548,23 +588,17 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "g41",
     type: "photo",
     url: "https://lh3.googleusercontent.com/d/1yrQdrXEnoTdyHSZMF57bLaE3oEVSdPbS",
-    thumbnail: "https://lh3.googleusercontent.com/d/1yrQdrXEnoTdyHSZMF57bLaE3oEVSdPbS",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1yrQdrXEnoTdyHSZMF57bLaE3oEVSdPbS",
     caption: "Memories of Grit 41",
     category: "Photos",
   },
   {
     id: "3",
     type: "video",
-    url: "#",
-    thumbnail: "https://picsum.photos/seed/video1/400/300",
-    caption: "2025 Highlights Reel",
-    category: "Videos",
-  },
-  {
-    id: "6",
-    type: "video",
     url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_0632.MOV?alt=media&token=d8ed73cb-9745-4f49-80ea-b053c9e6e2c9",
-    thumbnail: "https://picsum.photos/seed/video3/400/300",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1e4MTiH-8h27eu3c2dGCs5gCFvD-6d3D6",
     caption: "Moments of Grit: Performance",
     category: "Videos",
   },
@@ -572,7 +606,8 @@ export const GALLERY_ITEMS: GalleryItem[] = [
     id: "8",
     type: "video",
     url: "https://firebasestorage.googleapis.com/v0/b/kfit-fe6eb.firebasestorage.app/o/IMG_0646.MOV?alt=media&token=f31e16c5-8e54-486e-a1d7-ec3350979069",
-    thumbnail: "https://picsum.photos/seed/video4/400/300",
+    thumbnail:
+      "https://lh3.googleusercontent.com/d/1EUPBEsDF5oxZjhy_aQznLaqxuaWj2IXX",
     caption: "Moments of Grit: Awards",
     category: "Videos",
   },
