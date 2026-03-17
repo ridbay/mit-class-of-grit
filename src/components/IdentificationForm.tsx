@@ -6,7 +6,7 @@ export const IdentificationForm = ({
   error,
   onClearError,
   title = "Identify Yourself",
-  description = "Please enter your 9-digit Matric Number and Middle Name to proceed.",
+  description = "Please enter your 9-digit Matric Number and Password to proceed.",
 }: {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   error: string;
@@ -29,10 +29,16 @@ export const IdentificationForm = ({
         <input
           name="matric"
           type="text"
+          inputMode="numeric"
           placeholder="Matric Number (9 digits)"
           required
           maxLength={9}
           onChange={onClearError}
+          onKeyPress={(e) => {
+            if (!/[0-9]/.test(e.key)) {
+              e.preventDefault();
+            }
+          }}
           className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
         />
       </div>
@@ -42,9 +48,9 @@ export const IdentificationForm = ({
           size={20}
         />
         <input
-          name="middleName"
-          type="text"
-          placeholder="Middle Name"
+          name="password"
+          type="password"
+          placeholder="Password"
           required
           onChange={onClearError}
           className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}

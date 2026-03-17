@@ -1,12 +1,18 @@
 import React, { useState } from "react";
-import { motion } from "motion/react";
-import { Play, Camera, Twitter, Facebook, Linkedin, Share2 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { Play, Camera, Twitter, Facebook, Linkedin, Share2, X, Maximize2 } from "lucide-react";
 import { GALLERY_ITEMS } from "../data/constants";
 
-type FilterType = "Photos" | "Videos" | "Highlights";
+type FilterType = "Photos" | "Videos";
 
 export const GalleryPage = () => {
   const [galleryFilter, setGalleryFilter] = useState<FilterType>("Photos");
+  const [selectedItem, setSelectedItem] = useState<{ url: string; type: "photo" | "video" } | null>(null);
+  const [shuffledItems, setShuffledItems] = useState([...GALLERY_ITEMS]);
+
+  React.useEffect(() => {
+    setShuffledItems([...GALLERY_ITEMS].sort(() => Math.random() - 0.5));
+  }, []);
 
   return (
     <section className="py-24 px-6 max-w-7xl mx-auto min-h-screen">
@@ -48,7 +54,7 @@ export const GalleryPage = () => {
         transition={{ delay: 0.3 }}
         className="flex justify-center gap-4 mb-16 overflow-x-auto pb-4"
       >
-        {["Photos", "Videos", "Highlights"].map((f) => (
+        {["Photos", "Videos"].map((f) => (
           <button
             key={f}
             onClick={() => setGalleryFilter(f as FilterType)}
@@ -67,7 +73,7 @@ export const GalleryPage = () => {
         layout
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24"
       >
-        {GALLERY_ITEMS.filter(
+        {shuffledItems.filter(
           (item) => item.category === galleryFilter,
         ).map((item) => (
           <motion.div
@@ -79,13 +85,39 @@ export const GalleryPage = () => {
             key={item.id}
             className="group relative overflow-hidden rounded-[2rem] bg-slate-100 aspect-[4/3] cursor-pointer shadow-[0_10px_30px_rgba(30,111,217,0.06)] hover:shadow-[0_20px_40px_rgba(30,111,217,0.15)] transition-shadow duration-500"
           >
-            <img
-              src={item.thumbnail}
-              alt={item.caption}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              referrerPolicy="no-referrer"
-            />
+            {item.type === "video" && item.url !== "#" ? (
+              <video
+                src={item.url}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                autoPlay
+                muted
+                loop
+                playsInline
+                poster={item.thumbnail}
+              />
+            ) : (
+              <img
+                src={item.thumbnail}
+                alt={item.caption}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                referrerPolicy="no-referrer"
+              />
+            )}
+            
             <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8">
+              {/* Expand Button for Both Photos and Videos */}
+              {(item.type === "photo" || (item.type === "video" && item.url !== "#")) && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedItem({ url: item.url, type: item.type as "photo" | "video" });
+                  }}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-5 rounded-full backdrop-blur-md transition-all duration-300 scale-0 group-hover:scale-100 shadow-xl border border-white/30"
+                >
+                  <Maximize2 size={32} />
+                </button>
+              )}
+
               {/* Share Buttons */}
               <div className="absolute top-6 right-6 flex gap-2 opacity-0 translate-y-[-20px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-out delay-100">
                 {[
@@ -150,6 +182,50 @@ export const GalleryPage = () => {
           </motion.div>
         ))}
       </motion.div>
+
+      {/* Unified Preview Modal */}
+      <AnimatePresence>
+        {selectedItem && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 md:p-8 backdrop-blur-sm"
+            onClick={() => setSelectedItem(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-5xl aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedItem(null)}
+                className="absolute top-6 right-6 z-10 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full backdrop-blur-md transition-colors"
+              >
+                <X size={24} />
+              </button>
+              
+              {selectedItem.type === "video" ? (
+                <video
+                  src={selectedItem.url}
+                  className="w-full h-full object-contain"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={selectedItem.url}
+                  className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

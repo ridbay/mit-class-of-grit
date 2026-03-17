@@ -91,7 +91,7 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 sm:px-6">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4 sm:px-6 pb-16 md:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -99,9 +99,10 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
           className="max-w-4xl w-full"
         >
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-4 md:mb-6 tracking-tighter drop-shadow-lg px-2">
-            Class of Grit Awards Night <br className="hidden sm:block" />
+            Class of GRIT Networking, Awards & Dinner Night
+            <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-100 drop-shadow-sm inline-block mt-2 sm:mt-0">
-              Celebrating Excellence
+              THEME: Celebrating Excellence & Innovation
             </span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow mb-8 md:mb-12 font-medium max-w-2xl mx-auto px-4">

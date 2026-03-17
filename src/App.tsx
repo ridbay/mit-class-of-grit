@@ -238,7 +238,7 @@ export default function App() {
 
   // Auth State for Voting & Nomination
   const [matricNumber, setMatricNumber] = useState("");
-  const [middleName, setMiddleName] = useState("");
+  const [password, setPassword] = useState("");
   const [matricError, setMatricError] = useState("");
 
   // Track scrolling
@@ -253,10 +253,10 @@ export default function App() {
   // Hydrate auth
   useEffect(() => {
     const savedMatric = localStorage.getItem("grit_matric");
-    const savedMiddle = localStorage.getItem("grit_middle_name");
-    if (savedMatric && savedMiddle) {
+    const savedPassword = localStorage.getItem("grit_password");
+    if (savedMatric && savedPassword) {
       setMatricNumber(savedMatric);
-      setMiddleName(savedMiddle);
+      setPassword(savedPassword);
     }
   }, []);
 
@@ -264,7 +264,7 @@ export default function App() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const matric = (formData.get("matric") as string).trim();
-    const middle = (formData.get("middleName") as string).trim();
+    const pass = (formData.get("password") as string).trim();
 
     const matricRegex = /^\d{9}$/;
 
@@ -273,30 +273,30 @@ export default function App() {
       return;
     }
 
-    if (!middle) {
-      setMatricError("Middle name is required.");
+    if (!pass) {
+      setMatricError("Password is required.");
       return;
     }
 
     setMatricError("");
     setMatricNumber(matric);
-    setMiddleName(middle);
+    setPassword(pass);
     localStorage.setItem("grit_matric", matric);
-    localStorage.setItem("grit_middle_name", middle);
+    localStorage.setItem("grit_password", pass);
   };
 
   const handleLogout = () => {
     setMatricNumber("");
-    setMiddleName("");
+    setPassword("");
     localStorage.removeItem("grit_matric");
-    localStorage.removeItem("grit_middle_name");
+    localStorage.removeItem("grit_password");
   };
 
   return (
     <Router>
       <ScrollToTop />
       <GlobalLoader />
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col overflow-x-hidden">
         <Navigation isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
 
         <main className="flex-grow pt-20">
@@ -313,7 +313,7 @@ export default function App() {
                 element={
                   <NominatePage
                     matricNumber={matricNumber}
-                    middleName={middleName}
+                    password={password}
                     handleIdentify={handleIdentify}
                     matricError={matricError}
                     setMatricError={setMatricError}
@@ -326,7 +326,7 @@ export default function App() {
                 element={
                   <VotePage
                     matricNumber={matricNumber}
-                    middleName={middleName}
+                    password={password}
                     handleIdentify={handleIdentify}
                     matricError={matricError}
                     setMatricError={setMatricError}

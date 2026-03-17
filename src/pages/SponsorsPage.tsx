@@ -4,7 +4,7 @@ import { SPONSORS, SPONSORSHIP_TIERS } from "../data/constants";
 import { SponsorshipTierCard } from "../components/SponsorshipTierCard";
 
 export const SponsorsPage = () => (
-  <section className="py-24 px-6 max-w-7xl mx-auto min-h-screen">
+  <section className="py-24 px-6 max-w-7xl mx-auto min-h-screen overflow-hidden">
     <div className="text-center mb-20">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -29,11 +29,14 @@ export const SponsorsPage = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.2 }}
-        className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium mt-6"
+        className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium mt-6 text-justify"
       >
-        We are incredibly grateful to the organizations that make the Class of
-        Grit Awards Night possible. Their commitment to fostering new tech
-        talent is deeply appreciated.
+        We are grateful to the organizations and individuals who are already
+        standing with us to make the Class of Grit Networking, Awards & Dinner
+        Night a reality. Their early commitment to investing in tech talent
+        means a great deal to this Class. <br />
+        We are still welcoming more sponsors and partners who share our vision
+        of celebrating excellence and innovation in Nigeria's tech space.
       </motion.p>
     </div>
 
@@ -177,9 +180,15 @@ export const SponsorsPage = () => (
         Become a Partner Today
       </h3>
       <p className="max-w-2xl mx-auto mb-10 text-white/90 font-medium text-lg leading-relaxed relative z-10">
-        Ready to make an impact? Download our sponsorship brochure or contact us
-        directly to discuss how we can partner for the Class of Grit Awards
-        Night.
+        The Class of Grit Networking, Awards & Dinner Night is more than just an
+        event. It's a celebration of resilience, brilliance, and the future of
+        Nigeria's technology industry. We are calling on individuals and
+        organizations who believe in nurturing talent to partner with us and be
+        part of this historic night.
+        <br />
+        Whether you're a company looking to connect with top-tier IT graduate
+        talent, or an individual who wants to celebrate and invest in the next
+        generation, there's a sponsorship opportunity for you.
       </p>
       <button className="bg-white text-brand-blue font-black py-5 px-12 rounded-full hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95 text-lg relative z-10">
         Contact Partnership Team
