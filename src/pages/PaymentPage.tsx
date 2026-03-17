@@ -1,181 +1,120 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "motion/react";
-import { CheckCircle2, User, Mail, DollarSign, Wallet, CreditCard, Building } from "lucide-react";
+import { Ticket, Rocket, Star, Sparkles, ShieldCheck, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { DigitalTicket } from "../components/DigitalTicket";
 
 export const PaymentPage = () => {
   const navigate = useNavigate();
-  const [paymentStatus, setPaymentStatus] = useState<"idle" | "processing" | "success">("idle");
-  const matricNumber = localStorage.getItem("grit_matric");
-  const middleName = localStorage.getItem("grit_middle_name");
-
-  const handlePayment = (e: React.FormEvent) => {
-    e.preventDefault();
-    setPaymentStatus("processing");
-    setTimeout(() => setPaymentStatus("success"), 2000);
-  };
 
   return (
-    <section className="py-24 px-6 min-h-screen">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <span className="inline-block py-2 px-4 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-[0.3em] mb-4 shadow-sm border border-brand-blue/20">
-              Checkout
-            </span>
-          </motion.div>
-          <motion.h2 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="section-title text-5xl md:text-6xl"
-          >
-            Secure Your Ticket
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-slate-500 max-w-xl mx-auto text-lg leading-relaxed mt-6 font-medium"
-          >
-            Join us for an unforgettable night of celebration.
-          </motion.p>
-        </div>
+    <section className="relative min-h-[90vh] flex items-center justify-center py-24 px-6 overflow-hidden bg-slate-950">
+      {/* Dynamic Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-blue/20 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-teal/20 rounded-full blur-[120px] animate-pulse delay-700" />
+      </div>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="glass-card p-10 md:p-14 shadow-2xl shadow-brand-blue/5 border-white/60 relative overflow-hidden"
+      <div className="max-w-4xl w-full relative z-10">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6 }}
+          className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[3rem] p-8 md:p-16 text-center shadow-2xl overflow-hidden relative"
         >
-          {paymentStatus === "success" ? (
+          {/* Decorative icons */}
+          <motion.div
+            animate={{ 
+              rotate: [0, 10, -10, 0],
+              y: [0, -10, 0]
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-10 -right-10 text-brand-blue/20"
+          >
+            <Ticket size={200} />
+          </motion.div>
+
+          <div className="mb-12 relative flex justify-center">
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="text-center py-12"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="relative"
             >
-              <div className="w-24 h-24 bg-gradient-to-br from-brand-teal to-[#15a89a] rounded-full flex items-center justify-center text-white mx-auto mb-8 shadow-xl shadow-brand-teal/30 border-4 border-white">
-                <CheckCircle2 size={48} />
+              <div className="w-24 h-24 bg-gradient-to-br from-brand-blue to-brand-teal rounded-3xl flex items-center justify-center shadow-lg shadow-brand-blue/20 rotate-12 relative z-10">
+                <Rocket size={40} className="text-white" />
               </div>
-              <h3 className="text-4xl font-black text-slate-900 mb-6 tracking-tight">
-                Payment Successful!
-              </h3>
-              <p className="text-slate-600 mb-12 max-w-md mx-auto text-lg leading-relaxed font-medium">
-                Your ticket has been generated. Please save your digital
-                ticket for entry.
-              </p>
-
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.2 }}
+              <motion.div 
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -top-4 -left-4 text-brand-teal"
               >
-                <DigitalTicket
-                  name={middleName || "Guest"}
-                  matric={matricNumber || "N/A"}
-                />
+                <Sparkles size={32} />
               </motion.div>
-
-              <div className="mt-16">
-                <button
-                  onClick={() => navigate("/")}
-                  className="bg-slate-50 text-brand-blue font-bold px-8 py-4 rounded-full hover:bg-brand-blue hover:text-white transition-all shadow-sm hover:shadow-md border border-slate-100"
-                >
-                  Return to Homepage
-                </button>
-              </div>
             </motion.div>
-          ) : (
-            <form onSubmit={handlePayment} className="space-y-10 relative z-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-3">
-                  <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 flex items-center gap-2">
-                    <User size={14} className="text-brand-blue" /> Full Name
-                  </label>
-                  <input
-                    required
-                    type="text"
-                    placeholder="John Doe"
-                    className="w-full bg-white/50 border-2 border-slate-100 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-blue focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,111,217,0.1)] transition-all font-bold text-slate-900 placeholder:font-medium placeholder:text-slate-400"
-                  />
-                </div>
-                <div className="space-y-3">
-                  <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 flex items-center gap-2">
-                    <Mail size={14} className="text-brand-blue" /> Email Address
-                  </label>
-                  <input
-                    required
-                    type="email"
-                    placeholder="john@example.com"
-                    className="w-full bg-white/50 border-2 border-slate-100 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-blue focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,111,217,0.1)] transition-all font-bold text-slate-900 placeholder:font-medium placeholder:text-slate-400"
-                  />
-                </div>
-              </div>
+          </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-3">
-                  <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 flex items-center gap-2">
-                    <DollarSign size={14} className="text-brand-teal" /> Amount
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-6 top-1/2 -translate-y-1/2 font-black text-brand-teal text-xl">
-                      $
-                    </span>
-                    <input
-                      disabled
-                      type="text"
-                      value="45.00"
-                      className="w-full bg-slate-50/80 border-2 border-slate-200/60 rounded-2xl px-12 py-4 font-black text-slate-900 shadow-inner text-xl opacity-80"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-3">
-                  <label className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 flex items-center gap-2">
-                    <Wallet size={14} className="text-brand-blue" /> Payment Method
-                  </label>
-                  <select className="w-full bg-white/50 border-2 border-slate-100 rounded-2xl px-6 py-4 focus:outline-none focus:border-brand-blue focus:bg-white focus:shadow-[0_0_0_4px_rgba(30,111,217,0.1)] transition-all appearance-none font-bold text-slate-900 h-[60px]">
-                    <option>Credit / Debit Card</option>
-                    <option>Mobile Payment</option>
-                    <option>Bank Transfer</option>
-                  </select>
-                </div>
-              </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <span className="inline-block py-2 px-6 rounded-full bg-brand-blue/10 text-brand-blue text-xs font-black uppercase tracking-[0.3em] mb-6 border border-brand-blue/20">
+              Ticket Portal Prepping
+            </span>
+            <h1 className="text-5xl md:text-7xl font-black text-white mb-8 leading-tight tracking-tighter">
+              Secure Your Seat <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-emerald-400">
+                In The Arena
+              </span>
+            </h1>
+            <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-medium leading-relaxed">
+              We're currently fine-tuning our high-frequency trading systems to ensure 
+              the smoothest ticket acquisition experience in the Class of Grit history. 
+              The gates to greatness will open shortly! 🗳️💎
+            </p>
+          </motion.div>
 
-              <div className="pt-8 border-t border-slate-100/60">
-                <button
-                  type="submit"
-                  disabled={paymentStatus === "processing"}
-                  className="btn-primary w-full py-6 text-xl shadow-[0_20px_40px_rgba(30,111,217,0.2)] flex items-center justify-center gap-4 group"
-                >
-                  {paymentStatus === "processing" ? (
-                    <>
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      Processing Securely...
-                    </>
-                  ) : (
-                    <>
-                      Complete Payment <CreditCard size={24} className="group-hover:translate-x-1 group-hover:scale-110 transition-transform" />
-                    </>
-                  )}
-                </button>
-              </div>
+          {/* Fun Feature Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16 px-4">
+            {[
+              { icon: ShieldCheck, label: "Encrypted Transactions", color: "text-emerald-400" },
+              { icon: Zap, label: "Lightning FAST", color: "text-yellow-400" },
+              { icon: Star, label: "VIP Access", color: "text-brand-blue" },
+            ].map((feature, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + i * 0.1 }}
+                className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col items-center gap-3 backdrop-blur-md"
+              >
+                <feature.icon size={24} className={feature.color} />
+                <span className="text-[10px] font-black uppercase tracking-widest text-slate-300">
+                  {feature.label}
+                </span>
+              </motion.div>
+            ))}
+          </div>
 
-              <div className="flex items-center justify-center gap-10 opacity-30 grayscale pt-6">
-                <CreditCard size={36} className="hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer hover:scale-110" />
-                <Wallet size={36} className="hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer hover:scale-110" />
-                <Building size={36} className="hover:grayscale-0 hover:opacity-100 transition-all cursor-pointer hover:scale-110" />
-              </div>
-            </form>
-          )}
-
-          {/* Decorative background blurs inside card */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-brand-blue/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-teal/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+          >
+            <button 
+              onClick={() => navigate("/gallery")}
+              className="px-10 py-5 bg-white text-slate-950 rounded-full font-black text-lg transition-transform hover:scale-105 active:scale-95 shadow-xl shadow-white/10"
+            >
+              Check Past Highlights
+            </button>
+            <button 
+              onClick={() => navigate("/")}
+              className="text-white font-black text-lg flex items-center gap-2 hover:text-brand-teal transition-colors"
+            >
+              Back to Home
+            </button>
+          </motion.div>
         </motion.div>
       </div>
     </section>
