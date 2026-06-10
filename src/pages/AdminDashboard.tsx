@@ -338,7 +338,8 @@ export const AdminDashboard = () => {
             )}
 
             {activeTab === "security" && (
-              <div className="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm pb-4">
+              <>
+                <div className="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm pb-4">
                 <table className="w-full text-left text-sm whitespace-nowrap">
                   <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
                     <tr>
@@ -378,6 +379,77 @@ export const AdminDashboard = () => {
                   </tbody>
                 </table>
               </div>
+
+              {/* IP Aggregation Table */}
+              <div className="mt-12">
+                <h2 className="text-xl font-black mb-6 text-slate-800 flex items-center gap-2">
+                  <ShieldAlert size={24} className="text-brand-blue" />
+                  Shared Network Analysis
+                </h2>
+                <div className="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm pb-4">
+                  <table className="w-full text-left text-sm whitespace-nowrap">
+                    <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                      <tr>
+                        <th className="px-6 py-4 font-semibold">IP Address</th>
+                        <th className="px-6 py-4 font-semibold">User Count</th>
+                        <th className="px-6 py-4 font-semibold">Associated Users</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {(() => {
+                        const ipMap: Record<string, { count: number; users: string[] }> = {};
+                        deviceLogs.forEach((log) => {
+                          const ip = log.ip_address || "Unknown IP";
+                          if (!ipMap[ip]) ipMap[ip] = { count: 0, users: [] };
+                          
+                          const student = STUDENTS.find((s) => s.matric === log.student_matric);
+                          const userStr = student ? `${student.name} (${log.student_matric})` : log.student_matric;
+                          
+                          if (!ipMap[ip].users.includes(userStr)) {
+                            ipMap[ip].users.push(userStr);
+                            ipMap[ip].count++;
+                          }
+                        });
+
+                        const aggregated = Object.entries(ipMap)
+                          .map(([ip, data]) => ({ ip, ...data }))
+                          .sort((a, b) => b.count - a.count);
+
+                        if (aggregated.length === 0) {
+                          return (
+                            <tr>
+                              <td colSpan={3} className="px-6 py-12 text-center text-slate-400">
+                                No IP aggregations available.
+                              </td>
+                            </tr>
+                          );
+                        }
+
+                        return aggregated.map((item) => (
+                          <tr key={item.ip} className="hover:bg-slate-50 transition-colors">
+                            <td className="px-6 py-4 font-semibold text-slate-700">{item.ip}</td>
+                            <td className="px-6 py-4">
+                              <span className={`inline-flex items-center justify-center px-2.5 py-0.5 rounded-full text-xs font-medium ${item.count > 1 ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"}`}>
+                                {item.count}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 text-slate-500 whitespace-normal">
+                              <div className="flex flex-wrap gap-2">
+                                {item.users.map((u, i) => (
+                                  <span key={i} className="px-2 py-1 bg-slate-100 rounded text-xs">
+                                    {u}
+                                  </span>
+                                ))}
+                              </div>
+                            </td>
+                          </tr>
+                        ));
+                      })()}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
             )}
           </>
         )}
