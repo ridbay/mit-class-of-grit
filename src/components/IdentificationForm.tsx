@@ -5,8 +5,8 @@ export const IdentificationForm = ({
   onSubmit,
   error,
   onClearError,
-  title = "Identify Yourself",
-  description = "Please enter your 9-digit Matric Number to proceed.",
+  title = "Who goes there?",
+  description = "Enter your 9-digit Matric Number so we know you're part of the GRIT squad.",
   hidePassword = false,
 }: {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;

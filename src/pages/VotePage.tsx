@@ -147,7 +147,7 @@ export const VotePage = ({
           onSubmit={handleIdentify}
           error={matricError}
           onClearError={() => setMatricError("")}
-          description="Please enter your 9-digit Matric Number and Password to proceed with voting. This ensures a fair and strict voting process."
+          description="Enter your Matric Number and Password. We're keeping things locked down for a fair and strict voting process!"
         />
       ) : (
         <motion.div

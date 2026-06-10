@@ -294,7 +294,7 @@ export default function App() {
     const name = (formData.get("name") as string)?.trim();
 
     if (!matric && !name) {
-      setMatricError("Please provide your Name and Matric Number.");
+      setMatricError("Hold up! We need both your Name and Matric Number to let you in.");
       return;
     }
 
@@ -319,11 +319,11 @@ export default function App() {
         localStorage.setItem("grit_matric", data[0].matric);
         localStorage.setItem("grit_name", data[0].name);
       } else {
-        setMatricError("No matching student found in the database.");
+        setMatricError("Hmm... we couldn't find you in the Class of GRIT database. Double-check your details!");
       }
     } catch (err: any) {
       console.error(err);
-      setMatricError("Error verifying your identity. Please try again.");
+      setMatricError("Oops, our servers had a little hiccup verifying you. Give it another shot!");
     }
   };
 

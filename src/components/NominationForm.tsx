@@ -42,7 +42,7 @@ export const NominationForm = ({
 
   const handleNext = async () => {
     if (!selections[currentCategory]) {
-      setError("Please select a nominee to proceed.");
+      setError("Whoops! You forgot to pick a nominee. Don't leave them hanging!");
       return;
     }
     setError("");
@@ -79,7 +79,7 @@ export const NominationForm = ({
       }
     } catch (err: any) {
       console.error(err);
-      setError(err.message || "Failed to save nomination.");
+      setError(err.message || "Yikes, we couldn't save that nomination. The internet gremlins might be at it again.");
     } finally {
       setIsSubmitting(false);
     }

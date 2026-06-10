@@ -30,8 +30,8 @@ export const NominatePage = ({
           onSubmit={handleIdentify}
           error={matricError}
           onClearError={() => setMatricError("")}
-          title="Identify for Nominations"
-          description="Please enter your Name and Matric Number to start nominating."
+          title="Unlock Your Ballot"
+          description="Drop your Name and Matric Number below to unlock your nomination powers."
           hidePassword={true}
         />
       </section>
