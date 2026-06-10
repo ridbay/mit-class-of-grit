@@ -51,19 +51,32 @@ export const NominationForm = ({
     }));
   };
 
-  const handleNext = async () => {
-    if (!selections[currentCategory]) {
+  const handleNext = async (isSkipping = false) => {
+    if (!isSkipping && !selections[currentCategory]) {
       setError("Whoops! You forgot to pick a nominee. Don't leave them hanging!");
       return;
     }
     setError("");
     setIsSubmitting(true);
 
+    if (isSkipping) {
+      setSelections((prev) => {
+        const newSelections = { ...prev };
+        delete newSelections[currentCategory];
+        return newSelections;
+      });
+    }
+
     try {
+      const currentSelections = { ...selections };
+      if (isSkipping) {
+        delete currentSelections[currentCategory];
+      }
+
       // Map all selected IDs to their actual names for readable database storage
       const allNominees = [...LECTURERS, ...STUDENTS];
       const selectionsWithNames = Object.fromEntries(
-        Object.entries(selections).map(([cat, id]) => {
+        Object.entries(currentSelections).map(([cat, id]) => {
           const nominee = allNominees.find((n) => n.id === id);
           return [cat, nominee ? nominee.name : id];
         })
@@ -76,30 +89,29 @@ export const NominationForm = ({
         .eq("student_matric", matricNumber)
         .maybeSingle();
 
-      let dbError;
-      if (existingRecord) {
-        // Merge existing selections with new ones so we don't overwrite past votes
-        const mergedSelections = {
-          ...(existingRecord.selections || {}),
-          ...selectionsWithNames,
-        };
+      // Merge existing selections with new ones so we don't overwrite past votes
+      const mergedSelections = {
+        ...(existingRecord?.selections || {}),
+        ...selectionsWithNames,
+      };
 
-        // Update existing record
-        const { error } = await supabase
-          .from("nominations")
-          .update({ selections: mergedSelections })
-          .eq("student_matric", matricNumber);
-        dbError = error;
-      } else {
-        // Insert new record
-        const { error } = await supabase
-          .from("nominations")
-          .insert({
-            student_matric: matricNumber,
-            selections: selectionsWithNames,
-          });
-        dbError = error;
+      if (isSkipping) {
+        delete mergedSelections[currentCategory];
       }
+
+      // Safely upsert the record to handle both inserts and updates atomically
+      const payload: any = {
+        student_matric: matricNumber,
+        selections: mergedSelections,
+      };
+      
+      if (existingRecord?.id) {
+        payload.id = existingRecord.id;
+      }
+
+      const { error: dbError } = await supabase
+        .from("nominations")
+        .upsert(payload, { onConflict: "student_matric" });
 
       if (dbError) throw dbError;
 
@@ -107,7 +119,7 @@ export const NominationForm = ({
         setCurrentStep((prev) => prev + 1);
         setSearchQuery(""); // clear search on next
       } else {
-        onComplete(selectionsWithNames);
+        onComplete(mergedSelections);
       }
     } catch (err: any) {
       console.error(err);
@@ -225,14 +237,23 @@ export const NominationForm = ({
             >
               <ChevronLeft size={20} /> Back
             </button>
-            <button
-              onClick={handleNext}
-              disabled={isSubmitting || (categoryNominees.length > 0 && !selections[currentCategory])}
-              className="btn-primary py-3 px-8 flex items-center gap-2"
-            >
-              {isSubmitting ? "Saving..." : currentStep === CATEGORIES.length - 1 ? "Finish" : "Next Category"}
-              {!isSubmitting && <ChevronRight size={20} />}
-            </button>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => handleNext(true)}
+                disabled={isSubmitting}
+                className="px-6 py-3 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors"
+              >
+                Skip
+              </button>
+              <button
+                onClick={() => handleNext(false)}
+                disabled={isSubmitting || !selections[currentCategory]}
+                className="btn-primary py-3 px-8 flex items-center gap-2"
+              >
+                {isSubmitting ? "Saving..." : currentStep === CATEGORIES.length - 1 ? "Finish" : "Next Category"}
+                {!isSubmitting && <ChevronRight size={20} />}
+              </button>
+            </div>
           </div>
         </motion.div>
       </AnimatePresence>

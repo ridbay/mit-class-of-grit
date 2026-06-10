@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { CheckCircle2 } from "lucide-react";
+import { supabase } from "../lib/supabase";
 import { IdentificationForm } from "../components/IdentificationForm";
 import { NominationForm } from "../components/NominationForm";
 
@@ -23,6 +24,24 @@ export const NominatePage = ({
 }) => {
   const [isComplete, setIsComplete] = useState(false);
   const [finalSelections, setFinalSelections] = useState<Record<string, string>>({});
+  const [isResetting, setIsResetting] = useState(false);
+
+  const handleStartOver = async () => {
+    setIsResetting(true);
+    try {
+      // Clear their existing selections in the database so the merge logic doesn't preserve old votes
+      await supabase
+        .from("nominations")
+        .update({ selections: {} })
+        .eq("student_matric", matricNumber);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setFinalSelections({});
+      setIsComplete(false);
+      setIsResetting(false);
+    }
+  };
 
   if (!matricNumber) {
     return (
@@ -81,12 +100,21 @@ export const NominatePage = ({
                 </div>
               </div>
             </div>
-            <button
-              onClick={onLogout}
-              className="text-sm font-black text-brand-teal hover:underline uppercase tracking-widest"
-            >
-              Logout / Start Over
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 w-full justify-center">
+              <button
+                onClick={handleStartOver}
+                disabled={isResetting}
+                className="px-8 py-4 bg-slate-900 text-white rounded-full font-bold hover:bg-slate-800 transition-colors disabled:opacity-50"
+              >
+                {isResetting ? "Resetting..." : "Start All Over"}
+              </button>
+              <button
+                onClick={onLogout}
+                className="px-8 py-4 border-2 border-slate-200 text-slate-500 rounded-full font-bold hover:bg-slate-50 transition-colors"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </motion.div>
       </section>
