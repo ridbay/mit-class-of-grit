@@ -32,6 +32,7 @@ import { NominatePage } from "./pages/NominatePage";
 import { VotePage } from "./pages/VotePage";
 import { PaymentPage } from "./pages/PaymentPage";
 import { ContactPage } from "./pages/ContactPage";
+import { AdminDashboard } from "./pages/AdminDashboard";
 import { GlobalLoader } from "./components/GlobalLoader";
 
 const ScrollToTop = () => {
@@ -382,6 +383,7 @@ export default function App() {
               />
               <Route path="/payment" element={<PaymentPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
           </AnimatePresence>
         </main>

@@ -67,7 +67,7 @@ export const NominationForm = ({
           const nominee = allNominees.find((n) => n.id === id);
           return [cat, nominee ? nominee.name : id];
         })
-      );
+      ) as Record<string, string>;
 
       // Auto-submit to Supabase
       const { error: dbError } = await supabase
