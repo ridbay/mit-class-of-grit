@@ -72,16 +72,22 @@ export const NominationForm = ({
       // Check if student already has a nomination record
       const { data: existingRecord } = await supabase
         .from("nominations")
-        .select("id")
+        .select("id, selections")
         .eq("student_matric", matricNumber)
         .maybeSingle();
 
       let dbError;
       if (existingRecord) {
+        // Merge existing selections with new ones so we don't overwrite past votes
+        const mergedSelections = {
+          ...(existingRecord.selections || {}),
+          ...selectionsWithNames,
+        };
+
         // Update existing record
         const { error } = await supabase
           .from("nominations")
-          .update({ selections: selectionsWithNames })
+          .update({ selections: mergedSelections })
           .eq("student_matric", matricNumber);
         dbError = error;
       } else {
