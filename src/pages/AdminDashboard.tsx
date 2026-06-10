@@ -94,16 +94,23 @@ export const AdminDashboard = () => {
       });
     });
 
-    // Determine top 3 per category
-    const topPerCategory: Record<string, { name: string; votes: number }[]> = {};
+    const categoryStats: Record<string, { totalVotes: number; nominees: { name: string; votes: number; percentage: number }[] }> = {};
 
     Object.keys(votesByCategory).forEach((cat) => {
       const nomineeCounts = Object.entries(votesByCategory[cat]).map(
         ([name, count]) => ({ name, votes: count })
       );
-      // Sort descending
       nomineeCounts.sort((a, b) => b.votes - a.votes);
-      topPerCategory[cat] = nomineeCounts.slice(0, 3);
+      
+      const totalVotes = nomineeCounts.reduce((sum, n) => sum + n.votes, 0);
+      
+      categoryStats[cat] = {
+        totalVotes,
+        nominees: nomineeCounts.map(n => ({
+          ...n,
+          percentage: totalVotes > 0 ? (n.votes / totalVotes) * 100 : 0
+        }))
+      };
     });
 
     const votersList = nominations.map((row) => {
@@ -111,7 +118,7 @@ export const AdminDashboard = () => {
       return student ? `${student.name} (${row.student_matric})` : row.student_matric;
     });
 
-    return { totalVoters, votingPercentage, topPerCategory, votesByCategory, votersList };
+    return { totalVoters, votingPercentage, categoryStats, votesByCategory, votersList };
   }, [nominations]);
 
   if (!isAuthenticated) {
@@ -171,97 +178,90 @@ export const AdminDashboard = () => {
   }
 
   return (
-    <section className="py-24 px-6 min-h-screen bg-slate-50">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
+    <section className="py-12 px-6 min-h-screen bg-white">
+      <div className="max-w-5xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-6">
           <div>
-            <h1 className="text-3xl font-black text-slate-900 font-display flex items-center gap-3">
-              <BarChart className="text-brand-blue" /> Analytics Dashboard
+            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+              <BarChart size={24} className="text-slate-700" /> Insights
             </h1>
-            <p className="text-slate-500 font-medium">Live monitoring of the Class of GRIT nominations.</p>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-3">
             <button
               onClick={fetchData}
               disabled={isLoading}
-              className="px-6 py-2.5 bg-brand-blue/10 text-brand-blue font-bold rounded-xl hover:bg-brand-blue/20 transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-sm font-medium border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50"
             >
-              {isLoading ? "Refreshing..." : "Refresh Data"}
+              {isLoading ? "Refreshing..." : "Refresh"}
             </button>
             <button
               onClick={handleLogout}
-              className="px-6 py-2.5 bg-red-50 text-red-500 font-bold rounded-xl hover:bg-red-100 transition-colors flex items-center gap-2"
+              className="px-4 py-2 text-sm font-medium border border-slate-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
             >
-              <LogOut size={18} /> Logout
+              Logout
             </button>
           </div>
         </div>
 
         {error ? (
-          <div className="p-6 bg-red-50 text-red-600 rounded-2xl font-bold">{error}</div>
+          <div className="p-6 bg-red-50 text-red-600 rounded-xl font-medium">{error}</div>
         ) : !analytics ? (
-          <div className="p-12 text-center text-slate-400 font-bold">No nominations found yet.</div>
+          <div className="p-12 text-center text-slate-400 font-medium">No data available.</div>
         ) : (
           <>
             {/* Top Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-              <div className="glass-card p-8 flex items-center gap-6">
-                <div className="w-16 h-16 rounded-full bg-brand-blue/10 flex items-center justify-center text-brand-blue">
-                  <Users size={32} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Total Voters</p>
-                  <p className="text-4xl font-black text-slate-900">{analytics.totalVoters}</p>
-                </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+              <div className="border border-slate-200 rounded-xl p-6">
+                <p className="text-sm font-medium text-slate-500 mb-2">Total Submissions</p>
+                <p className="text-3xl font-semibold text-slate-900">{analytics.totalVoters}</p>
               </div>
-              <div className="glass-card p-8 flex items-center gap-6">
-                <div className="w-16 h-16 rounded-full bg-brand-teal/10 flex items-center justify-center text-brand-teal">
-                  <TrendingUp size={32} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-1">Class Turnout</p>
-                  <p className="text-4xl font-black text-slate-900">{analytics.votingPercentage}%</p>
-                </div>
+              <div className="border border-slate-200 rounded-xl p-6">
+                <p className="text-sm font-medium text-slate-500 mb-2">Class Turnout</p>
+                <p className="text-3xl font-semibold text-slate-900">{analytics.votingPercentage}%</p>
               </div>
             </div>
 
-            {/* Category Leaderboards */}
-            <h2 className="text-2xl font-black mb-6 text-slate-800">Category Leaderboards (Top 3)</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Object.keys(analytics.topPerCategory).map((category) => {
-                const top3 = analytics.topPerCategory[category];
+            {/* Category Bars */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+              {Object.keys(analytics.categoryStats).map((category) => {
+                const stat = analytics.categoryStats[category];
                 return (
-                  <motion.div
-                    key={category}
-                    whileHover={{ y: -5 }}
-                    className="glass-card p-6 flex flex-col h-full"
-                  >
-                    <h3 className="font-bold text-lg text-brand-blue mb-4 leading-tight">{category}</h3>
+                  <div key={category} className="flex flex-col">
+                    <div className="flex justify-between items-end mb-4">
+                      <h3 className="font-semibold text-slate-900 text-[15px]">{category}</h3>
+                      <span className="text-xs text-slate-400 font-medium">{stat.totalVotes} answers</span>
+                    </div>
                     
-                    <div className="flex-1 space-y-4">
-                      {top3.length === 0 ? (
-                        <p className="text-sm text-slate-400 font-medium">No votes yet.</p>
+                    <div className="flex-1 space-y-2">
+                      {stat.nominees.length === 0 ? (
+                        <p className="text-sm text-slate-400">No responses yet.</p>
                       ) : (
-                        top3.map((nominee, idx) => (
-                          <div key={nominee.name} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
-                            <div className="flex items-center gap-3">
-                              <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${
-                                idx === 0 ? "bg-yellow-100 text-yellow-600" :
-                                idx === 1 ? "bg-slate-200 text-slate-500" :
-                                "bg-amber-100 text-amber-700"
-                              }`}>
-                                {idx + 1}
-                              </span>
-                              <span className="font-bold text-slate-700 text-sm">{nominee.name}</span>
+                        stat.nominees.map((nominee) => (
+                          <div key={nominee.name} className="flex items-center justify-between group relative">
+                            {/* Background Bar */}
+                            <div className="absolute inset-0 bg-slate-100 rounded-md z-0 overflow-hidden">
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${nominee.percentage}%` }}
+                                transition={{ duration: 0.8, ease: "easeOut" }}
+                                className="h-full bg-slate-200"
+                              />
                             </div>
-                            <span className="font-black text-brand-teal text-sm bg-brand-teal/10 px-2 py-1 rounded-md">
-                              {nominee.votes}
-                            </span>
+                            
+                            {/* Content */}
+                            <div className="relative z-10 w-full flex justify-between items-center px-3 py-2">
+                              <span className="text-sm font-medium text-slate-700 truncate pr-4">
+                                {nominee.name}
+                              </span>
+                              <span className="text-sm text-slate-500 font-medium">
+                                {nominee.votes}
+                              </span>
+                            </div>
                           </div>
                         ))
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 );
               })}
             </div>
