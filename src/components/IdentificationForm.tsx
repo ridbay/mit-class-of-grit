@@ -6,13 +6,15 @@ export const IdentificationForm = ({
   error,
   onClearError,
   title = "Identify Yourself",
-  description = "Please enter your 9-digit Matric Number and Password to proceed.",
+  description = "Please enter your 9-digit Matric Number to proceed.",
+  hidePassword = false,
 }: {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   error: string;
   onClearError: () => void;
   title?: string;
   description?: string;
+  hidePassword?: boolean;
 }) => (
   <div className="max-w-md mx-auto glass-card p-12 text-center">
     <div className="w-20 h-20 bg-brand-blue/10 rounded-3xl flex items-center justify-center mx-auto mb-8">
@@ -21,6 +23,22 @@ export const IdentificationForm = ({
     <h3 className="text-2xl font-black text-slate-900 mb-4">{title}</h3>
     <p className="text-slate-500 mb-8">{description}</p>
     <form onSubmit={onSubmit} className="space-y-4">
+      {hidePassword && (
+        <div className="relative">
+          <User
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+            size={20}
+          />
+          <input
+            name="name"
+            type="text"
+            placeholder="Full Name"
+            required
+            onChange={onClearError}
+            className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
+          />
+        </div>
+      )}
       <div className="relative">
         <User
           className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
@@ -42,20 +60,22 @@ export const IdentificationForm = ({
           className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
         />
       </div>
-      <div className="relative">
-        <User
-          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-          size={20}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="Password"
-          required
-          onChange={onClearError}
-          className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
-        />
-      </div>
+      {!hidePassword && (
+        <div className="relative">
+          <User
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+            size={20}
+          />
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            required
+            onChange={onClearError}
+            className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
+          />
+        </div>
+      )}
       {error && (
         <p className="text-xs font-bold text-red-500 mt-2 flex items-center justify-center gap-1">
           <X size={12} /> {error}

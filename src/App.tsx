@@ -18,6 +18,8 @@ import {
   Phone,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
+import { STUDENTS } from "./data/constants";
+import { supabase } from "./lib/supabase";
 
 // Pages
 import { HomePage } from "./pages/HomePage";
@@ -69,6 +71,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             { path: "/", label: "Home" },
             { path: "/about", label: "About" },
             { path: "/categories", label: "Awards" },
+            { path: "/nominate", label: "Nominate" },
             { path: "/vote", label: "Voting" },
             { path: "/gallery", label: "Gallery" },
             { path: "/sponsors", label: "Sponsors" },
@@ -256,6 +259,7 @@ export default function App() {
 
   // Auth State for Voting & Nomination
   const [matricNumber, setMatricNumber] = useState("");
+  const [studentName, setStudentName] = useState("");
   const [password, setPassword] = useState("");
   const [matricError, setMatricError] = useState("");
 
@@ -271,42 +275,64 @@ export default function App() {
   // Hydrate auth
   useEffect(() => {
     const savedMatric = localStorage.getItem("grit_matric");
+    const savedName = localStorage.getItem("grit_name");
     const savedPassword = localStorage.getItem("grit_password");
     if (savedMatric && savedPassword) {
       setMatricNumber(savedMatric);
       setPassword(savedPassword);
+      if (savedName) setStudentName(savedName);
+    } else if (savedMatric) {
+      setMatricNumber(savedMatric);
+      if (savedName) setStudentName(savedName);
     }
   }, []);
 
-  const handleIdentify = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleIdentify = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const matric = (formData.get("matric") as string).trim();
-    const pass = (formData.get("password") as string).trim();
+    const matric = (formData.get("matric") as string)?.trim();
+    const name = (formData.get("name") as string)?.trim();
 
-    const matricRegex = /^\d{9}$/;
-
-    if (!matricRegex.test(matric)) {
-      setMatricError("Matric number must be exactly 9 digits.");
+    if (!matric && !name) {
+      setMatricError("Please provide your Name and Matric Number.");
       return;
     }
 
-    if (!pass) {
-      setMatricError("Password is required.");
-      return;
-    }
+    try {
+      // Query Supabase for a matching matric or name
+      const query = supabase.from('students').select('*');
+      
+      let filter = [];
+      if (matric) filter.push(`matric.eq.${matric}`);
+      if (name) filter.push(`name.ilike.%${name}%`);
+      
+      const { data, error } = await query.or(filter.join(',')).limit(1);
 
-    setMatricError("");
-    setMatricNumber(matric);
-    setPassword(pass);
-    localStorage.setItem("grit_matric", matric);
-    localStorage.setItem("grit_password", pass);
+      if (error) {
+        throw error;
+      }
+
+      if (data && data.length > 0) {
+        setMatricError("");
+        setMatricNumber(data[0].matric);
+        setStudentName(data[0].name);
+        localStorage.setItem("grit_matric", data[0].matric);
+        localStorage.setItem("grit_name", data[0].name);
+      } else {
+        setMatricError("No matching student found in the database.");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setMatricError("Error verifying your identity. Please try again.");
+    }
   };
 
   const handleLogout = () => {
     setMatricNumber("");
+    setStudentName("");
     setPassword("");
     localStorage.removeItem("grit_matric");
+    localStorage.removeItem("grit_name");
     localStorage.removeItem("grit_password");
   };
 
@@ -331,6 +357,7 @@ export default function App() {
                 element={
                   <NominatePage
                     matricNumber={matricNumber}
+                    studentName={studentName}
                     password={password}
                     handleIdentify={handleIdentify}
                     matricError={matricError}
@@ -344,6 +371,7 @@ export default function App() {
                 element={
                   <VotePage
                     matricNumber={matricNumber}
+                    studentName={studentName}
                     password={password}
                     handleIdentify={handleIdentify}
                     matricError={matricError}

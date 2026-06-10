@@ -7,6 +7,7 @@ import { ResultsDashboard } from "../components/ResultsDashboard";
 
 export const VotePage = ({
   matricNumber,
+  studentName,
   password,
   handleIdentify,
   matricError,
@@ -14,6 +15,7 @@ export const VotePage = ({
   onLogout,
 }: {
   matricNumber: string;
+  studentName?: string;
   password: string;
   handleIdentify: (e: React.FormEvent<HTMLFormElement>) => void;
   matricError: string;
