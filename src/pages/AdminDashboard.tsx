@@ -67,13 +67,14 @@ export const AdminDashboard = () => {
   };
 
   // Process data for analytics
+  const [activeTab, setActiveTab] = useState<"insights" | "submissions">("insights");
+
   const analytics = useMemo(() => {
-    if (!nominations.length) return null;
+    if (!nominations || nominations.length === 0) return null;
 
     const totalVoters = nominations.length;
     const votingPercentage = ((totalVoters / TOTAL_STUDENTS) * 100).toFixed(1);
 
-    // Group votes by category: Record<CategoryName, Record<NomineeName, Count>>
     const votesByCategory: Record<string, Record<string, number>> = {};
 
     CATEGORIES.forEach((cat) => {
@@ -82,15 +83,13 @@ export const AdminDashboard = () => {
 
     nominations.forEach((row) => {
       const selections = row.selections || {};
-      Object.entries(selections).forEach(([category, nominee]) => {
-        if (!nominee || typeof nominee !== "string") return;
-        if (!votesByCategory[category]) {
-          votesByCategory[category] = {};
+      Object.keys(selections).forEach((cat) => {
+        const nomineeName = selections[cat];
+        if (nomineeName) {
+          if (!votesByCategory[cat]) votesByCategory[cat] = {};
+          if (!votesByCategory[cat][nomineeName]) votesByCategory[cat][nomineeName] = 0;
+          votesByCategory[cat][nomineeName] += 1;
         }
-        if (!votesByCategory[category][nominee]) {
-          votesByCategory[category][nominee] = 0;
-        }
-        votesByCategory[category][nominee]++;
       });
     });
 
@@ -113,12 +112,7 @@ export const AdminDashboard = () => {
       };
     });
 
-    const votersList = nominations.map((row) => {
-      const student = STUDENTS.find((s) => s.matric === row.student_matric);
-      return student ? `${student.name} (${row.student_matric})` : row.student_matric;
-    });
-
-    return { totalVoters, votingPercentage, categoryStats, votesByCategory, votersList };
+    return { totalVoters, votingPercentage, categoryStats };
   }, [nominations]);
 
   if (!isAuthenticated) {
@@ -179,14 +173,28 @@ export const AdminDashboard = () => {
 
   return (
     <section className="py-12 px-6 min-h-screen bg-white">
-      <div className="max-w-5xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4 border-b border-slate-200 pb-6">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 border-b border-slate-200 pb-2">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <BarChart size={24} className="text-slate-700" /> Insights
+            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2 mb-4">
+              <BarChart size={24} className="text-slate-700" /> Class of GRIT
             </h1>
+            <div className="flex gap-6">
+              <button 
+                onClick={() => setActiveTab("insights")}
+                className={`font-semibold pb-2 border-b-2 transition-colors ${activeTab === "insights" ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+              >
+                Insights
+              </button>
+              <button 
+                onClick={() => setActiveTab("submissions")}
+                className={`font-semibold pb-2 border-b-2 transition-colors ${activeTab === "submissions" ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+              >
+                Submissions
+              </button>
+            </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 mb-2">
             <button
               onClick={fetchData}
               disabled={isLoading}
@@ -209,82 +217,110 @@ export const AdminDashboard = () => {
           <div className="p-12 text-center text-slate-400 font-medium">No data available.</div>
         ) : (
           <>
-            {/* Top Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-              <div className="border border-slate-200 rounded-xl p-6">
-                <p className="text-sm font-medium text-slate-500 mb-2">Total Submissions</p>
-                <p className="text-3xl font-semibold text-slate-900">{analytics.totalVoters}</p>
-              </div>
-              <div className="border border-slate-200 rounded-xl p-6">
-                <p className="text-sm font-medium text-slate-500 mb-2">Class Turnout</p>
-                <p className="text-3xl font-semibold text-slate-900">{analytics.votingPercentage}%</p>
-              </div>
-            </div>
-
-            {/* Category Bars */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-              {Object.keys(analytics.categoryStats).map((category) => {
-                const stat = analytics.categoryStats[category];
-                return (
-                  <div key={category} className="flex flex-col">
-                    <div className="flex justify-between items-end mb-4">
-                      <h3 className="font-semibold text-slate-900 text-[15px]">{category}</h3>
-                      <span className="text-xs text-slate-400 font-medium">{stat.totalVotes} answers</span>
-                    </div>
-                    
-                    <div className="flex-1 space-y-2">
-                      {stat.nominees.length === 0 ? (
-                        <p className="text-sm text-slate-400">No responses yet.</p>
-                      ) : (
-                        stat.nominees.map((nominee) => (
-                          <div key={nominee.name} className="flex items-center justify-between group relative">
-                            {/* Background Bar */}
-                            <div className="absolute inset-0 bg-slate-100 rounded-md z-0 overflow-hidden">
-                              <motion.div 
-                                initial={{ width: 0 }}
-                                animate={{ width: `${nominee.percentage}%` }}
-                                transition={{ duration: 0.8, ease: "easeOut" }}
-                                className="h-full bg-slate-200"
-                              />
-                            </div>
-                            
-                            {/* Content */}
-                            <div className="relative z-10 w-full flex justify-between items-center px-3 py-2">
-                              <span className="text-sm font-medium text-slate-700 truncate pr-4">
-                                {nominee.name}
-                              </span>
-                              <span className="text-sm text-slate-500 font-medium">
-                                {nominee.votes}
-                              </span>
-                            </div>
-                          </div>
-                        ))
-                      )}
-                    </div>
+            {activeTab === "insights" && (
+              <>
+                {/* Top Metrics */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                  <div className="border border-slate-200 rounded-xl p-6">
+                    <p className="text-sm font-medium text-slate-500 mb-2">Total Submissions</p>
+                    <p className="text-3xl font-semibold text-slate-900">{analytics.totalVoters}</p>
                   </div>
-                );
-              })}
-            </div>
-
-            {/* List of Voters */}
-            <div className="mt-16 glass-card p-8">
-              <h2 className="text-xl font-black mb-6 text-slate-800 flex items-center gap-2">
-                <Users size={24} className="text-brand-blue" />
-                Voters ({analytics.totalVoters})
-              </h2>
-              {analytics.votersList.length === 0 ? (
-                <p className="text-slate-500 font-medium">No one has voted yet.</p>
-              ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-96 overflow-y-auto pr-2">
-                  {analytics.votersList.map((voter, index) => (
-                    <div key={index} className="p-3 bg-slate-50 border border-slate-100 rounded-xl text-sm font-medium text-slate-700 truncate hover:bg-slate-100 transition-colors">
-                      {voter}
-                    </div>
-                  ))}
+                  <div className="border border-slate-200 rounded-xl p-6">
+                    <p className="text-sm font-medium text-slate-500 mb-2">Class Turnout</p>
+                    <p className="text-3xl font-semibold text-slate-900">{analytics.votingPercentage}%</p>
+                  </div>
                 </div>
-              )}
-            </div>
-            
+
+                {/* Category Bars */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                  {Object.keys(analytics.categoryStats).map((category) => {
+                    const stat = analytics.categoryStats[category];
+                    return (
+                      <div key={category} className="flex flex-col">
+                        <div className="flex justify-between items-end mb-4">
+                          <h3 className="font-semibold text-slate-900 text-[15px]">{category}</h3>
+                          <span className="text-xs text-slate-400 font-medium">{stat.totalVotes} answers</span>
+                        </div>
+                        
+                        <div className="flex-1 space-y-2">
+                          {stat.nominees.length === 0 ? (
+                            <p className="text-sm text-slate-400">No responses yet.</p>
+                          ) : (
+                            stat.nominees.map((nominee) => (
+                              <div key={nominee.name} className="flex items-center justify-between group relative">
+                                {/* Background Bar */}
+                                <div className="absolute inset-0 bg-slate-100 rounded-md z-0 overflow-hidden">
+                                  <motion.div 
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${nominee.percentage}%` }}
+                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    className="h-full bg-slate-200"
+                                  />
+                                </div>
+                                
+                                {/* Content */}
+                                <div className="relative z-10 w-full flex justify-between items-center px-3 py-2">
+                                  <span className="text-sm font-medium text-slate-700 truncate pr-4">
+                                    {nominee.name}
+                                  </span>
+                                  <span className="text-sm text-slate-500 font-medium">
+                                    {nominee.votes}
+                                  </span>
+                                </div>
+                              </div>
+                            ))
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            )}
+
+            {activeTab === "submissions" && (
+              <div className="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm pb-4">
+                <table className="w-full text-left text-sm whitespace-nowrap">
+                  <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                    <tr>
+                      <th className="px-6 py-4 font-semibold">Submitted at</th>
+                      <th className="px-6 py-4 font-semibold">Name</th>
+                      <th className="px-6 py-4 font-semibold">Matric Number</th>
+                      {CATEGORIES.map(cat => (
+                        <th key={cat} className="px-6 py-4 font-semibold text-slate-500 max-w-[200px] truncate" title={cat}>
+                          {cat}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {nominations.map(row => {
+                      const student = STUDENTS.find(s => s.matric === row.student_matric);
+                      const date = row.created_at ? new Date(row.created_at).toLocaleString() : "N/A";
+                      return (
+                        <tr key={row.student_matric} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-6 py-4 text-slate-500">{date}</td>
+                          <td className="px-6 py-4 font-medium text-slate-900">{student?.name || "Unknown"}</td>
+                          <td className="px-6 py-4 text-slate-500">{row.student_matric}</td>
+                          {CATEGORIES.map(cat => (
+                            <td key={cat} className="px-6 py-4 text-slate-700">
+                              {row.selections?.[cat] || <span className="text-slate-300">-</span>}
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                    {nominations.length === 0 && (
+                      <tr>
+                        <td colSpan={CATEGORIES.length + 3} className="px-6 py-12 text-center text-slate-400">
+                          No submissions yet.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </>
         )}
       </div>
