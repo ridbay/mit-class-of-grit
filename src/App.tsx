@@ -294,20 +294,19 @@ export default function App() {
     const matric = (formData.get("matric") as string)?.trim();
     const name = (formData.get("name") as string)?.trim();
 
-    if (!matric && !name) {
+    if (!matric || !name) {
       setMatricError("Hold up! We need both your Name and Matric Number to let you in.");
       return;
     }
 
     try {
-      // Query Supabase for a matching matric or name
-      const query = supabase.from('students').select('*');
+      // Query Supabase for an EXACT matching matric AND a partial matching name
+      let query = supabase.from('students').select('*');
       
-      let filter = [];
-      if (matric) filter.push(`matric.eq.${matric}`);
-      if (name) filter.push(`name.ilike.%${name}%`);
+      if (matric) query = query.eq('matric', matric);
+      if (name) query = query.ilike('name', `%${name}%`);
       
-      const { data, error } = await query.or(filter.join(',')).limit(1);
+      const { data, error } = await query.limit(1);
 
       if (error) {
         throw error;
