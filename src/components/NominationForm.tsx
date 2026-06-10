@@ -156,7 +156,7 @@ export const NominationForm = ({
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 max-h-[500px] overflow-y-auto p-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-6 mb-12 max-h-[500px] overflow-y-auto p-2">
             {categoryNominees.length > 0 ? (
               categoryNominees.map((nominee) => {
                 const isSelected = selections[currentCategory] === nominee.id;
@@ -166,31 +166,18 @@ export const NominationForm = ({
                     whileTap={{ scale: 0.98 }}
                     key={nominee.id}
                     onClick={() => handleSelect(nominee.id)}
-                    className={`cursor-pointer rounded-3xl p-6 transition-all duration-300 border-2 flex flex-col items-center text-center ${
+                    className={`cursor-pointer rounded-xl sm:rounded-2xl p-4 sm:p-6 transition-all duration-300 border-2 flex items-center justify-center text-center relative ${
                       isSelected
-                        ? "border-brand-blue bg-brand-blue/5 shadow-xl shadow-brand-blue/10"
-                        : "border-transparent bg-slate-50 hover:bg-white hover:shadow-lg"
+                        ? "border-brand-blue bg-brand-blue/5 shadow-md shadow-brand-blue/10"
+                        : "border-slate-100 bg-white hover:border-brand-blue/30 hover:shadow-md"
                     }`}
                   >
-                    <div className="relative mb-4">
-                      {nominee.image ? (
-                        <img
-                          src={nominee.image}
-                          alt={nominee.name}
-                          className={`w-24 h-24 rounded-full object-cover border-4 transition-colors ${isSelected ? "border-brand-blue" : "border-slate-200"}`}
-                        />
-                      ) : (
-                        <div className={`w-24 h-24 rounded-full flex items-center justify-center border-4 ${isSelected ? "border-brand-blue bg-brand-blue/10" : "border-slate-200 bg-slate-100"}`}>
-                          <User size={32} className={isSelected ? "text-brand-blue" : "text-slate-400"} />
-                        </div>
-                      )}
-                      {isSelected && (
-                        <div className="absolute -bottom-2 -right-2 bg-brand-blue text-white rounded-full p-1">
-                          <CheckCircle2 size={24} className="fill-white text-brand-blue" />
-                        </div>
-                      )}
-                    </div>
-                    <h3 className="font-bold text-lg text-slate-900">
+                    {isSelected && (
+                      <div className="absolute top-2 right-2 text-brand-blue">
+                        <CheckCircle2 size={16} className="fill-brand-blue text-white" />
+                      </div>
+                    )}
+                    <h3 className={`font-bold text-xs sm:text-base leading-tight ${isSelected ? "text-brand-blue" : "text-slate-700"}`}>
                       {nominee.name}
                     </h3>
                   </motion.div>
