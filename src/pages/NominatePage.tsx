@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { CheckCircle2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
@@ -25,6 +25,77 @@ export const NominatePage = ({
   const [isComplete, setIsComplete] = useState(false);
   const [finalSelections, setFinalSelections] = useState<Record<string, string>>({});
   const [isResetting, setIsResetting] = useState(false);
+  const [deviceLockError, setDeviceLockError] = useState(false);
+
+  // Check device lock on login and grab device info
+  useEffect(() => {
+    if (!matricNumber) return;
+
+    const checkLock = async () => {
+      try {
+        let deviceId = localStorage.getItem("grit_device_id");
+        
+        // If no device ID, generate one
+        if (!deviceId) {
+          deviceId = crypto.randomUUID();
+          localStorage.setItem("grit_device_id", deviceId);
+        }
+        
+        // Always ensure we have device info captured locally
+        let deviceInfoStr = localStorage.getItem("grit_device_info");
+        if (!deviceInfoStr) {
+          try {
+            const res = await fetch("https://api.ipify.org?format=json");
+            const data = await res.json();
+            const deviceInfo = {
+              ip: data.ip,
+              userAgent: navigator.userAgent,
+              language: navigator.language,
+              screen: `${window.screen.width}x${window.screen.height}`,
+              timestamp: new Date().toISOString()
+            };
+            localStorage.setItem("grit_device_info", JSON.stringify(deviceInfo));
+          } catch (e) {
+            console.error("Failed to fetch IP info", e);
+          }
+        }
+
+        // 1. Fetch from device_logs instead of nominations
+        const { data } = await supabase
+          .from("device_logs")
+          .select("device_id")
+          .eq("student_matric", matricNumber)
+          .maybeSingle();
+
+        if (data) {
+          // If a record exists, check if the device ID matches
+          if (data.device_id !== deviceId) {
+            setDeviceLockError(true);
+          } else {
+            setDeviceLockError(false);
+          }
+        } else {
+          // If no record exists, this is the first login. Lock it instantly!
+          const deviceInfoStr = localStorage.getItem("grit_device_info");
+          const deviceInfo = deviceInfoStr ? JSON.parse(deviceInfoStr) : {};
+          
+          await supabase.from("device_logs").insert({
+            student_matric: matricNumber,
+            device_id: deviceId,
+            ip_address: deviceInfo.ip || null,
+            user_agent: deviceInfo.userAgent || null,
+            screen: deviceInfo.screen || null,
+            language: deviceInfo.language || null,
+          });
+          
+          setDeviceLockError(false);
+        }
+      } catch (err) {
+        console.error("Device check failed", err);
+      }
+    };
+    checkLock();
+  }, [matricNumber]);
 
   const handleStartOver = () => {
     setIsResetting(true);
@@ -46,6 +117,32 @@ export const NominatePage = ({
           description="Drop your Name and Matric Number below to unlock your nomination powers."
           hidePassword={true}
         />
+      </section>
+    );
+  }
+
+  if (deviceLockError) {
+    return (
+      <section className="py-24 px-6 min-h-[80vh] flex flex-col items-center justify-center text-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="glass-card p-12 max-w-lg border-red-500/20 shadow-2xl shadow-red-500/10"
+        >
+          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h2 className="text-2xl font-black text-slate-900 mb-4">Device Locked</h2>
+          <p className="text-slate-600 mb-8 font-medium">
+            This Matric Number has already been used to nominate from another device or browser. To prevent impersonation, you can only vote from the original device you started with.
+          </p>
+          <button
+            onClick={onLogout}
+            className="px-8 py-4 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors"
+          >
+            Go Back
+          </button>
+        </motion.div>
       </section>
     );
   }

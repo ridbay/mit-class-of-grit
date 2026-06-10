@@ -11,6 +11,7 @@ export const AdminDashboard = () => {
   const [loginError, setLoginError] = useState("");
 
   const [nominations, setNominations] = useState<any[]>([]);
+  const [deviceLogs, setDeviceLogs] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -49,15 +50,21 @@ export const AdminDashboard = () => {
   const fetchData = async () => {
     setIsLoading(true);
     try {
-      // Need to fetch using service role if RLS blocks anon from selecting all rows.
-      // But we are running from client side. If anon cannot select, this will fail.
-      // Assuming RLS allows anon SELECT using (true) as set earlier.
-      const { data, error: dbError } = await supabase
-        .from("nominations")
-        .select("*");
+      const [nomsRes, logsRes] = await Promise.all([
+        supabase.from("nominations").select("*"),
+        supabase.from("device_logs").select("*")
+      ]);
 
-      if (dbError) throw dbError;
-      setNominations(data || []);
+      if (nomsRes.error) throw nomsRes.error;
+      
+      // If the device_logs table doesn't exist yet, it might throw an error.
+      // We catch it silently so the dashboard doesn't crash before the user runs the SQL.
+      if (logsRes.error) {
+        console.warn("Device logs fetch failed. Ensure table is created:", logsRes.error);
+      }
+
+      setNominations(nomsRes.data || []);
+      setDeviceLogs(logsRes.data || []);
     } catch (err: any) {
       console.error(err);
       setError("Failed to fetch nomination data.");
@@ -67,7 +74,7 @@ export const AdminDashboard = () => {
   };
 
   // Process data for analytics
-  const [activeTab, setActiveTab] = useState<"insights" | "submissions">("insights");
+  const [activeTab, setActiveTab] = useState<"insights" | "submissions" | "security">("insights");
 
   const analytics = useMemo(() => {
     if (!nominations || nominations.length === 0) return null;
@@ -192,6 +199,12 @@ export const AdminDashboard = () => {
               >
                 Submissions
               </button>
+              <button 
+                onClick={() => setActiveTab("security")}
+                className={`font-semibold pb-2 border-b-2 transition-colors ${activeTab === "security" ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+              >
+                Security Logs
+              </button>
             </div>
           </div>
           <div className="flex gap-3 mb-2">
@@ -297,6 +310,8 @@ export const AdminDashboard = () => {
                     {nominations.map(row => {
                       const student = STUDENTS.find(s => s.matric === row.student_matric);
                       const date = row.created_at ? new Date(row.created_at).toLocaleString() : "N/A";
+                      const deviceInfo = row.selections?._device_info;
+                      
                       return (
                         <tr key={row.student_matric} className="hover:bg-slate-50 transition-colors">
                           <td className="px-6 py-4 text-slate-500">{date}</td>
@@ -314,6 +329,49 @@ export const AdminDashboard = () => {
                       <tr>
                         <td colSpan={CATEGORIES.length + 3} className="px-6 py-12 text-center text-slate-400">
                           No submissions yet.
+                        </td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+            {activeTab === "security" && (
+              <div className="overflow-x-auto bg-white border border-slate-200 rounded-xl shadow-sm pb-4">
+                <table className="w-full text-left text-sm whitespace-nowrap">
+                  <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                    <tr>
+                      <th className="px-6 py-4 font-semibold">Student</th>
+                      <th className="px-6 py-4 font-semibold">Matric Number</th>
+                      <th className="px-6 py-4 font-semibold">IP Address</th>
+                      <th className="px-6 py-4 font-semibold">Browser / User Agent</th>
+                      <th className="px-6 py-4 font-semibold">Screen</th>
+                      <th className="px-6 py-4 font-semibold">Logged At</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {deviceLogs.map(log => {
+                      const student = STUDENTS.find(s => s.matric === log.student_matric);
+                      const timestamp = log.created_at ? new Date(log.created_at).toLocaleString() : "N/A";
+                      
+                      return (
+                        <tr key={log.id} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-6 py-4 font-medium text-slate-900">{student?.name || "Unknown"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.student_matric}</td>
+                          <td className="px-6 py-4 font-semibold text-slate-700">{log.ip_address || "N/A"}</td>
+                          <td className="px-6 py-4 text-slate-500 max-w-[300px] truncate" title={log.user_agent}>
+                            {log.user_agent || "N/A"}
+                          </td>
+                          <td className="px-6 py-4 text-slate-500">{log.screen || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{timestamp}</td>
+                        </tr>
+                      );
+                    })}
+                    {deviceLogs.length === 0 && (
+                      <tr>
+                        <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
+                          No device logs available yet.
                         </td>
                       </tr>
                     )}
