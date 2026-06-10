@@ -95,10 +95,6 @@ export const NominationForm = ({
         ...selectionsWithNames,
       };
 
-      if (isSkipping) {
-        delete mergedSelections[currentCategory];
-      }
-
       // Safely upsert the record to handle both inserts and updates atomically
       const payload: any = {
         student_matric: matricNumber,

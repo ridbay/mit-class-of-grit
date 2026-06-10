@@ -26,21 +26,13 @@ export const NominatePage = ({
   const [finalSelections, setFinalSelections] = useState<Record<string, string>>({});
   const [isResetting, setIsResetting] = useState(false);
 
-  const handleStartOver = async () => {
+  const handleStartOver = () => {
     setIsResetting(true);
-    try {
-      // Clear their existing selections in the database so the merge logic doesn't preserve old votes
-      await supabase
-        .from("nominations")
-        .update({ selections: {} })
-        .eq("student_matric", matricNumber);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setFinalSelections({});
-      setIsComplete(false);
-      setIsResetting(false);
-    }
+    // We don't wipe the DB anymore. We just let them go through the form again.
+    // Their new choices will merge with their existing records.
+    setFinalSelections({});
+    setIsComplete(false);
+    setIsResetting(false);
   };
 
   if (!matricNumber) {
