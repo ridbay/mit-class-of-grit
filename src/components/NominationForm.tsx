@@ -9,7 +9,7 @@ export const NominationForm = ({
   onComplete,
 }: {
   matricNumber: string;
-  onComplete: () => void;
+  onComplete: (selections: Record<string, string>) => void;
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selections, setSelections] = useState<Record<string, string>>({});
@@ -24,7 +24,18 @@ export const NominationForm = ({
     (g) => g.name === "Merit Awards for Lecturers"
   )?.categories.some((c) => c.name === currentCategory);
 
-  const baseNominees = isLecturerCategory ? LECTURERS : STUDENTS;
+  const baseNominees = useMemo(() => {
+    const list = isLecturerCategory ? [...LECTURERS] : [...STUDENTS];
+    
+    // Only shuffle for student categories
+    if (!isLecturerCategory) {
+      for (let i = list.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [list[i], list[j]] = [list[j], list[i]];
+      }
+    }
+    return list;
+  }, [isLecturerCategory, currentCategory]);
 
   const categoryNominees = useMemo(() => {
     if (!searchQuery) return baseNominees;
@@ -75,7 +86,7 @@ export const NominationForm = ({
         setCurrentStep((prev) => prev + 1);
         setSearchQuery(""); // clear search on next
       } else {
-        onComplete();
+        onComplete(selectionsWithNames);
       }
     } catch (err: any) {
       console.error(err);

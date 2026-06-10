@@ -22,6 +22,7 @@ export const NominatePage = ({
   onLogout: () => void;
 }) => {
   const [isComplete, setIsComplete] = useState(false);
+  const [finalSelections, setFinalSelections] = useState<Record<string, string>>({});
 
   if (!matricNumber) {
     return (
@@ -52,9 +53,22 @@ export const NominatePage = ({
           <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 font-display">
             Nominations Complete!
           </h2>
-          <p className="text-xl text-slate-500 font-medium leading-relaxed mb-12">
+          <p className="text-xl text-slate-500 font-medium leading-relaxed mb-8">
             Thank you for submitting your nominations. Your voice matters in recognizing the best among us.
           </p>
+
+          <div className="bg-slate-50 border border-slate-100 rounded-2xl p-6 mb-12 text-left max-h-[400px] overflow-y-auto">
+            <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">Your Selections</h3>
+            <div className="flex flex-col gap-4">
+              {Object.entries(finalSelections).map(([category, nomineeName]) => (
+                <div key={category} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-white rounded-xl border border-slate-100 shadow-sm gap-2">
+                  <span className="text-sm font-bold text-slate-700">{category}</span>
+                  <span className="text-sm font-black text-brand-blue">{nomineeName}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="flex flex-col items-center gap-6">
             <div className="flex items-center gap-4 bg-slate-100 px-8 py-4 rounded-full border border-slate-200">
               <div className="w-10 h-10 bg-brand-blue/10 rounded-full flex items-center justify-center text-brand-blue font-bold">
@@ -102,7 +116,10 @@ export const NominatePage = ({
       </div>
       <NominationForm
         matricNumber={matricNumber}
-        onComplete={() => setIsComplete(true)}
+        onComplete={(selections) => {
+          setFinalSelections(selections);
+          setIsComplete(true);
+        }}
       />
     </section>
   );
