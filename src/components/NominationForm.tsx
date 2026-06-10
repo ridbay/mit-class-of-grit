@@ -49,13 +49,22 @@ export const NominationForm = ({
     setIsSubmitting(true);
 
     try {
+      // Map all selected IDs to their actual names for readable database storage
+      const allNominees = [...LECTURERS, ...STUDENTS];
+      const selectionsWithNames = Object.fromEntries(
+        Object.entries(selections).map(([cat, id]) => {
+          const nominee = allNominees.find((n) => n.id === id);
+          return [cat, nominee ? nominee.name : id];
+        })
+      );
+
       // Auto-submit to Supabase
       const { error: dbError } = await supabase
         .from("nominations")
         .upsert(
           {
             student_matric: matricNumber,
-            selections: selections,
+            selections: selectionsWithNames,
           },
           { onConflict: "student_matric" }
         );
