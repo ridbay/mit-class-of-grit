@@ -285,13 +285,6 @@ export const AdminDashboard = () => {
               )}
             </div>
             
-            {/* Full Breakdown Summary */}
-            <div className="mt-16 glass-card p-8">
-              <h2 className="text-xl font-black mb-6 text-slate-800">Raw Data Summary</h2>
-              <div className="text-sm text-slate-500 font-medium bg-slate-50 p-6 rounded-2xl overflow-x-auto whitespace-pre">
-                {JSON.stringify(analytics.votesByCategory, null, 2)}
-              </div>
-            </div>
           </>
         )}
       </div>
