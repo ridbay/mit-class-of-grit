@@ -69,16 +69,31 @@ export const NominationForm = ({
         })
       ) as Record<string, string>;
 
-      // Auto-submit to Supabase
-      const { error: dbError } = await supabase
+      // Check if student already has a nomination record
+      const { data: existingRecord } = await supabase
         .from("nominations")
-        .upsert(
-          {
+        .select("id")
+        .eq("student_matric", matricNumber)
+        .maybeSingle();
+
+      let dbError;
+      if (existingRecord) {
+        // Update existing record
+        const { error } = await supabase
+          .from("nominations")
+          .update({ selections: selectionsWithNames })
+          .eq("student_matric", matricNumber);
+        dbError = error;
+      } else {
+        // Insert new record
+        const { error } = await supabase
+          .from("nominations")
+          .insert({
             student_matric: matricNumber,
             selections: selectionsWithNames,
-          },
-          { onConflict: "student_matric" }
-        );
+          });
+        dbError = error;
+      }
 
       if (dbError) throw dbError;
 
