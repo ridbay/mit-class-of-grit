@@ -27,94 +27,100 @@ export const CATEGORY_GROUPS = [
     ],
   },
   {
-    name: "Merit Awards for Students",
+    name: "Student Merit Awards",
     description:
-      "Celebrating students who have demonstrated exceptional character and contribution.",
+      "Celebrating students who have demonstrated exceptional character, leadership, commitment, and contribution to the class.",
     categories: [
       {
-        id: "s_m1",
+        id: "sm1",
+        name: "Outstanding Student of the Year",
+        description:
+          "For the student who best represents excellence across academics, character, class participation, responsibility, and overall contribution.",
+      },
+      {
+        id: "sm2",
         name: "Leadership Excellence Award",
         description:
-          "For the student who leads with integrity, vision, and purpose. Whether in official roles or informally, this person inspires others, takes initiative, and sets the standard for what it means to lead well.",
+          "For the student who has shown leadership through service, initiative, responsibility, and the ability to guide, influence, or represent others positively.",
       },
       {
-        id: "s_m2",
-        name: "Most Supportive Classmate Award",
+        id: "sm3",
+        name: "Most Supportive Classmate",
         description:
-          "For the student who is always there — sharing notes, offering encouragement, checking in on others, and making sure no one is left behind. Their kindness makes the entire class better.",
+          "For the student who is always willing to help others — sharing information, explaining things, checking up on classmates, offering encouragement, and making sure no one is left behind.",
       },
       {
-        id: "s_m3",
-        name: "Outstanding Student Award",
+        id: "sm4",
+        name: "Best Team Player",
         description:
-          "Recognizing the student who excels across the board — academically, socially, and in character. This is the all-around best representation of what a student in this department should be.",
+          "For the student who works excellently with others during group tasks, projects, assignments, and presentations. This person is reliable, cooperative, respectful, and helps the team succeed.",
+      },
+      {
+        id: "sm5",
+        name: "Class Contribution Award",
+        description:
+          "For the student who has consistently contributed to the progress, unity, organization, and overall experience of the class, whether officially or unofficially.",
       },
     ],
   },
   {
-    name: "Recognition Awards for Students",
+    name: "Student Recognition Awards",
     description:
-      "Fun, personality-driven awards that celebrate the unique qualities that make our class special.",
+      "Fun, inclusive, and experience-based awards that celebrate the different personalities, talents, and strengths within the class.",
     categories: [
       {
-        id: "r1",
+        id: "sr1",
+        name: "Best Presenter",
+        description:
+          "For the student who delivers presentations with confidence, clarity, good communication, strong delivery, and proper understanding of the topic.",
+      },
+      {
+        id: "sr2",
+        name: "Most Tech-Savvy Student",
+        description:
+          "For the student who demonstrates strong digital, technical, or IT-related skills and is often recognized for understanding technology deeply.",
+      },
+      {
+        id: "sr3",
+        name: "Most Innovative Thinker",
+        description:
+          "For the student who brings fresh ideas, creative solutions, and a different way of approaching problems, projects, discussions, or class activities.",
+      },
+      {
+        id: "sr4",
+        name: "Best Problem Solver",
+        description:
+          "For the student who is analytical, calm under pressure, and good at finding solutions during assignments, projects, presentations, or class-related challenges.",
+      },
+      {
+        id: "sr5",
         name: "Most Enterprising Student",
         description:
-          "For the student who is always building something — a business, a brand, a project, or an idea. Resourceful, ambitious, and never waiting for opportunity to knock.",
+          "For the student who is business-minded, resourceful, and actively involved in running a business, brand, service, side hustle, or professional venture.",
       },
       {
-        id: "r2",
-        name: "Most Influential Student",
+        id: "sr6",
+        name: "Best Dressed Male",
         description:
-          "For the student whose opinions, actions, and presence genuinely shape the thinking and behavior of those around them. When they speak, people listen.",
+          "For the male student who consistently shows style, neatness, confidence, and intentional fashion sense.",
       },
       {
-        id: "r3",
-        name: "Best Dressed / Style Icon",
+        id: "sr7",
+        name: "Best Dressed Female",
         description:
-          "For the student who consistently shows up looking put-together, stylish, and intentional. Their personal style is distinctive and always on point.",
+          "For the female student who consistently shows style, elegance, confidence, and intentional fashion sense.",
       },
       {
-        id: "r4",
-        name: "Most Community-Minded Student",
+        id: "sr8",
+        name: "Most Creative Student",
         description:
-          "For the student who thinks beyond themselves — actively contributing to the class, department, or wider community through service, advocacy, or consistent acts of goodwill.",
+          "For the student who brings originality, imagination, and creativity into presentations, ideas, designs, projects, writing, media, or class-related activities.",
       },
       {
-        id: "r5",
-        name: "The Charisma Award",
+        id: "sr9",
+        name: "Most Engaging Class Participant",
         description:
-          "For the student with a magnetic personality — warm, confident, and naturally draws people in. Everyone knows them, and everyone enjoys being around them.",
-      },
-      {
-        id: "r6",
-        name: "The Connector Award",
-        description:
-          "For the student who knows everyone and brings people together. They make introductions, build bridges, and are the reason many friendships and collaborations in the class even exist.",
-      },
-      {
-        id: "r7",
-        name: "The Innovative Thinker Award",
-        description:
-          "For the student who approaches problems differently — creative, analytical, and never satisfied with \"because that's how it's always been done.\" They bring fresh perspectives to every challenge.",
-      },
-      {
-        id: "r8",
-        name: "The Collaboration Award",
-        description:
-          "For the student who makes every group work better. Reliable, team-oriented, and the kind of person everyone wants on their project — not just for the work, but for the energy they bring.",
-      },
-      {
-        id: "r9",
-        name: "The Renaissance Student Award",
-        description:
-          "For the student who does it all — academics, extracurriculars, creativity, and more. Versatile, well-rounded, and impossible to put in a box.",
-      },
-      {
-        id: "r10",
-        name: "The Catalyst Award",
-        description:
-          "For the student whose energy, enthusiasm, and presence elevates every room they walk into. They don't just participate — they ignite. Where they go, things happen.",
+          "For the student who actively contributes to class discussions, asks meaningful questions, responds thoughtfully, and helps make lectures, presentations, or group sessions more interactive.",
       },
     ],
   },
