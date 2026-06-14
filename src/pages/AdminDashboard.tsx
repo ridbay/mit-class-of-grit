@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "motion/react";
 import { ShieldAlert, Users, TrendingUp, BarChart, Medal, Award, LogOut } from "lucide-react";
 import { supabase } from "../lib/supabase";
-import { CATEGORIES, STUDENTS } from "../data/constants";
+import { CATEGORIES, CATEGORY_GROUPS, STUDENTS } from "../data/constants";
 
 export const AdminDashboard = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -244,49 +244,63 @@ export const AdminDashboard = () => {
                   </div>
                 </div>
 
-                {/* Category Bars */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
-                  {Object.keys(analytics.categoryStats).map((category) => {
-                    const stat = analytics.categoryStats[category];
-                    return (
-                      <div key={category} className="flex flex-col">
-                        <div className="flex justify-between items-end mb-4">
-                          <h3 className="font-semibold text-slate-900 text-[15px]">{category}</h3>
-                          <span className="text-xs text-slate-400 font-medium">{stat.totalVotes} answers</span>
-                        </div>
-                        
-                        <div className="flex-1 space-y-2">
-                          {stat.nominees.length === 0 ? (
-                            <p className="text-sm text-slate-400">No responses yet.</p>
-                          ) : (
-                            stat.nominees.map((nominee) => (
-                              <div key={nominee.name} className="flex items-center justify-between group relative">
-                                {/* Background Bar */}
-                                <div className="absolute inset-0 bg-slate-100 rounded-md z-0 overflow-hidden">
-                                  <motion.div 
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${nominee.percentage}%` }}
-                                    transition={{ duration: 0.8, ease: "easeOut" }}
-                                    className="h-full bg-slate-200"
-                                  />
-                                </div>
-                                
-                                {/* Content */}
-                                <div className="relative z-10 w-full flex justify-between items-center px-3 py-2">
-                                  <span className="text-sm font-medium text-slate-700 truncate pr-4">
-                                    {nominee.name}
-                                  </span>
-                                  <span className="text-sm text-slate-500 font-medium">
-                                    {nominee.votes}
-                                  </span>
-                                </div>
-                              </div>
-                            ))
-                          )}
-                        </div>
+                {/* Category Bars Grouped */}
+                <div className="space-y-16">
+                  {CATEGORY_GROUPS.map((group) => (
+                    <div key={group.name} className="bg-slate-50/50 p-6 md:p-8 rounded-2xl border border-slate-100">
+                      <div className="mb-8 border-b border-slate-200 pb-4">
+                        <h2 className="text-xl font-black text-slate-800">{group.name}</h2>
+                        <p className="text-sm text-slate-500 mt-1">{group.description}</p>
                       </div>
-                    );
-                  })}
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                        {group.categories.map((catObj) => {
+                          const category = catObj.name;
+                          const stat = analytics.categoryStats[category];
+                          if (!stat) return null;
+
+                          return (
+                            <div key={category} className="flex flex-col">
+                              <div className="flex justify-between items-end mb-4">
+                                <h3 className="font-semibold text-slate-900 text-[15px]">{category}</h3>
+                                <span className="text-xs text-slate-400 font-medium">{stat.totalVotes} answers</span>
+                              </div>
+                              
+                              <div className="flex-1 space-y-2">
+                                {stat.nominees.length === 0 ? (
+                                  <p className="text-sm text-slate-400">No responses yet.</p>
+                                ) : (
+                                  stat.nominees.map((nominee) => (
+                                    <div key={nominee.name} className="flex items-center justify-between group relative">
+                                      {/* Background Bar */}
+                                      <div className="absolute inset-0 bg-slate-100 rounded-md z-0 overflow-hidden">
+                                        <motion.div 
+                                          initial={{ width: 0 }}
+                                          animate={{ width: `${nominee.percentage}%` }}
+                                          transition={{ duration: 0.8, ease: "easeOut" }}
+                                          className="h-full bg-slate-200"
+                                        />
+                                      </div>
+                                      
+                                      {/* Content */}
+                                      <div className="relative z-10 w-full flex justify-between items-center px-3 py-2">
+                                        <span className="text-sm font-medium text-slate-700 truncate pr-4">
+                                          {nominee.name}
+                                        </span>
+                                        <span className="text-sm text-slate-500 font-medium">
+                                          {nominee.votes}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  ))
+                                )}
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </>
             )}
