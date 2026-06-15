@@ -360,7 +360,10 @@ export const AdminDashboard = () => {
                       <th className="px-6 py-4 font-semibold">Student</th>
                       <th className="px-6 py-4 font-semibold">Matric Number</th>
                       <th className="px-6 py-4 font-semibold">IP Address</th>
-                      <th className="px-6 py-4 font-semibold">Browser / User Agent</th>
+                      <th className="px-6 py-4 font-semibold">Location</th>
+                      <th className="px-6 py-4 font-semibold">ISP</th>
+                      <th className="px-6 py-4 font-semibold">OS</th>
+                      <th className="px-6 py-4 font-semibold">Browser</th>
                       <th className="px-6 py-4 font-semibold">Type</th>
                       <th className="px-6 py-4 font-semibold">Model</th>
                       <th className="px-6 py-4 font-semibold">Logged At</th>
@@ -376,9 +379,10 @@ export const AdminDashboard = () => {
                           <td className="px-6 py-4 font-medium text-slate-900">{student?.name || "Unknown"}</td>
                           <td className="px-6 py-4 text-slate-500">{log.student_matric}</td>
                           <td className="px-6 py-4 font-semibold text-slate-700">{log.ip_address || "N/A"}</td>
-                          <td className="px-6 py-4 text-slate-500 max-w-[300px] truncate" title={log.user_agent}>
-                            {log.user_agent || "N/A"}
-                          </td>
+                          <td className="px-6 py-4 text-slate-500">{log.city ? `${log.city}, ${log.country}` : "-"}</td>
+                          <td className="px-6 py-4 text-slate-500 max-w-[150px] truncate" title={log.isp}>{log.isp || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.os_info || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.browser_info || "-"}</td>
                           <td className="px-6 py-4 text-slate-500 capitalize">{log.device_type || "-"}</td>
                           <td className="px-6 py-4 text-slate-500">{log.device_model || "-"}</td>
                           <td className="px-6 py-4 text-slate-500">{timestamp}</td>
@@ -387,7 +391,7 @@ export const AdminDashboard = () => {
                     })}
                     {deviceLogs.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
+                        <td colSpan={10} className="px-6 py-12 text-center text-slate-400">
                           No device logs available yet.
                         </td>
                       </tr>

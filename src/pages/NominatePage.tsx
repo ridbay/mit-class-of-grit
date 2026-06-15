@@ -46,14 +46,28 @@ export const NominatePage = ({
         let deviceInfoStr = localStorage.getItem("grit_device_info");
         if (!deviceInfoStr) {
           try {
-            const res = await fetch("https://api.ipify.org?format=json");
+            const res = await fetch("https://ipapi.co/json/");
             const data = await res.json();
             
             const parser = new UAParser(navigator.userAgent);
             const devInfo = parser.getDevice();
+            const osInfo = parser.getOS();
+            const browserInfo = parser.getBrowser();
+            
+            // @ts-ignore
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            const connectionType = connection ? connection.effectiveType : "unknown";
             
             const deviceInfo = {
               ip: data.ip,
+              country: data.country_name || null,
+              region: data.region || null,
+              city: data.city || null,
+              isp: data.org || null,
+              lat_lng: data.latitude && data.longitude ? `${data.latitude},${data.longitude}` : null,
+              connectionType,
+              osInfo: osInfo.name ? `${osInfo.name} ${osInfo.version || ""}`.trim() : "Unknown",
+              browserInfo: browserInfo.name ? `${browserInfo.name} ${browserInfo.version || ""}`.trim() : "Unknown",
               userAgent: navigator.userAgent,
               deviceType: devInfo.type || "desktop",
               deviceModel: devInfo.model || "Unknown",
@@ -88,18 +102,36 @@ export const NominatePage = ({
           
           let dType = deviceInfo.deviceType;
           let dModel = deviceInfo.deviceModel;
+          let os = deviceInfo.osInfo;
+          let browser = deviceInfo.browserInfo;
           
-          if (!dType || !dModel) {
+          if (!dType || !dModel || !os || !browser) {
             const parser = new UAParser(navigator.userAgent);
             const devInfo = parser.getDevice();
-            dType = devInfo.type || "desktop";
-            dModel = devInfo.model || "Unknown";
+            const osInfo = parser.getOS();
+            const browserInfo = parser.getBrowser();
+            dType = dType || devInfo.type || "desktop";
+            dModel = dModel || devInfo.model || "Unknown";
+            os = os || (osInfo.name ? `${osInfo.name} ${osInfo.version || ""}`.trim() : "Unknown");
+            browser = browser || (browserInfo.name ? `${browserInfo.name} ${browserInfo.version || ""}`.trim() : "Unknown");
           }
+          
+          // @ts-ignore
+          const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+          const connectionType = deviceInfo.connectionType || (connection ? connection.effectiveType : "unknown");
           
           const { error: insertError } = await supabase.from("device_logs").insert({
             student_matric: matricNumber,
             device_id: deviceId,
             ip_address: deviceInfo.ip || null,
+            country: deviceInfo.country || null,
+            region: deviceInfo.region || null,
+            city: deviceInfo.city || null,
+            isp: deviceInfo.isp || null,
+            lat_lng: deviceInfo.lat_lng || null,
+            connection_type: connectionType,
+            os_info: os,
+            browser_info: browser,
             user_agent: deviceInfo.userAgent || null,
             device_type: dType,
             device_model: dModel,
