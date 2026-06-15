@@ -21,8 +21,7 @@ CREATE TABLE public.device_logs (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Note: Ensure that the permissions and policies (RLS) on the new device_logs table
--- match what was previously set. E.g.
--- ALTER TABLE public.device_logs ENABLE ROW LEVEL SECURITY;
--- CREATE POLICY "Enable read access for all users" ON public.device_logs FOR SELECT USING (true);
--- CREATE POLICY "Enable insert for authenticated users only" ON public.device_logs FOR INSERT WITH CHECK (true);
+-- Re-enable RLS on the new device_logs table
+ALTER TABLE public.device_logs ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Enable read access for all users" ON public.device_logs FOR SELECT USING (true);
+CREATE POLICY "Enable insert for all users" ON public.device_logs FOR INSERT WITH CHECK (true);
