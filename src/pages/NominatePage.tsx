@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
+import { UAParser } from "ua-parser-js";
 import { CheckCircle2 } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { IdentificationForm } from "../components/IdentificationForm";
@@ -47,9 +48,15 @@ export const NominatePage = ({
           try {
             const res = await fetch("https://api.ipify.org?format=json");
             const data = await res.json();
+            
+            const parser = new UAParser(navigator.userAgent);
+            const devInfo = parser.getDevice();
+            
             const deviceInfo = {
               ip: data.ip,
               userAgent: navigator.userAgent,
+              deviceType: devInfo.type || "desktop",
+              deviceModel: devInfo.model || "Unknown",
               language: navigator.language,
               screen: `${window.screen.width}x${window.screen.height}`,
               timestamp: new Date().toISOString()
@@ -79,11 +86,23 @@ export const NominatePage = ({
           const deviceInfoStr = localStorage.getItem("grit_device_info");
           const deviceInfo = deviceInfoStr ? JSON.parse(deviceInfoStr) : {};
           
+          let dType = deviceInfo.deviceType;
+          let dModel = deviceInfo.deviceModel;
+          
+          if (!dType || !dModel) {
+            const parser = new UAParser(navigator.userAgent);
+            const devInfo = parser.getDevice();
+            dType = devInfo.type || "desktop";
+            dModel = devInfo.model || "Unknown";
+          }
+          
           const { error: insertError } = await supabase.from("device_logs").insert({
             student_matric: matricNumber,
             device_id: deviceId,
             ip_address: deviceInfo.ip || null,
             user_agent: deviceInfo.userAgent || null,
+            device_type: dType,
+            device_model: dModel,
           });
 
           if (insertError) {

@@ -8,6 +8,8 @@ CREATE TABLE public.device_logs (
     device_id TEXT NOT NULL,
     ip_address TEXT,
     user_agent TEXT,
+    device_type TEXT,
+    device_model TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

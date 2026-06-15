@@ -361,7 +361,8 @@ export const AdminDashboard = () => {
                       <th className="px-6 py-4 font-semibold">Matric Number</th>
                       <th className="px-6 py-4 font-semibold">IP Address</th>
                       <th className="px-6 py-4 font-semibold">Browser / User Agent</th>
-                      <th className="px-6 py-4 font-semibold">Screen</th>
+                      <th className="px-6 py-4 font-semibold">Type</th>
+                      <th className="px-6 py-4 font-semibold">Model</th>
                       <th className="px-6 py-4 font-semibold">Logged At</th>
                     </tr>
                   </thead>
@@ -378,14 +379,15 @@ export const AdminDashboard = () => {
                           <td className="px-6 py-4 text-slate-500 max-w-[300px] truncate" title={log.user_agent}>
                             {log.user_agent || "N/A"}
                           </td>
-                          <td className="px-6 py-4 text-slate-500">{log.screen || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500 capitalize">{log.device_type || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.device_model || "-"}</td>
                           <td className="px-6 py-4 text-slate-500">{timestamp}</td>
                         </tr>
                       );
                     })}
                     {deviceLogs.length === 0 && (
                       <tr>
-                        <td colSpan={6} className="px-6 py-12 text-center text-slate-400">
+                        <td colSpan={7} className="px-6 py-12 text-center text-slate-400">
                           No device logs available yet.
                         </td>
                       </tr>
