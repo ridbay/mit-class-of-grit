@@ -79,14 +79,16 @@ export const NominatePage = ({
           const deviceInfoStr = localStorage.getItem("grit_device_info");
           const deviceInfo = deviceInfoStr ? JSON.parse(deviceInfoStr) : {};
           
-          await supabase.from("device_logs").insert({
+          const { error: insertError } = await supabase.from("device_logs").insert({
             student_matric: matricNumber,
             device_id: deviceId,
             ip_address: deviceInfo.ip || null,
             user_agent: deviceInfo.userAgent || null,
-            screen: deviceInfo.screen || null,
-            language: deviceInfo.language || null,
           });
+
+          if (insertError) {
+            console.error("Failed to insert device log:", insertError);
+          }
           
           setDeviceLockError(false);
         }
