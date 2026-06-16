@@ -304,7 +304,13 @@ export default function App() {
       let query = supabase.from('students').select('*');
       
       if (matric) query = query.eq('matric', matric);
-      if (name) query = query.ilike('name', `%${name}%`);
+      if (name) {
+        const nameParts = name.split(/\s+/).filter(Boolean);
+        if (nameParts.length > 0) {
+          const orCondition = nameParts.map(part => `name.ilike.%${part}%`).join(',');
+          query = query.or(orCondition);
+        }
+      }
       
       const { data, error } = await query.limit(1);
 
