@@ -150,7 +150,11 @@ export const STUDENTS = [
   { id: "s10", name: "Ikeri Priscilla Oluchukwu", matric: "130310014" },
   { id: "s11", name: "Oyeleye Daniel Aduragbemi", matric: "140201134" },
   { id: "s12", name: "Kesinro Iyinolanla Jubilee", matric: "140205049" },
-  { id: "s13", name: "Akintelure Omowasola Oluwatamilore", matric: "140408025" },
+  {
+    id: "s13",
+    name: "Akintelure Omowasola Oluwatamilore",
+    matric: "140408025",
+  },
   { id: "s14", name: "Ekundayo Mathew Mayowa", matric: "140408037" },
   { id: "s15", name: "Alade Olumide Segun", matric: "150808040" },
   { id: "s16", name: "Adebayo Olabode Oluwatimileyin", matric: "160804519" },
@@ -183,7 +187,11 @@ export const STUDENTS = [
   { id: "s43", name: "Ali Hussaina", matric: "249074025" },
   { id: "s44", name: "Akinbami Collins Tobi", matric: "249074027" },
   { id: "s45", name: "Talabi Titilayo Joy", matric: "249074029" },
-  { id: "s46", name: "Awofolaju Oluwatobiloba Jesufolaju", matric: "249074100" },
+  {
+    id: "s46",
+    name: "Awofolaju Oluwatobiloba Jesufolaju",
+    matric: "249074100",
+  },
   { id: "s47", name: "Bodunde Olaoluwa Joseph", matric: "249074031" },
   { id: "s48", name: "AJAYI OLUWAFIKAYO OMONIYI", matric: "249074032" },
   { id: "s49", name: "Okesanjo Quamarudeen Okedayo", matric: "249074033" },
@@ -283,8 +291,8 @@ export const STUDENTS = [
   { id: "s143", name: "Johnson Iffiok", matric: "249074169" },
   { id: "s144", name: "Ile Samuel", matric: "249074170" },
   { id: "s145", name: "Arijeloye Oluwarotimi Emmanuel", matric: "249074171" },
-  { id: "s146", name: "NMONWU ERNEST OBUMNEKE", matric: "249074172" },
-  { id: "s147", name: "EGHO SUNDAY IMUENTINYAN", matric: "249074173" },
+  { id: "s146", name: "Olukayode Rosanwo", matric: "179074163" },
+  { id: "s147", name: "Adetoba Aderemi Olusegun", matric: "169074050" },
   { id: "s148", name: "AYENI OPEYEMI MOYINOLUWA", matric: "249074174" },
   { id: "s149", name: "Ariyo Temitope Williams", matric: "249074175" },
   { id: "s150", name: "OJEZUA LAURA", matric: "249074176" },
@@ -355,7 +363,11 @@ export const STUDENTS = [
   { id: "s215", name: "Osundare Olajide Soji", matric: "249074267" },
   { id: "s216", name: "Olatoke Jumai Ayomide", matric: "249074268" },
   { id: "s217", name: "Atewe Obed Onuelu", matric: "249074270" },
-  { id: "s218", name: "Ekpobadarho Blessing Oghenetejiri", matric: "249074271" },
+  {
+    id: "s218",
+    name: "Ekpobadarho Blessing Oghenetejiri",
+    matric: "249074271",
+  },
   { id: "s219", name: "Russel Eduje Sharon", matric: "249074275" },
   { id: "s220", name: "ADEKANBI ABOLADE TEMITOPE", matric: "249074276" },
   { id: "s221", name: "KENNEDY WILSON UGO", matric: "249074277" },
@@ -366,7 +378,11 @@ export const STUDENTS = [
   { id: "s226", name: "Olalekan Muyiwa Olawale", matric: "249074285" },
   { id: "s227", name: "Akinola Olalekan Idris", matric: "249074286" },
   { id: "s228", name: "Akpan Patience Friday", matric: "249074287" },
-  { id: "s229", name: "Luke-Metibaiye Oluwashina Christopher", matric: "249074288" },
+  {
+    id: "s229",
+    name: "Luke-Metibaiye Oluwashina Christopher",
+    matric: "249074288",
+  },
   { id: "s230", name: "Oreoluwa Israel Ipinnuoluwakiiye", matric: "249074289" },
   { id: "s231", name: "TONY-OSAHON ADESUWA OMONO", matric: "249074290" },
   { id: "s232", name: "Adeniyi Abdulazeez Tosin", matric: "249074292" },
@@ -397,7 +413,7 @@ export const STUDENTS = [
   { id: "s257", name: "Ologun Ayodeji Olanrewaju", matric: "249074326" },
   { id: "s258", name: "Ojo Gbenga Timothy", matric: "249074328" },
   { id: "s259", name: "Omolaja Samuel Olawale", matric: "249074330" },
-  { id: "s260", name: "JIKIEMI DASOLA IDAYAT", matric: "249074331" }
+  { id: "s260", name: "JIKIEMI DASOLA IDAYAT", matric: "249074331" },
 ];
 
 export const NOMINEES: Nominee[] = [
@@ -1052,7 +1068,6 @@ export const FAQS = [
   },
 ];
 
-
 export const LECTURERS = [
   { id: "lec1", name: "C. O. Yinka-Banjo" },
   { id: "lec2", name: "C. O. Uwadia" },
@@ -1076,5 +1091,5 @@ export const LECTURERS = [
   { id: "lec20", name: "S.E. Edagbami" },
   { id: "lec21", name: "C. Ojiako" },
   { id: "lec22", name: "D.T. Afolabi" },
-  { id: "lec23", name: "R. O. Abass" }
+  { id: "lec23", name: "R. O. Abass" },
 ];
