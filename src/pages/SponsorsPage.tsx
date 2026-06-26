@@ -174,6 +174,77 @@ export const SponsorsPage = () => (
             ))}
         </div>
       </motion.div>
+
+      {/* Detailed Sponsor Value Copy */}
+      <div className="max-w-4xl mx-auto mt-24 mb-16 text-slate-300 space-y-12">
+        <div className="text-center mb-12">
+          <h3 className="text-3xl md:text-4xl font-black mb-4 tracking-tighter text-white">
+            Detailed Sponsor Value Copy
+          </h3>
+          <div className="w-16 h-1 bg-brand-teal mx-auto rounded-full" />
+        </div>
+
+        <div className="space-y-6 glass-card p-8 border border-white/5 bg-slate-900/50">
+          <h4 className="text-2xl font-bold text-white flex items-center gap-3">
+            <span className="text-3xl">🥉</span> Bronze Sponsor — ₦100,000
+          </h4>
+          <p className="text-lg leading-relaxed text-slate-400">
+            Bronze Sponsorship is an entry-level partnership option for brands, startups, and supporters who want visible association with MIT Connect 2026. Bronze Sponsors receive logo placement on the event banner and digital flyer, listing on the sponsor page, one sponsor appreciation post across class platforms, and post-event thank-you recognition.
+          </p>
+          <p className="text-lg leading-relaxed text-slate-400">
+            This package is ideal for organizations that want affordable visibility while supporting a premium platform connecting current students, alumni, and the wider innovation ecosystem.
+          </p>
+        </div>
+
+        <div className="space-y-6 glass-card p-8 border border-white/5 bg-slate-900/50">
+          <h4 className="text-2xl font-bold text-white flex items-center gap-3">
+            <span className="text-3xl">🥈</span> Silver Sponsor — ₦250,000
+          </h4>
+          <p className="text-lg leading-relaxed text-slate-400">
+            Silver Sponsorship gives your brand stronger repeated visibility before and during the event. In addition to Bronze benefits, Silver Sponsors receive logo placement on select printed event materials, two MC mentions during the programme, two pre-event promo posts across class channels, and one complimentary event pass.
+          </p>
+          <p className="text-lg leading-relaxed text-slate-400">
+            This tier is suited for brands that want more in-room recognition and stronger recall without moving into a large-scale activation package.
+          </p>
+        </div>
+
+        <div className="space-y-6 glass-card p-8 border border-white/5 bg-slate-900/50 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 blur-3xl rounded-full" />
+          <h4 className="text-2xl font-bold text-white flex items-center gap-3">
+            <span className="text-3xl">🥇</span> Gold Sponsor — ₦500,000
+          </h4>
+          <p className="text-lg leading-relaxed text-slate-400">
+            Gold Sponsorship is designed for brands that want meaningful event presence and stronger brand association with MIT Connect 2026. Gold Sponsors receive all Silver benefits, plus more prominent logo placement on event materials, a 60-second branded reel played during the event, a featured sponsor profile on the website, and two complimentary event passes.
+          </p>
+          <p className="text-lg leading-relaxed text-slate-400">
+            This package works well for companies that want to be visibly associated with innovation, student-alumni connection, professional networking, and future-facing talent — without taking over the programme with a long speech.
+          </p>
+        </div>
+
+        <div className="space-y-6 glass-card p-8 border border-slate-600/30 bg-slate-800/80 relative overflow-hidden shadow-xl">
+          <div className="absolute -right-20 -top-20 w-64 h-64 bg-blue-400/10 blur-3xl rounded-full" />
+          <h4 className="text-2xl font-bold text-white flex items-center gap-3">
+            <span className="text-3xl">💎</span> Platinum Sponsor — ₦1,000,000
+          </h4>
+          <p className="text-lg leading-relaxed text-slate-300">
+            Platinum Sponsorship offers premium positioning and deeper audience engagement before, during, and after the event. In addition to all Gold benefits, Platinum Sponsors receive recognition as an Official Platinum Sponsor, a branded activation stand or display table at the venue, a 90-second branded reel and 2-minute MC-led introduction, weekly promo mentions across class platforms until the event, and four complimentary event passes.
+          </p>
+          <p className="text-lg leading-relaxed text-slate-300">
+            This tier is built for organizations that want a strong on-ground presence, higher brand prestige, and multiple touchpoints with attendees across the full event cycle.
+          </p>
+        </div>
+
+        <div className="space-y-6 glass-card p-8 border border-brand-teal/30 bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden shadow-2xl">
+          <div className="absolute inset-0 bg-brand-teal/5 mix-blend-overlay" />
+          <div className="absolute -left-20 -bottom-20 w-64 h-64 bg-brand-teal/20 blur-3xl rounded-full" />
+          <h4 className="text-2xl font-bold text-white flex items-center gap-3">
+            <span className="text-3xl">👑</span> Headline Sponsor — Custom Partnership
+          </h4>
+          <p className="text-lg leading-relaxed text-slate-300">
+            The Headline Sponsor is the most exclusive partnership opportunity for MIT Connect 2026 and is handled by private discussion. The Headline Sponsor receives all Platinum benefits, plus exclusive recognition as the Presenting Partner, event co-branding rights, the most prominent logo placement across event materials and venue branding, opening acknowledgement at the event, premium activation positioning, and tailored benefits agreed through direct partnership.
+          </p>
+        </div>
+      </div>
     </div>
 
     <motion.div

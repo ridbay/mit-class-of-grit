@@ -50,9 +50,8 @@ export const ContactPage = () => {
               Organizing Committee
             </span>
           </motion.h1>
-          <p className="text-slate-600 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-            Have questions about the Class of Grit awards, sponsorship, or the
-            dinner night? Our team is here to help you.
+          <p className="text-slate-600 text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed">
+            The MIT Connect '26 Planning Committee is entirely managed by the Master of Information Technology cohort within the Department of Computer Science, University of Lagos. Whether you are a corporate brand looking to partner, an alumnus returning to network, or a class member requiring assistance, our team is standing by.
           </p>
         </div>
       </section>
