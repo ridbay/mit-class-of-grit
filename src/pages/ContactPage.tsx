@@ -51,7 +51,11 @@ export const ContactPage = () => {
             </span>
           </motion.h1>
           <p className="text-slate-600 text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed">
-            The MIT Connect '26 Planning Committee is entirely managed by the Master of Information Technology cohort within the Department of Computer Science, University of Lagos. Whether you are a corporate brand looking to partner, an alumnus returning to network, or a class member requiring assistance, our team is standing by.
+            The MIT Connect '26 Planning Committee is entirely managed by the
+            Master of Information Technology cohort within the Department of
+            Computer Science, University of Lagos. Whether you are a corporate
+            brand looking to partner, an alumnus returning to network, or a
+            class member requiring assistance, our team is standing by.
           </p>
         </div>
       </section>
@@ -108,7 +112,7 @@ export const ContactPage = () => {
                 <div className="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center">
                   <Mail size={18} className="text-brand-teal" />
                 </div>
-                awards@classofgrit.com
+                classofgrit@gmail.com
               </div>
               <div className="flex items-center gap-4 text-slate-900 font-bold">
                 <div className="w-10 h-10 rounded-full bg-brand-teal/10 flex items-center justify-center">

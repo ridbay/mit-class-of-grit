@@ -218,7 +218,7 @@ const Footer = () => {
             <ul className="space-y-4 font-bold text-white">
               <li className="flex items-center gap-3">
                 <Mail size={18} className="text-brand-teal" />{" "}
-                awards@classofgrit.com
+                classofgrit@gmail.com
               </li>
               <li className="flex flex-col gap-2">
                 <div className="flex items-center gap-3 group">
@@ -252,9 +252,10 @@ const Footer = () => {
                   </span>
                 </div>
               </li>
-              <li className="flex items-center gap-3">
-                <MapPin size={18} className="text-brand-teal" /> MIT, DEPARTMENT
-                OF COMPUTER SCIENCES <br /> UNIVERSITY OF LAGOS
+              <li className="flex items-start gap-3">
+                <MapPin size={18} className="text-brand-teal" />
+                Department of Computer Science, Faculty of Computing and
+                Information, University of Lagos.
               </li>
             </ul>
           </div>
