@@ -22,7 +22,7 @@ export const SponsorsPage = () => (
         transition={{ delay: 0.1 }}
         className="section-title text-5xl md:text-6xl"
       >
-        Event Sponsors
+        Our Partners
       </motion.h2>
       <motion.p
         initial={{ opacity: 0, y: 10 }}
@@ -32,11 +32,14 @@ export const SponsorsPage = () => (
         className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium mt-6"
       >
         We are grateful to the organizations and individuals who are already
-        standing with us to make the Class of Grit Networking, Awards & Dinner
-        Night a reality. Their early commitment to investing in tech talent
-        means a great deal to this Class. <br />
-        We are still welcoming more sponsors and partners who share our vision
-        of celebrating excellence and innovation in Nigeria's tech space.
+        standing with us to make MIT Connect 2026 — Creating What's Next? a
+        reality. Their early commitment to investing in Nigeria's IT community
+        means a great deal to the Class of GRIT and to every student, alumni,
+        and professional who will be in that room on the 21st of November 2026.{" "}
+        <br />
+        We are still welcoming sponsors and partners who share our vision of
+        celebrating excellence, empowering innovation, and shaping the future of
+        technology in Nigeria.
       </motion.p>
     </div>
 
@@ -55,7 +58,12 @@ export const SponsorsPage = () => (
       className="flex flex-wrap justify-center gap-6 mb-32"
     >
       {SPONSORS.map((s, i) => {
-        const initials = s.name.split(" ").map((w) => w[0]).join("").substring(0, 2).toUpperCase();
+        const initials = s.name
+          .split(" ")
+          .map((w) => w[0])
+          .join("")
+          .substring(0, 2)
+          .toUpperCase();
         return (
           <motion.div
             key={i}
@@ -72,9 +80,15 @@ export const SponsorsPage = () => (
           >
             <div className="w-20 h-20 rounded-full border-2 border-brand-teal/50 flex items-center justify-center mb-5 group-hover:border-brand-teal group-hover:bg-brand-teal/10 transition-colors duration-300 overflow-hidden bg-slate-800">
               {s.logo ? (
-                <img src={s.logo} alt={s.name} className="w-full h-full object-contain p-2" />
+                <img
+                  src={s.logo}
+                  alt={s.name}
+                  className="w-full h-full object-contain p-2"
+                />
               ) : (
-                <span className="text-xl font-medium text-[#1EC7B6] tracking-wide">{initials}</span>
+                <span className="text-xl font-medium text-[#1EC7B6] tracking-wide">
+                  {initials}
+                </span>
               )}
             </div>
             <h4 className="text-[13px] font-medium text-slate-300 group-hover:text-white transition-colors duration-300 tracking-wide">
@@ -175,16 +189,23 @@ export const SponsorsPage = () => (
         Become a Partner Today
       </h3>
       <p className="max-w-2xl mx-auto mb-10 text-white/90 font-medium text-lg leading-relaxed relative z-10">
-        The Class of Grit Networking, Awards & Dinner Night is more than just an
-        event. It's a celebration of resilience, brilliance, and the future of
-        Nigeria's technology industry. We are calling on individuals and
-        organizations who believe in nurturing talent to partner with us and be
-        part of this historic night.
+        MIT Connect 2026 is more than an event — it is a flagship experience
+        bringing together over 200 postgraduate IT professionals, current
+        students, distinguished alumni, industry leaders, innovators, and
+        executives in one room for a night of excellence, recognition, and real
+        connection. <br />
+        Under the theme "Creating What's Next?" — from the Innovation & Pitch
+        Challenge to the Alumni Excellence Awards, Panel Discussion, Keynote
+        Address, and Live Entertainment — this is a premium platform designed to
+        put your brand in front of the next generation of Nigeria's technology
+        leaders.
         <br />
-        Whether you're a company looking to connect with top-tier IT graduate
-        talent, or an individual who wants to celebrate and invest in the next
-        generation, there's a sponsorship opportunity for you.
+        Whether you are a company looking to connect with top-tier IT talent, an
+        entrepreneur who wants brand visibility among professionals, or an
+        individual who believes in investing in the future — there is a
+        sponsorship opportunity built for you.
       </p>
+
       <button className="bg-white text-brand-blue font-black py-5 px-12 rounded-full hover:shadow-[0_10px_30px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105 active:scale-95 text-lg relative z-10">
         Contact Partnership Team
       </button>

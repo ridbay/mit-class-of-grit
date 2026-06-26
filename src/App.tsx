@@ -75,7 +75,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             { path: "/nominate", label: "Nominate" },
             { path: "/vote", label: "Voting" },
             { path: "/gallery", label: "Gallery" },
-            { path: "/sponsors", label: "Sponsors" },
+            { path: "/sponsors", label: "Partners" },
             { path: "/contact", label: "Contact" },
           ].map((item) => (
             <Link
@@ -118,7 +118,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
                 { path: "/nominate", label: "Nominate" },
                 { path: "/vote", label: "Voting" },
                 { path: "/gallery", label: "Gallery" },
-                { path: "/sponsors", label: "Sponsors" },
+                { path: "/sponsors", label: "Partners" },
                 { path: "/contact", label: "Contact" },
               ].map((item) => (
                 <Link
@@ -195,7 +195,7 @@ const Footer = () => {
                 { path: "/nominate", label: "Nominate" },
                 { path: "/vote", label: "Voting" },
                 { path: "/gallery", label: "Gallery" },
-                { path: "/sponsors", label: "Sponsors" },
+                { path: "/sponsors", label: "Partners" },
                 { path: "/payment", label: "Payment" },
                 { path: "/contact", label: "Contact" },
               ].map((link) => (
@@ -222,12 +222,34 @@ const Footer = () => {
               </li>
               <li className="flex flex-col gap-2">
                 <div className="flex items-center gap-3 group">
-                  <Phone size={18} className="text-brand-teal group-hover:scale-110 transition-transform" />
-                  <span>Barry: <a href="tel:+2348164845671" className="hover:text-brand-teal transition-colors">+234 816 484 5671</a></span>
+                  <Phone
+                    size={18}
+                    className="text-brand-teal group-hover:scale-110 transition-transform"
+                  />
+                  <span>
+                    Barry:{" "}
+                    <a
+                      href="tel:+2348164845671"
+                      className="hover:text-brand-teal transition-colors"
+                    >
+                      +234 816 484 5671
+                    </a>
+                  </span>
                 </div>
                 <div className="flex items-center gap-3 group">
-                  <Phone size={18} className="text-brand-teal group-hover:scale-110 transition-transform" />
-                  <span>Priscilla: <a href="tel:+2349074549591" className="hover:text-brand-teal transition-colors">+234 907 454 9591</a></span>
+                  <Phone
+                    size={18}
+                    className="text-brand-teal group-hover:scale-110 transition-transform"
+                  />
+                  <span>
+                    Priscilla:{" "}
+                    <a
+                      href="tel:+2349074549591"
+                      className="hover:text-brand-teal transition-colors"
+                    >
+                      +234 907 454 9591
+                    </a>
+                  </span>
                 </div>
               </li>
               <li className="flex items-center gap-3">
@@ -295,23 +317,27 @@ export default function App() {
     const name = (formData.get("name") as string)?.trim();
 
     if (!matric || !name) {
-      setMatricError("Hold up! We need both your Name and Matric Number to let you in.");
+      setMatricError(
+        "Hold up! We need both your Name and Matric Number to let you in.",
+      );
       return;
     }
 
     try {
       // Query Supabase for an EXACT matching matric AND a partial matching name
-      let query = supabase.from('students').select('*');
-      
-      if (matric) query = query.eq('matric', matric);
+      let query = supabase.from("students").select("*");
+
+      if (matric) query = query.eq("matric", matric);
       if (name) {
         const nameParts = name.split(/\s+/).filter(Boolean);
         if (nameParts.length > 0) {
-          const orCondition = nameParts.map(part => `name.ilike.%${part}%`).join(',');
+          const orCondition = nameParts
+            .map((part) => `name.ilike.%${part}%`)
+            .join(",");
           query = query.or(orCondition);
         }
       }
-      
+
       const { data, error } = await query.limit(1);
 
       if (error) {
@@ -325,11 +351,15 @@ export default function App() {
         localStorage.setItem("grit_matric", data[0].matric);
         localStorage.setItem("grit_name", data[0].name);
       } else {
-        setMatricError("Hmm... we couldn't find you in the Class of GRIT database. Double-check your details!");
+        setMatricError(
+          "Hmm... we couldn't find you in the Class of GRIT database. Double-check your details!",
+        );
       }
     } catch (err: any) {
       console.error(err);
-      setMatricError("Oops, our servers had a little hiccup verifying you. Give it another shot!");
+      setMatricError(
+        "Oops, our servers had a little hiccup verifying you. Give it another shot!",
+      );
     }
   };
 

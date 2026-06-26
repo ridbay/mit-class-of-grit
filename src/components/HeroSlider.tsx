@@ -100,16 +100,21 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
           transition={{ delay: 0.5 }}
           className="max-w-4xl w-full"
         >
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-6 md:mb-8 tracking-tighter drop-shadow-lg px-2">
-            Class of GRIT Networking, Awards & Dinner Night
-            <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-100 drop-shadow-sm inline-block mt-2 sm:mt-0">
-              Celebrating Excellence & Innovation
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-6 md:mb-8 tracking-tighter drop-shadow-lg px-2">
+            MIT Connect '26: Creating What's Next?
+            <br className="hidden lg:block" />{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-100 drop-shadow-sm inline-block mt-2 sm:mt-0 text-3xl sm:text-4xl md:text-5xl">
+              The Premier Technology Ecosystem Gathering & Executive Gala
             </span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow mb-10 md:mb-14 font-medium max-w-2xl mx-auto px-4">
-            {HERO_SLIDES[currentSlide].subtitle}
-          </p>
+          <div className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow mb-10 md:mb-14 font-medium max-w-3xl mx-auto px-4 flex flex-col gap-4">
+            <p>
+              MIT Connect '26 is the landmark annual summit and networking gala hosted by the Master of Information Technology (MIT) cohort, University of Lagos.
+            </p>
+            <p>
+              MIT Connect '26 brings together over 300 top-tier IT professionals, developers, managers, and tech leaders for an elite evening of strategic dialogue, innovation tracking, and corporate networking.
+            </p>
+          </div>
 
           <div className="mb-12 md:mb-20">
             <CountdownTimer />
