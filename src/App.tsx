@@ -6,17 +6,7 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
-import {
-  Menu,
-  X,
-  ArrowUp,
-  Instagram,
-  Twitter,
-  Facebook,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
+import { Menu, X, ArrowUp, Mail } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { STUDENTS } from "./data/constants";
 import { supabase } from "./lib/supabase";
@@ -24,6 +14,7 @@ import { supabase } from "./lib/supabase";
 // Pages
 import { HomePage } from "./pages/HomePage";
 import { AboutPage } from "./pages/AboutPage";
+import { PitchShowcasePage } from "./pages/PitchShowcasePage";
 import { SponsorsPage } from "./pages/SponsorsPage";
 import { CategoriesPage } from "./pages/CategoriesPage";
 import { GalleryPage } from "./pages/GalleryPage";
@@ -72,6 +63,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
             { path: "/", label: "Home" },
             { path: "/about", label: "About" },
             { path: "/categories", label: "Awards" },
+            { path: "/pitch", label: "Pitch Showcase" },
             { path: "/nominate", label: "Nominate" },
             { path: "/vote", label: "Voting" },
             { path: "/gallery", label: "Gallery" },
@@ -115,6 +107,7 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
                 { path: "/", label: "Home" },
                 { path: "/about", label: "About" },
                 { path: "/categories", label: "Awards" },
+                { path: "/pitch", label: "Pitch Showcase" },
                 { path: "/nominate", label: "Nominate" },
                 { path: "/vote", label: "Voting" },
                 { path: "/gallery", label: "Gallery" },
@@ -145,16 +138,39 @@ const Navigation = ({ isMenuOpen, setIsMenuOpen }: any) => {
   );
 };
 
+const FOOTER_LINKS = [
+  { path: "/", label: "Home" },
+  { path: "/about", label: "About MIT Connect" },
+  { path: "/sponsors", label: "Partnerships" },
+  { path: "/categories", label: "Awards" },
+  { path: "/nominate", label: "Nominate" },
+  { path: "/vote", label: "Voting" },
+  { path: "/gallery", label: "Gallery" },
+  { path: "/contact", label: "Contact" },
+];
+
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 text-white pt-24 pb-12 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-20">
-          <div className="md:col-span-2">
+    <footer className="bg-slate-950 text-white pt-24 pb-12 px-6 relative overflow-hidden">
+      <motion.div
+        animate={{ scale: [1, 1.1, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute -top-32 -right-32 w-96 h-96 bg-brand-teal/10 rounded-full blur-[120px] pointer-events-none"
+      />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-16 mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="md:col-span-2"
+          >
             <div className="flex items-center gap-3 mb-8">
-              <img
+              <motion.img
                 src="/MIT_Logo.png"
                 alt="MIT Logo"
+                whileHover={{ rotate: 8, scale: 1.05 }}
                 className="w-12 h-12 object-contain drop-shadow"
               />
               <div className="flex flex-col items-start leading-none">
@@ -162,93 +178,79 @@ const Footer = () => {
                   CLASS OF <span className="text-brand-teal">GRIT</span>
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-white">
-                  Masters of IT
+                  Creating What&rsquo;s Next.
                 </span>
               </div>
             </div>
-            <p className="text-white max-w-sm mb-10 font-medium leading-relaxed">
-              Celebrating the resilience, innovation, and excellence of our
-              department's finest. Join us in honoring the masters of IT.
+            <p className="text-white/80 max-w-sm font-medium leading-relaxed">
+              Official website of the Masters of Information Technology
+              Class of 2026, University of Lagos, and home of MIT Connect
+              &rsquo;26.
             </p>
-            {/* <div className="flex gap-4">
-              {[Instagram, Twitter, Facebook].map((Icon, i) => (
-                <a
-                  key={i}
-                  href="#"
-                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-brand-blue hover:border-brand-blue transition-all"
-                >
-                  <Icon size={20} />
-                </a>
-              ))}
-            </div> */}
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+          >
             <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white mb-8">
               Navigation
             </h4>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-4 font-bold">
-              {[
-                { path: "/", label: "Home" },
-                { path: "/about", label: "About" },
-                { path: "/categories", label: "Awards" },
-                { path: "/nominate", label: "Nominate" },
-                { path: "/vote", label: "Voting" },
-                { path: "/gallery", label: "Gallery" },
-                { path: "/sponsors", label: "Sponsors" },
-                { path: "/payment", label: "Payment" },
-                { path: "/contact", label: "Contact" },
-              ].map((link) => (
+              {FOOTER_LINKS.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="hover:text-brand-teal transition-colors"
+                    className="inline-block hover:text-brand-teal hover:translate-x-1 transition-all duration-300"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
             <h4 className="text-sm font-black uppercase tracking-[0.2em] text-white mb-8">
               Contact
             </h4>
             <ul className="space-y-4 font-bold text-white">
-              <li className="flex items-center gap-3">
-                <Mail size={18} className="text-brand-teal" />{" "}
-                awards@classofgrit.com
-              </li>
-              <li className="flex flex-col gap-2">
-                <div className="flex items-center gap-3 group">
-                  <Phone size={18} className="text-brand-teal group-hover:scale-110 transition-transform" />
-                  <span>Barry: <a href="tel:+2348164845671" className="hover:text-brand-teal transition-colors">+234 816 484 5671</a></span>
-                </div>
-                <div className="flex items-center gap-3 group">
-                  <Phone size={18} className="text-brand-teal group-hover:scale-110 transition-transform" />
-                  <span>Priscilla: <a href="tel:+2349074549591" className="hover:text-brand-teal transition-colors">+234 907 454 9591</a></span>
-                </div>
-              </li>
-              <li className="flex items-center gap-3">
-                <MapPin size={18} className="text-brand-teal" /> MIT, DEPARTMENT
-                OF COMPUTER SCIENCES <br /> UNIVERSITY OF LAGOS
+              <li className="flex items-center gap-3 group">
+                <Mail
+                  size={18}
+                  className="text-brand-teal group-hover:scale-110 transition-transform flex-shrink-0"
+                />
+                <a
+                  href="mailto:classofgrit@gmail.com"
+                  className="hover:text-brand-teal transition-colors break-all"
+                >
+                  classofgrit@gmail.com
+                </a>
               </li>
             </ul>
-          </div>
+          </motion.div>
         </div>
 
-        {/* <div className="border-t border-white/10 pt-12 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-          <p>© 2026 Class of Grit Department. All rights reserved.</p>
-          <div className="flex gap-12">
-            <a href="#" className="hover:text-white transition-colors">
-              Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Terms of Service
-            </a>
-          </div>
-        </div> */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="border-t border-white/10 pt-10 text-center"
+        >
+          <p className="text-white/60 text-xs sm:text-sm font-medium leading-relaxed max-w-3xl mx-auto">
+            MIT Connect &rsquo;26 is organized by the Masters of Information
+            Technology Class of 2026, Department of Computer Science,
+            Faculty of Computing and Informatics, University of Lagos.
+          </p>
+        </motion.div>
       </div>
     </footer>
   );
@@ -354,6 +356,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/pitch" element={<PitchShowcasePage />} />
               <Route path="/sponsors" element={<SponsorsPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/gallery" element={<GalleryPage />} />

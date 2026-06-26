@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "motion/react";
 import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface SponsorshipTierProps {
   level: string;
@@ -128,8 +129,11 @@ export const SponsorshipTierCard: React.FC<SponsorshipTierProps> = ({
             style={{ 
               backgroundColor: isPremium ? "#ffffff" : "transparent"
             }}
-          >
+          > 
+					<Link to="/contact">
             Start Partnering
+					</Link>
+
           </motion.button>
         </div>
       </div>

@@ -1,39 +1,45 @@
 import React from "react";
 import { motion } from "motion/react";
 import {
-  Award,
-  Users,
-  Mic2,
   Calendar,
+  Clock,
   MapPin,
   ChevronRight,
   Star,
   Zap,
+  Compass,
+  Target,
+  Sparkles,
+  Rocket,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { EVENT_DETAILS } from "../data/constants";
+
+const GOALS = [
+  "Celebrate the MIT Class of 2026",
+  "Recognize outstanding students, lecturers, and contributors",
+  "Create a strong alumni and industry connection",
+  "Provide visibility for student-led innovation and startups",
+  "Build a platform for sponsors and partners to engage future technology leaders",
+  "Strengthen the public identity of the Class of Grit",
+  "Leave behind a legacy that future MIT cohorts can build on",
+];
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+  },
+};
 
 export const AboutPage = () => {
-  const stats = [
-    { label: "Expected Attendance", value: "250+", icon: Users },
-    { label: "Award Categories", value: "16", icon: Award },
-    { label: "Honorees", value: "Students & Lecturers", icon: Star },
-  ];
-
-  const details = [
-    {
-      label: "Date",
-      value: "November 2026",
-      subValue: "(Exact date to be announced)",
-      icon: Calendar,
-    },
-    {
-      label: "Venue",
-      value: "To be announced",
-      subValue: "University of Lagos vicinity",
-      icon: MapPin,
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-white text-slate-900 overflow-hidden pb-24">
       {/* Animated Background Orbs */}
@@ -43,7 +49,7 @@ export const AboutPage = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -56,52 +62,52 @@ export const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black mb-10 leading-[1.1] tracking-tighter text-slate-950"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-10 leading-[1.1] tracking-tighter text-slate-950"
           >
-            What is the <br />
+            About <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-emerald-500">
-              Class of Grit
-            </span>{" "}
-            <br />
-            Awards Night?
+              MIT Connect &rsquo;26
+            </span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-slate-600 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed font-semibold"
+            className="text-slate-600 text-base sm:text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed font-semibold"
           >
-            The{" "}
             <span className="text-slate-900 font-black">
-              Class of Grit Networking, Awards & Dinner Night
+              MIT Connect &rsquo;26: Creating What&rsquo;s Next?
             </span>{" "}
-            is the flagship event of the MIT Class of 2026, School of
-            Postgraduate Studies (SPGS), University of Lagos.
+            is the flagship event of the Masters&rsquo;s of Information
+            Technology Class of 2026, popularly known as the{" "}
+            <span className="text-brand-blue font-black">Class of Grit</span>.
           </motion.p>
         </div>
       </section>
 
       {/* Intro Description */}
-      <section className="py-12 px-6 relative z-10">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="py-12 px-4 sm:px-6 relative z-10">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="glass-card p-8 md:p-12 border-slate-200/50 bg-slate-50/50 backdrop-blur-3xl shadow-xl shadow-slate-200/40"
           >
-            <p className="text-xl md:text-3xl text-slate-800 leading-relaxed font-light mb-8 italic">
-              "It is an evening dedicated to celebrating the resilience,
-              excellence, and innovation of an exceptional cohort."
+            <p className="text-lg sm:text-xl md:text-3xl text-slate-800 leading-relaxed font-light mb-8 italic">
+              "The event is designed as a premium gathering for technology,
+              innovation, networking, pitching, dinner, and awards."
             </p>
-            <p className="text-slate-600 text-lg leading-relaxed font-medium">
-              Bringing together{" "}
-              <span className="text-brand-blue font-black text-2xl">
-                over 250 guests
+            <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-medium">
+              It brings together students, alumni, lecturers, university
+              representatives, entrepreneurs, innovators, corporate guests,
+              executives, and key stakeholders within the{" "}
+              <span className="text-brand-blue font-black">
+                technology ecosystem
               </span>
-              , including students, lecturers, educators, industry
-              professionals, and guest speakers — this event is a powerful
-              convergence of minds, achievements, and possibilities.
+              . MIT Connect &rsquo;26 is not just a celebration of a class —
+              it is a bridge between academia, industry, leadership,
+              innovation, and legacy.
             </p>
           </motion.div>
 
@@ -126,109 +132,153 @@ export const AboutPage = () => {
         </div>
       </section>
 
-      {/* Recognition & Speakers */}
-      <section className="py-24 px-6 bg-slate-50 relative">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Awards */}
+      {/* About the Class of Grit */}
+      <section className="py-24 px-4 sm:px-6 bg-slate-50 relative">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="group p-10 rounded-[3rem] bg-white border border-slate-200 hover:border-brand-blue/30 transition-all cursor-default shadow-sm hover:shadow-xl"
           >
-            <div className="w-16 h-16 bg-brand-blue/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-              <Award className="text-brand-blue" size={32} />
-            </div>
-            <h3 className="text-3xl font-black mb-6 text-slate-900">
-              🏆 Recognition & Awards
-            </h3>
-            <p className="text-slate-600 leading-relaxed text-lg mb-6 font-medium">
-              The night will feature{" "}
-              <b className="text-brand-blue">16 award categories</b>,
-              recognizing outstanding contributions from both{" "}
-              <span className="text-brand-teal font-black uppercase tracking-wider">
-                students and lecturers
-              </span>
-              .
+            <h2 className="section-title">About the Class of Grit</h2>
+            <p className="text-slate-700 leading-relaxed text-base sm:text-lg md:text-xl font-bold mb-6">
+              The Class of Grit represents resilience, discipline, ambition,
+              and the courage to keep moving forward.
             </p>
-            <p className="text-slate-500 leading-relaxed">
-              Excellence in this class is not limited to one side of the
-              classroom. Every effort, every sacrifice, and every breakthrough
-              deserves to be celebrated.
+            <p className="text-slate-600 leading-relaxed text-base sm:text-lg mb-6">
+              We are postgraduate students, professionals, founders,
+              builders, analysts, developers, managers, entrepreneurs, and
+              future technology leaders. We are people who have balanced
+              academics, work, business, family, leadership, pressure,
+              deadlines, and growth.
             </p>
-          </motion.div>
-
-          {/* Speakers */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="group p-10 rounded-[3rem] bg-white border border-slate-200 hover:border-brand-teal/30 transition-all cursor-default shadow-sm hover:shadow-xl"
-          >
-            <div className="w-16 h-16 bg-brand-teal/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform">
-              <Mic2 className="text-brand-teal" size={32} />
-            </div>
-            <h3 className="text-3xl font-black mb-6 text-slate-900">
-              🎤 Guest Speakers
-            </h3>
-            <p className="text-slate-600 leading-relaxed text-lg mb-6 font-medium">
-              The event will host a distinguished lineup of{" "}
-              <span className="text-brand-blue font-black">
-                guest speakers and educators
-              </span>
-              .
-            </p>
-            <p className="text-slate-500 leading-relaxed">
-              Thought leaders who will inspire, challenge, and pour into the
-              next generation of technology professionals in Nigeria.
+            <p className="text-slate-600 leading-relaxed text-base sm:text-lg">
+              The name &ldquo;Class of Grit&rdquo; reflects who we are: a
+              class that does not quit, a class that keeps showing up, and a
+              class determined to leave a strong legacy.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Event Details Grid */}
-      <section className="py-24 px-6 max-w-7xl mx-auto">
+      {/* Vision & Mission */}
+      <section className="py-24 px-4 sm:px-6 relative">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="group p-8 sm:p-10 rounded-[3rem] bg-white border border-slate-200 hover:border-brand-blue/30 hover:-translate-y-2 transition-all duration-300 cursor-default shadow-sm hover:shadow-xl"
+          >
+            <div className="w-16 h-16 bg-brand-blue/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-brand-blue/10 transition-transform duration-300">
+              <Compass className="text-brand-blue" size={32} />
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black mb-6 text-slate-900">
+              Our Vision
+            </h3>
+            <p className="text-slate-600 leading-relaxed text-base sm:text-lg font-medium">
+              To create a meaningful platform that connects postgraduate
+              technology talent with opportunity, industry, alumni, academic
+              excellence, innovation, and recognition.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="group p-8 sm:p-10 rounded-[3rem] bg-white border border-slate-200 hover:border-brand-teal/30 hover:-translate-y-2 transition-all duration-300 cursor-default shadow-sm hover:shadow-xl"
+          >
+            <div className="w-16 h-16 bg-brand-teal/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-brand-teal/10 transition-transform duration-300">
+              <Target className="text-brand-teal" size={32} />
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black mb-6 text-slate-900">
+              Our Mission
+            </h3>
+            <p className="text-slate-600 leading-relaxed text-base sm:text-lg font-medium">
+              To host a premium event that celebrates excellence, strengthens
+              professional relationships, showcases innovation, recognizes
+              impact, and positions the MIT Class of 2026 as a forward-thinking
+              technology community.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* What We Want to Achieve */}
+      <section className="py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <Rocket className="text-brand-blue mx-auto mb-4" size={28} />
+          <h2 className="section-title">What We Want to Achieve</h2>
+        </motion.div>
+
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+        >
+          {GOALS.map((goal, i) => (
+            <motion.div
+              key={i}
+              variants={fadeUp}
+              className="flex items-start gap-4 p-6 rounded-3xl bg-slate-50 border border-slate-100 hover:border-brand-teal/30 hover:bg-white hover:-translate-y-1 transition-all duration-300"
+            >
+              <Sparkles className="text-brand-teal flex-shrink-0 mt-1" size={20} />
+              <span className="text-slate-700 font-bold text-sm sm:text-base leading-relaxed">
+                {goal}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+      {/* Official Event Information */}
+      <section className="py-24 px-4 sm:px-6 max-w-7xl mx-auto">
         <motion.h3
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
           className="text-sm font-black uppercase tracking-[0.4em] text-brand-blue mb-12 text-center"
         >
-          📅 Event Details
+          Official Event Information
         </motion.h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             {
               label: "Date",
-              value: "Nov 2026",
+              value: EVENT_DETAILS.date,
               color: "from-blue-500/5",
               icon: Calendar,
-              sub: "TBA",
               text: "text-blue-600",
             },
             {
-              label: "Attendance",
-              value: "250+",
+              label: "Time",
+              value: EVENT_DETAILS.time,
               color: "from-teal-500/5",
-              icon: Users,
-              sub: "Guests",
+              icon: Clock,
               text: "text-teal-600",
             },
             {
-              label: "Awards",
-              value: "16",
+              label: "Venue",
+              value: EVENT_DETAILS.venue,
               color: "from-purple-500/5",
-              icon: Award,
-              sub: "Categories",
+              icon: MapPin,
               text: "text-purple-600",
             },
             {
-              label: "Honorees",
-              value: "Lec & Stu",
+              label: "Organized By",
+              value: "UNILAG MIT",
               color: "from-emerald-500/5",
               icon: Star,
-              sub: "Combined",
               text: "text-emerald-600",
             },
           ].map((item, i) => (
@@ -238,25 +288,37 @@ export const AboutPage = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className={`p-8 rounded-[2.5rem] bg-gradient-to-b ${item.color} to-white border border-slate-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow`}
+              whileHover={{ y: -6 }}
+              className={`p-6 sm:p-8 rounded-[2.5rem] bg-gradient-to-b ${item.color} to-white border border-slate-100 flex flex-col items-center text-center shadow-sm hover:shadow-md transition-shadow`}
             >
               <item.icon className={`${item.text} opacity-40 mb-6`} size={24} />
               <span className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">
                 {item.label}
               </span>
-              <span className={`text-3xl font-black ${item.text}`}>
+              <span className={`text-sm sm:text-base font-black ${item.text} leading-snug`}>
                 {item.value}
-              </span>
-              <span className="text-[10px] font-black text-slate-400 uppercase mt-2">
-                {item.sub}
               </span>
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-10 text-center"
+        >
+          <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-slate-400 mb-3">
+            Organized By
+          </p>
+          <p className="text-slate-600 font-bold text-sm sm:text-base">
+            {EVENT_DETAILS.organizedBy.join(" · ")}
+          </p>
+        </motion.div>
       </section>
 
       {/* Statement Footer */}
-      <section className="py-32 px-6 relative bg-slate-50/50">
+      <section className="py-32 px-4 sm:px-6 relative bg-slate-50/50">
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

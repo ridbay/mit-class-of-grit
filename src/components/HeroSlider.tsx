@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ChevronRight, Play } from "lucide-react";
+import { ChevronRight, Calendar, Clock, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { HERO_SLIDES } from "../data/constants";
+import { HERO_SLIDES, EVENT_DETAILS } from "../data/constants";
 
 export const CountdownTimer = () => {
   const [timeLeft, setTimeLeft] = useState({
@@ -13,7 +13,7 @@ export const CountdownTimer = () => {
   });
 
   useEffect(() => {
-    const targetDate = new Date("2026-11-01T00:00:00").getTime();
+    const targetDate = new Date("2026-11-14T00:00:00").getTime(); 
     const timer = setInterval(() => {
       const now = new Date().getTime();
       const distance = targetDate - now;
@@ -51,8 +51,7 @@ export const CountdownTimer = () => {
     </div>
   );
 };
-
-export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
+export const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
@@ -74,7 +73,8 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
           transition={{ duration: 1 }}
           className="absolute inset-0"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/80 to-brand-teal/80 mix-blend-multiply z-10" />
+          <div className="absolute inset-0 bg-black/55 z-10" />
+          <div className="absolute inset-0 bg-gradient-to-br from-brand-blue/70 to-brand-teal/70 mix-blend-multiply z-10" />
           <motion.img
             src={HERO_SLIDES[currentSlide].image}
             alt="Hero"
@@ -93,43 +93,74 @@ export const HeroSlider = ({ onVoteClick }: { onVoteClick: () => void }) => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute inset-0 z-20 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-40 sm:pt-48 md:pt-64 pb-24 md:pb-32 overflow-y-auto">
+      <div className="absolute inset-0 z-20 flex flex-col items-center justify-start text-center px-4 sm:px-6 pt-32 sm:pt-36 md:pt-48 pb-24 md:pb-32 overflow-y-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="max-w-4xl w-full"
+          className="max-w-5xl w-full"
         >
+          <span className="inline-block text-xs sm:text-sm font-black uppercase tracking-[0.3em] text-teal-200 drop-shadow mb-4 sm:mb-6">
+            Class of Grit presents
+          </span>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-tight mb-6 md:mb-8 tracking-tighter drop-shadow-lg px-2">
-            Class of GRIT Networking, Awards & Dinner Night
-            <br className="hidden sm:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-100 drop-shadow-sm inline-block mt-2 sm:mt-0">
-              Celebrating Excellence & Innovation
-            </span>
+            MIT Connect &rsquo;26: Creating What&rsquo;s Next?
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/90 drop-shadow mb-10 md:mb-14 font-medium max-w-2xl mx-auto px-4">
-            {HERO_SLIDES[currentSlide].subtitle}
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 text-white/90 text-sm sm:text-base font-bold mb-10 md:mb-12 px-4">
+            <span className="flex items-center gap-2">
+              <Calendar size={18} /> {EVENT_DETAILS.date}
+            </span>
+            <span className="hidden sm:inline text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <Clock size={18} /> {EVENT_DETAILS.time}
+            </span>
+            <span className="hidden sm:inline text-white/40">•</span>
+            <span className="flex items-center gap-2">
+              <MapPin size={18} /> {EVENT_DETAILS.venue}
+            </span>
+          </div>
 
-          <div className="mb-12 md:mb-20">
+          <div className="mb-7 md:mb-9">
+            <p className="text-[10px] sm:text-xs font-black uppercase tracking-[0.25em] text-white/60 mb-2">
+              Organized By
+            </p>
+            <p className="text-sm sm:text-sm text-white/85 font-medium">
+              {EVENT_DETAILS.organizedBy.join(" · ")}
+            </p>
+          </div>
+
+          <div className="mb-12 md:mb-16">
             <CountdownTimer />
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 w-full px-4 sm:px-0 mb-8 sm:mb-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 w-full max-w-2xl mx-auto px-4 sm:px-0">
             <button
-              onClick={onVoteClick}
-              className="btn-primary flex items-center justify-center gap-2 px-8 sm:px-10 py-4 text-base sm:text-lg drop-shadow-md w-full sm:w-auto"
+              onClick={() => navigate("/sponsors")}
+              className="btn-primary flex items-center justify-center gap-2 px-6 py-4 text-sm sm:text-base drop-shadow-md w-full"
             >
-              Vote Now <ChevronRight size={20} />
+              Become a Partner <ChevronRight size={18} />
             </button>
             <button
-              onClick={() => navigate("/gallery")}
-              className="px-8 sm:px-10 py-4 text-base sm:text-lg font-black text-white hover:text-teal-200 drop-shadow-md transition-colors flex items-center justify-center gap-3 group w-full sm:w-auto"
+              onClick={() => navigate("/payment")}
+              className="btn-secondary flex items-center justify-center gap-2 px-6 py-4 text-sm sm:text-base drop-shadow-md w-full"
             >
-              <div className="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
-                <Play size={18} fill="currentColor" />
-              </div>
-              View Highlights
+              Reserve Your Seat <ChevronRight size={18} />
+            </button>
+            <button
+              onClick={() => navigate("/nominate")}
+              className="px-6 py-4 text-sm sm:text-base font-black text-white border-2 border-white/40 rounded-full hover:bg-white/10 transition-colors w-full"
+            >
+              Nominate a Gritter
+            </button>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("event-details")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="px-6 py-4 text-sm sm:text-base font-black text-white border-2 border-white/40 rounded-full hover:bg-white/10 transition-colors w-full"
+            >
+              View Event Details
             </button>
           </div>
         </motion.div>

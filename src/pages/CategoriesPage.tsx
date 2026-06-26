@@ -1,48 +1,188 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Trophy, ChevronRight, CheckCircle2, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { CATEGORY_GROUPS } from "../data/constants";
+
+const PHILOSOPHY_LINES = [
+  "Some people lead.",
+  "Some people build.",
+  "Some people support.",
+  "Some people teach.",
+  "Some people inspire.",
+  "Some people hold the class together quietly.",
+  "Some people show up when it is difficult.",
+];
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: "spring" as const, stiffness: 300, damping: 24 },
+  },
+};
 
 export const CategoriesPage = () => {
   const [showComingSoon, setShowComingSoon] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="py-24 px-6 max-w-7xl mx-auto min-h-screen"
+      className="min-h-screen"
     >
-      <div className="text-center mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <span className="inline-block py-2 px-4 rounded-full bg-brand-blue/10 text-brand-blue text-[10px] font-bold uppercase tracking-[0.3em] mb-4 shadow-sm border border-brand-blue/20">
+      {/* Hero / Intro */}
+      <section className="pt-32 pb-16 px-4 sm:px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-block py-2 px-6 rounded-full bg-brand-blue/5 text-brand-blue text-xs font-black uppercase tracking-[0.3em] mb-8 border border-brand-blue/10"
+          >
             The Honors
-          </span>
-        </motion.div>
-        <motion.h2
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="section-title text-5xl md:text-6xl"
-        >
-          Award Categories
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium mt-6"
-        >
-          Discover the prestigious awards we present to our outstanding
-          lecturers and students.
-        </motion.p>
-      </div>
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.15 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-black mb-8 leading-[1.1] tracking-tighter text-slate-950"
+          >
+            MIT Connect &rsquo;26{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue via-brand-teal to-emerald-500">
+              Awards
+            </span>
+          </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="text-slate-600 text-base sm:text-lg md:text-xl leading-relaxed font-medium space-y-4"
+          >
+            <p>
+              The awards segment of MIT Connect &rsquo;26 celebrates the
+              people who have shown excellence, resilience, service,
+              leadership, support, innovation, and true Grit throughout the
+              MIT journey.
+            </p>
+            <p>
+              These awards are designed to recognize not only academic
+              brilliance, but also contribution, consistency, class spirit,
+              leadership, impact, and the people who made the journey better
+              for others.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10"
+          >
+            <button
+              onClick={() =>
+                document
+                  .getElementById("categories")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="btn-primary w-full sm:w-auto whitespace-nowrap"
+            >
+              View Categories
+            </button>
+            <button
+              onClick={() => navigate("/nominate")}
+              className="btn-secondary w-full sm:w-auto whitespace-nowrap"
+            >
+              Nominate Someone
+            </button>
+            <button
+              onClick={() => navigate("/vote")}
+              className="px-10 py-4 font-black text-slate-700 border-2 border-slate-200 rounded-full hover:bg-slate-50 transition-colors w-full sm:w-auto whitespace-nowrap"
+            >
+              Vote When Voting Opens
+            </button>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Award Philosophy */}
+      <section className="py-20 px-4 sm:px-6 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-3xl mx-auto text-center">
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-title"
+          >
+            Award Philosophy
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-slate-900 font-black text-lg sm:text-xl mb-10"
+          >
+            We believe excellence is not one-dimensional.
+          </motion.p>
+
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-50px" }}
+            variants={staggerContainer}
+            className="space-y-3 mb-10"
+          >
+            {PHILOSOPHY_LINES.map((line, i) => (
+              <motion.p
+                key={i}
+                variants={fadeUp}
+                className="text-slate-600 font-semibold text-base sm:text-lg hover:text-brand-teal hover:translate-x-1 transition-all duration-300"
+              >
+                {line}
+              </motion.p>
+            ))}
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-slate-600 font-medium text-base sm:text-lg leading-relaxed"
+          >
+            The MIT Connect &rsquo;26 Awards will recognize the many ways
+            people contribute to the strength of the Class of Grit.
+          </motion.p>
+        </div>
+      </section>
+
+      <div id="categories" className="py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+        <div className="text-center mb-20">
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-title text-4xl sm:text-5xl md:text-6xl"
+          >
+            Award Categories
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-slate-500 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed font-medium mt-6"
+          >
+            Discover the prestigious awards we present to our outstanding
+            lecturers and students.
+          </motion.p>
+        </div>
 
       <div className="space-y-32">
         {CATEGORY_GROUPS.map((group) => (
@@ -95,6 +235,7 @@ export const CategoriesPage = () => {
             </motion.div>
           </div>
         ))}
+      </div>
       </div>
 
       {/* Coming Soon Modal */}
