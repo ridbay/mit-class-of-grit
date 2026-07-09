@@ -10,7 +10,7 @@ export interface Env {
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const db = drizzle(context.env.DB);
-  
+
   try {
     const authHeader = context.request.headers.get("Authorization");
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -28,17 +28,19 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       encoder.encode(secretStr),
       { name: "HMAC", hash: "SHA-256" },
       false,
-      ["verify"]
+      ["verify"],
     );
 
     let signatureArray;
     try {
-      const signatureStr = atob(signatureBase64.replace(/-/g, "+").replace(/_/g, "/"));
+      const signatureStr = atob(
+        signatureBase64.replace(/-/g, "+").replace(/_/g, "/"),
+      );
       signatureArray = new Uint8Array(signatureStr.length);
       for (let i = 0; i < signatureStr.length; i++) {
         signatureArray[i] = signatureStr.charCodeAt(i);
       }
-    } catch(e) {
+    } catch (e) {
       return Response.json({ error: "Invalid token format" }, { status: 401 });
     }
 
@@ -46,15 +48,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       "HMAC",
       key,
       signatureArray,
-      encoder.encode(payloadBase64)
+      encoder.encode(payloadBase64),
     );
 
     if (!isValid) {
-      return Response.json({ error: "Invalid token signature" }, { status: 401 });
+      return Response.json(
+        { error: "Invalid token signature" },
+        { status: 401 },
+      );
     }
 
     const payload = JSON.parse(atob(payloadBase64));
-    
+
     if (payload.exp < Date.now()) {
       return Response.json({ error: "Token expired" }, { status: 401 });
     }
@@ -62,7 +67,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const matric = payload.matric;
 
     // Get voting payload
-    const body = await context.request.json() as { fingerprint?: string, selections: any };
+    const body = (await context.request.json()) as {
+      fingerprint?: string;
+      selections: any;
+    };
     const ip = context.request.headers.get("CF-Connecting-IP") || "unknown-ip";
     const fingerprint = body.fingerprint || "unknown-fingerprint";
 
@@ -72,35 +80,65 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       browser: uap.getBrowser(),
       os: uap.getOS(),
       device: uap.getDevice(),
-      userAgent
+      userAgent,
     };
-    
+
     const location = {
       country: (context.request.cf as any)?.country,
       city: (context.request.cf as any)?.city,
       region: (context.request.cf as any)?.region,
       continent: (context.request.cf as any)?.continent,
     };
-    
+
     const network = {
       asn: (context.request.cf as any)?.asn,
       asOrganization: (context.request.cf as any)?.asOrganization,
     };
 
-    // IP/Fingerprint uniqueness check removed so we can track multiple users on the same network
+    // Check IP or Fingerprint uniqueness to restrict one vote per device/IP
+    const conditions = [];
+    if (ip && ip !== "unknown-ip" && ip !== "127.0.0.1" && ip !== "::1") {
+      conditions.push(eq(vote_logs.ip_address, ip));
+    }
+    if (fingerprint && fingerprint !== "unknown-fingerprint") {
+      conditions.push(eq(vote_logs.browser_fingerprint, fingerprint));
+    }
 
+    if (conditions.length > 0) {
+      const existingDeviceLog = await db
+        .select()
+        .from(vote_logs)
+        .where(or(...conditions))
+        .limit(1);
+      if (existingDeviceLog.length > 0) {
+        return Response.json(
+          { error: "A vote has already been cast. Only one vote is allowed." },
+          { status: 403 },
+        );
+      }
+    }
     // Check if they already voted (update or insert)
-    const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
+    const existingVote = await db
+      .select()
+      .from(votes)
+      .where(eq(votes.student_matric, matric))
+      .limit(1);
 
     if (existingVote.length > 0) {
-      return Response.json({ error: "You have already cast your votes. Multiple submissions are not allowed." }, { status: 403 });
+      return Response.json(
+        {
+          error:
+            "You have already cast your votes. Multiple submissions are not allowed.",
+        },
+        { status: 403 },
+      );
     } else {
       // Insert new vote and log the device
       await db.insert(votes).values({
         id: crypto.randomUUID(),
         student_matric: matric,
         selections: body.selections,
-        created_at: new Date()
+        created_at: new Date(),
       });
     }
 
@@ -113,11 +151,14 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       device_info: device_info,
       location: location,
       network: network,
-      created_at: new Date()
+      created_at: new Date(),
     });
 
     return Response.json({ success: true });
   } catch (err: any) {
-    return Response.json({ error: "Server error", details: err.message }, { status: 500 });
+    return Response.json(
+      { error: "Server error", details: err.message },
+      { status: 500 },
+    );
   }
 };

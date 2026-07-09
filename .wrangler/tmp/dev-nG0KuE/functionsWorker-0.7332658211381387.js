@@ -6249,6 +6249,39 @@ var vote_logs = sqliteTable("vote_logs", {
   network: text("network", { mode: "json" }),
   created_at: integer("created_at", { mode: "timestamp" }).notNull()
 });
+var onRequestGet = /* @__PURE__ */ __name2(async (context) => {
+  try {
+    const authHeader = context.request.headers.get("Authorization");
+    if (!authHeader || !authHeader.startsWith("Basic ")) {
+      return Response.json(
+        { error: "Unauthorized" },
+        { status: 401, headers: { "WWW-Authenticate": 'Basic realm="Admin"' } }
+      );
+    }
+    const base64 = authHeader.split(" ")[1];
+    const decoded = atob(base64);
+    const [username, password] = decoded.split(":");
+    const expectedUser = context.env.VITE_ADMIN_USERNAME || "interroperability";
+    const expectedPass = context.env.VITE_ADMIN_PASSWORD || "*Grit2026Cl@ss";
+    if (username !== expectedUser || password !== expectedPass) {
+      return Response.json({ error: "Forbidden" }, { status: 403 });
+    }
+    const db = drizzle(context.env.DB);
+    const [nominations, deviceLogs] = await Promise.all([
+      db.select().from(votes).orderBy(desc(votes.created_at)),
+      db.select().from(vote_logs).orderBy(desc(vote_logs.created_at))
+    ]);
+    return Response.json({
+      nominations,
+      deviceLogs
+    });
+  } catch (err) {
+    return Response.json(
+      { error: "Server error", details: err.message },
+      { status: 500 }
+    );
+  }
+}, "onRequestGet");
 var onRequestPost = /* @__PURE__ */ __name2(async (context) => {
   const db = drizzle(context.env.DB);
   try {
@@ -8225,7 +8258,9 @@ var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
     );
     let signatureArray;
     try {
-      const signatureStr = atob(signatureBase64.replace(/-/g, "+").replace(/_/g, "/"));
+      const signatureStr = atob(
+        signatureBase64.replace(/-/g, "+").replace(/_/g, "/")
+      );
       signatureArray = new Uint8Array(signatureStr.length);
       for (let i = 0; i < signatureStr.length; i++) {
         signatureArray[i] = signatureStr.charCodeAt(i);
@@ -8240,7 +8275,10 @@ var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
       encoder.encode(payloadBase64)
     );
     if (!isValid) {
-      return Response.json({ error: "Invalid token signature" }, { status: 401 });
+      return Response.json(
+        { error: "Invalid token signature" },
+        { status: 401 }
+      );
     }
     const payload = JSON.parse(atob(payloadBase64));
     if (payload.exp < Date.now()) {
@@ -8268,9 +8306,30 @@ var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
       asn: context.request.cf?.asn,
       asOrganization: context.request.cf?.asOrganization
     };
+    const conditions = [];
+    if (ip && ip !== "unknown-ip" && ip !== "127.0.0.1" && ip !== "::1") {
+      conditions.push(eq(vote_logs.ip_address, ip));
+    }
+    if (fingerprint && fingerprint !== "unknown-fingerprint") {
+      conditions.push(eq(vote_logs.browser_fingerprint, fingerprint));
+    }
+    if (conditions.length > 0) {
+      const existingDeviceLog = await db.select().from(vote_logs).where(or(...conditions)).limit(1);
+      if (existingDeviceLog.length > 0) {
+        return Response.json(
+          { error: "A vote has already been cast. Only one vote is allowed." },
+          { status: 403 }
+        );
+      }
+    }
     const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
     if (existingVote.length > 0) {
-      return Response.json({ error: "You have already cast your votes. Multiple submissions are not allowed." }, { status: 403 });
+      return Response.json(
+        {
+          error: "You have already cast your votes. Multiple submissions are not allowed."
+        },
+        { status: 403 }
+      );
     } else {
       await db.insert(votes).values({
         id: crypto.randomUUID(),
@@ -8292,10 +8351,20 @@ var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
     });
     return Response.json({ success: true });
   } catch (err) {
-    return Response.json({ error: "Server error", details: err.message }, { status: 500 });
+    return Response.json(
+      { error: "Server error", details: err.message },
+      { status: 500 }
+    );
   }
 }, "onRequestPost");
 var routes = [
+  {
+    routePath: "/api/admin/data",
+    mountPath: "/api/admin",
+    method: "GET",
+    middlewares: [],
+    modules: [onRequestGet]
+  },
   {
     routePath: "/api/auth/verify",
     mountPath: "/api/auth",

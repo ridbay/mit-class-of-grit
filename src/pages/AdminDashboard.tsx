@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "motion/react";
 import { ShieldAlert, Users, TrendingUp, BarChart, Medal, Award, LogOut } from "lucide-react";
-import { supabase } from "../lib/supabase";
 import { CATEGORIES, CATEGORY_GROUPS, STUDENTS } from "../data/constants";
 
 export const AdminDashboard = () => {
@@ -17,11 +16,11 @@ export const AdminDashboard = () => {
 
   const TOTAL_STUDENTS = 260; // From earlier context
 
-  // Check session storage on mount
   useEffect(() => {
-    if (sessionStorage.getItem("admin_auth") === "true") {
+    const token = sessionStorage.getItem("admin_token");
+    if (token) {
       setIsAuthenticated(true);
-      fetchData();
+      fetchData(token);
     }
   }, []);
 
@@ -33,8 +32,9 @@ export const AdminDashboard = () => {
     if (username === validUser && password === validPass) {
       setIsAuthenticated(true);
       setLoginError("");
-      sessionStorage.setItem("admin_auth", "true");
-      fetchData();
+      const token = btoa(`${username}:${password}`);
+      sessionStorage.setItem("admin_token", token);
+      fetchData(token);
     } else {
       setLoginError("Invalid credentials.");
     }
@@ -44,30 +44,48 @@ export const AdminDashboard = () => {
     setIsAuthenticated(false);
     setUsername("");
     setPassword("");
-    sessionStorage.removeItem("admin_auth");
+    sessionStorage.removeItem("admin_token");
   };
 
-  const fetchData = async () => {
+  const fetchData = async (overrideToken?: string | any) => {
     setIsLoading(true);
     try {
-      const [nomsRes, logsRes] = await Promise.all([
-        supabase.from("nominations").select("*"),
-        supabase.from("device_logs").select("*")
-      ]);
-
-      if (nomsRes.error) throw nomsRes.error;
+      const token = typeof overrideToken === "string" ? overrideToken : sessionStorage.getItem("admin_token");
+      if (!token) throw new Error("No admin token found.");
       
-      // If the device_logs table doesn't exist yet, it might throw an error.
-      // We catch it silently so the dashboard doesn't crash before the user runs the SQL.
-      if (logsRes.error) {
-        console.warn("Device logs fetch failed. Ensure table is created:", logsRes.error);
+      const response = await fetch("/api/admin/data", {
+        headers: {
+          "Authorization": `Basic ${token}`
+        }
+      });
+      
+      const data = (await response.json()) as any;
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch data.");
       }
 
-      setNominations(nomsRes.data || []);
-      setDeviceLogs(logsRes.data || []);
+      const catIdToName: Record<string, string> = {};
+      CATEGORY_GROUPS.forEach(group => {
+        group.categories.forEach(cat => {
+          catIdToName[cat.id] = cat.name;
+        });
+      });
+
+      const mappedNominations = (data.nominations || []).map((nom: any) => {
+        if (!nom.selections) return nom;
+        const newSelections: Record<string, string> = {};
+        for (const [key, value] of Object.entries(nom.selections)) {
+          const name = catIdToName[key] || key;
+          newSelections[name] = value as string;
+        }
+        return { ...nom, selections: newSelections };
+      });
+
+      setNominations(mappedNominations);
+      setDeviceLogs(data.deviceLogs || []);
     } catch (err: any) {
       console.error(err);
-      setError("Failed to fetch nomination data.");
+      setError(err.message || "Failed to fetch nomination data.");
     } finally {
       setIsLoading(false);
     }
@@ -379,12 +397,12 @@ export const AdminDashboard = () => {
                           <td className="px-6 py-4 font-medium text-slate-900">{student?.name || "Unknown"}</td>
                           <td className="px-6 py-4 text-slate-500">{log.student_matric}</td>
                           <td className="px-6 py-4 font-semibold text-slate-700">{log.ip_address || "N/A"}</td>
-                          <td className="px-6 py-4 text-slate-500">{log.city ? `${log.city}, ${log.country}` : "-"}</td>
-                          <td className="px-6 py-4 text-slate-500 max-w-[150px] truncate" title={log.isp}>{log.isp || "-"}</td>
-                          <td className="px-6 py-4 text-slate-500">{log.os_info || "-"}</td>
-                          <td className="px-6 py-4 text-slate-500">{log.browser_info || "-"}</td>
-                          <td className="px-6 py-4 text-slate-500 capitalize">{log.device_type || "-"}</td>
-                          <td className="px-6 py-4 text-slate-500">{log.device_model || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.location?.city ? `${log.location.city}, ${log.location.country}` : "-"}</td>
+                          <td className="px-6 py-4 text-slate-500 max-w-[150px] truncate" title={log.network?.asOrganization}>{log.network?.asOrganization || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.device_info?.os?.name || "-"} {log.device_info?.os?.version || ""}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.device_info?.browser?.name || "-"} {log.device_info?.browser?.version || ""}</td>
+                          <td className="px-6 py-4 text-slate-500 capitalize">{log.device_info?.device?.type || "-"}</td>
+                          <td className="px-6 py-4 text-slate-500">{log.device_info?.device?.model || "-"}</td>
                           <td className="px-6 py-4 text-slate-500">{timestamp}</td>
                         </tr>
                       );
