@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/d1";
 import { eq, or, and } from "drizzle-orm";
 import { votes, vote_logs } from "../../src/db/schema";
+import { UAParser } from "ua-parser-js";
 
 export interface Env {
   DB: D1Database;
@@ -65,20 +66,28 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const ip = context.request.headers.get("CF-Connecting-IP") || "unknown-ip";
     const fingerprint = body.fingerprint || "unknown-fingerprint";
 
-    // Check if IP or Fingerprint has already voted
-    // If we want strict "one vote per IP AND one vote per browser"
-    const existingLogs = await db.select().from(vote_logs).where(
-      or(
-        eq(vote_logs.ip_address, ip),
-        eq(vote_logs.browser_fingerprint, fingerprint)
-      )
-    ).limit(1);
+    const userAgent = context.request.headers.get("User-Agent") || "";
+    const uap = new UAParser(userAgent);
+    const device_info = {
+      browser: uap.getBrowser(),
+      os: uap.getOS(),
+      device: uap.getDevice(),
+      userAgent
+    };
+    
+    const location = {
+      country: (context.request.cf as any)?.country,
+      city: (context.request.cf as any)?.city,
+      region: (context.request.cf as any)?.region,
+      continent: (context.request.cf as any)?.continent,
+    };
+    
+    const network = {
+      asn: (context.request.cf as any)?.asn,
+      asOrganization: (context.request.cf as any)?.asOrganization,
+    };
 
-    if (existingLogs.length > 0 && existingLogs[0].student_matric !== matric) {
-        // Someone else already voted from this IP or browser
-        // If they are voting again for the *same* matric, we allow it (it's an update)
-        return Response.json({ error: "A vote has already been cast from this device or network." }, { status: 403 });
-    }
+    // IP/Fingerprint uniqueness check removed so we can track multiple users on the same network
 
     // Check if they already voted (update or insert)
     const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
@@ -96,15 +105,19 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         selections: body.selections,
         created_at: new Date()
       });
-
-      await db.insert(vote_logs).values({
-        id: crypto.randomUUID(),
-        ip_address: ip,
-        browser_fingerprint: fingerprint,
-        student_matric: matric,
-        created_at: new Date()
-      });
     }
+
+    await db.insert(vote_logs).values({
+      id: crypto.randomUUID(),
+      ip_address: ip,
+      browser_fingerprint: fingerprint,
+      student_matric: matric,
+      student_name: payload.name,
+      device_info: device_info,
+      location: location,
+      network: network,
+      created_at: new Date()
+    });
 
     return Response.json({ success: true });
   } catch (err: any) {

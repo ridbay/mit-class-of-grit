@@ -25,6 +25,7 @@ interface VoteCategory {
   icon: string;
   isLecturer: boolean;
   sectionId: string;
+  nominees?: string[];
 }
 
 interface VoteSection {
@@ -56,6 +57,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🏆",
         isLecturer: false,
         sectionId: "student-merit",
+        nominees: ["s48", "s43", "s21", "s100", "s10", "s51"],
       },
       {
         id: "sm2",
@@ -532,9 +534,13 @@ export const VotingForm = ({
 
   // Compute nominee list
   const baseNominees = useMemo(() => {
-    const list = currentCategory.isLecturer
+    let list = currentCategory.isLecturer
       ? [...LECTURERS]
       : [...STUDENTS];
+
+    if (currentCategory.nominees && currentCategory.nominees.length > 0) {
+      list = list.filter((p) => currentCategory.nominees!.includes(p.id));
+    }
 
     if (!currentCategory.isLecturer) {
       // Shuffle for fairness (Fisher-Yates)

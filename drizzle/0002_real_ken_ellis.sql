@@ -1,0 +1,1 @@
+ALTER TABLE `vote_logs` ADD `student_name` text;

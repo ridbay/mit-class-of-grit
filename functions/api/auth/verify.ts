@@ -66,6 +66,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const payload = JSON.stringify({
       matric: student.matric,
+      name: student.name,
       exp: Date.now() + 1000 * 60 * 60 * 24,
     }); // 24 hours
     const payloadBase64 = btoa(payload);

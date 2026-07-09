@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-cuP7us/checked-fetch.js
+// .wrangler/tmp/bundle-f0NL4C/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -27,7 +27,34 @@ globalThis.fetch = new Proxy(globalThis.fetch, {
   }
 });
 
-// ../node_modules/drizzle-orm/entity.js
+// .wrangler/tmp/pages-jBcKeu/functionsWorker-0.7332658211381387.mjs
+var __defProp2 = Object.defineProperty;
+var __name2 = /* @__PURE__ */ __name((target, value) => __defProp2(target, "name", { value, configurable: true }), "__name");
+var urls2 = /* @__PURE__ */ new Set();
+function checkURL2(request, init) {
+  const url = request instanceof URL ? request : new URL(
+    (typeof request === "string" ? new Request(request, init) : request).url
+  );
+  if (url.port && url.port !== "443" && url.protocol === "https:") {
+    if (!urls2.has(url.toString())) {
+      urls2.add(url.toString());
+      console.warn(
+        `WARNING: known issue with \`fetch()\` requests to custom HTTPS ports in published Workers:
+ - ${url.toString()} - the custom port will be ignored when the Worker is published using the \`wrangler deploy\` command.
+`
+      );
+    }
+  }
+}
+__name(checkURL2, "checkURL");
+__name2(checkURL2, "checkURL");
+globalThis.fetch = new Proxy(globalThis.fetch, {
+  apply(target, thisArg, argArray) {
+    const [request, init] = argArray;
+    checkURL2(request, init);
+    return Reflect.apply(target, thisArg, argArray);
+  }
+});
 var entityKind = /* @__PURE__ */ Symbol.for("drizzle:entityKind");
 function is(value, type) {
   if (!value || typeof value !== "object") {
@@ -53,11 +80,13 @@ function is(value, type) {
   return false;
 }
 __name(is, "is");
-
-// ../node_modules/drizzle-orm/logger.js
+__name2(is, "is");
 var ConsoleLogWriter = class {
   static {
     __name(this, "ConsoleLogWriter");
+  }
+  static {
+    __name2(this, "ConsoleLogWriter");
   }
   static [entityKind] = "ConsoleLogWriter";
   write(message) {
@@ -67,6 +96,9 @@ var ConsoleLogWriter = class {
 var DefaultLogger = class {
   static {
     __name(this, "DefaultLogger");
+  }
+  static {
+    __name2(this, "DefaultLogger");
   }
   static [entityKind] = "DefaultLogger";
   writer;
@@ -89,15 +121,14 @@ var NoopLogger = class {
   static {
     __name(this, "NoopLogger");
   }
+  static {
+    __name2(this, "NoopLogger");
+  }
   static [entityKind] = "NoopLogger";
   logQuery() {
   }
 };
-
-// ../node_modules/drizzle-orm/table.utils.js
 var TableName = /* @__PURE__ */ Symbol.for("drizzle:Name");
-
-// ../node_modules/drizzle-orm/table.js
 var Schema = /* @__PURE__ */ Symbol.for("drizzle:Schema");
 var Columns = /* @__PURE__ */ Symbol.for("drizzle:Columns");
 var ExtraConfigColumns = /* @__PURE__ */ Symbol.for("drizzle:ExtraConfigColumns");
@@ -109,6 +140,9 @@ var IsDrizzleTable = /* @__PURE__ */ Symbol.for("drizzle:IsDrizzleTable");
 var Table = class {
   static {
     __name(this, "Table");
+  }
+  static {
+    __name2(this, "Table");
   }
   static [entityKind] = "Table";
   /** @internal */
@@ -159,15 +193,18 @@ function getTableName(table) {
   return table[TableName];
 }
 __name(getTableName, "getTableName");
+__name2(getTableName, "getTableName");
 function getTableUniqueName(table) {
   return `${table[Schema] ?? "public"}.${table[TableName]}`;
 }
 __name(getTableUniqueName, "getTableUniqueName");
-
-// ../node_modules/drizzle-orm/column.js
+__name2(getTableUniqueName, "getTableUniqueName");
 var Column = class {
   static {
     __name(this, "Column");
+  }
+  static {
+    __name2(this, "Column");
   }
   constructor(table, config) {
     this.table = table;
@@ -217,11 +254,12 @@ var Column = class {
     return this.config.generated !== void 0 && this.config.generated.type !== "byDefault";
   }
 };
-
-// ../node_modules/drizzle-orm/column-builder.js
 var ColumnBuilder = class {
   static {
     __name(this, "ColumnBuilder");
+  }
+  static {
+    __name2(this, "ColumnBuilder");
   }
   static [entityKind] = "ColumnBuilder";
   config;
@@ -323,11 +361,12 @@ var ColumnBuilder = class {
     this.config.name = name;
   }
 };
-
-// ../node_modules/drizzle-orm/pg-core/foreign-keys.js
 var ForeignKeyBuilder = class {
   static {
     __name(this, "ForeignKeyBuilder");
+  }
+  static {
+    __name2(this, "ForeignKeyBuilder");
   }
   static [entityKind] = "PgForeignKeyBuilder";
   /** @internal */
@@ -363,6 +402,9 @@ var ForeignKey = class {
   static {
     __name(this, "ForeignKey");
   }
+  static {
+    __name2(this, "ForeignKey");
+  }
   constructor(table, builder) {
     this.table = table;
     this.reference = builder.reference;
@@ -386,21 +428,22 @@ var ForeignKey = class {
     return name ?? `${chunks.join("_")}_fk`;
   }
 };
-
-// ../node_modules/drizzle-orm/tracing-utils.js
 function iife(fn, ...args) {
   return fn(...args);
 }
 __name(iife, "iife");
-
-// ../node_modules/drizzle-orm/pg-core/unique-constraint.js
+__name2(iife, "iife");
 function uniqueKeyName(table, columns) {
   return `${table[TableName]}_${columns.join("_")}_unique`;
 }
 __name(uniqueKeyName, "uniqueKeyName");
+__name2(uniqueKeyName, "uniqueKeyName");
 var UniqueConstraintBuilder = class {
   static {
     __name(this, "UniqueConstraintBuilder");
+  }
+  static {
+    __name2(this, "UniqueConstraintBuilder");
   }
   constructor(columns, name) {
     this.name = name;
@@ -424,6 +467,9 @@ var UniqueOnConstraintBuilder = class {
   static {
     __name(this, "UniqueOnConstraintBuilder");
   }
+  static {
+    __name2(this, "UniqueOnConstraintBuilder");
+  }
   static [entityKind] = "PgUniqueOnConstraintBuilder";
   /** @internal */
   name;
@@ -437,6 +483,9 @@ var UniqueOnConstraintBuilder = class {
 var UniqueConstraint = class {
   static {
     __name(this, "UniqueConstraint");
+  }
+  static {
+    __name2(this, "UniqueConstraint");
   }
   constructor(table, columns, nullsNotDistinct, name) {
     this.table = table;
@@ -452,8 +501,6 @@ var UniqueConstraint = class {
     return this.name;
   }
 };
-
-// ../node_modules/drizzle-orm/pg-core/utils/array.js
 function parsePgArrayValue(arrayString, startFrom, inQuotes) {
   for (let i = startFrom; i < arrayString.length; i++) {
     const char = arrayString[i];
@@ -474,6 +521,7 @@ function parsePgArrayValue(arrayString, startFrom, inQuotes) {
   return [arrayString.slice(startFrom).replace(/\\/g, ""), arrayString.length];
 }
 __name(parsePgArrayValue, "parsePgArrayValue");
+__name2(parsePgArrayValue, "parsePgArrayValue");
 function parsePgNestedArray(arrayString, startFrom = 0) {
   const result = [];
   let i = startFrom;
@@ -515,11 +563,13 @@ function parsePgNestedArray(arrayString, startFrom = 0) {
   return [result, i];
 }
 __name(parsePgNestedArray, "parsePgNestedArray");
+__name2(parsePgNestedArray, "parsePgNestedArray");
 function parsePgArray(arrayString) {
   const [result] = parsePgNestedArray(arrayString, 1);
   return result;
 }
 __name(parsePgArray, "parsePgArray");
+__name2(parsePgArray, "parsePgArray");
 function makePgArray(array) {
   return `{${array.map((item) => {
     if (Array.isArray(item)) {
@@ -532,11 +582,13 @@ function makePgArray(array) {
   }).join(",")}}`;
 }
 __name(makePgArray, "makePgArray");
-
-// ../node_modules/drizzle-orm/pg-core/columns/common.js
+__name2(makePgArray, "makePgArray");
 var PgColumnBuilder = class extends ColumnBuilder {
   static {
     __name(this, "PgColumnBuilder");
+  }
+  static {
+    __name2(this, "PgColumnBuilder");
   }
   foreignKeyConfigs = [];
   static [entityKind] = "PgColumnBuilder";
@@ -592,6 +644,9 @@ var PgColumn = class extends Column {
   static {
     __name(this, "PgColumn");
   }
+  static {
+    __name2(this, "PgColumn");
+  }
   constructor(table, config) {
     if (!config.uniqueName) {
       config.uniqueName = uniqueKeyName(table, [config.name]);
@@ -604,6 +659,9 @@ var PgColumn = class extends Column {
 var ExtraConfigColumn = class extends PgColumn {
   static {
     __name(this, "ExtraConfigColumn");
+  }
+  static {
+    __name2(this, "ExtraConfigColumn");
   }
   static [entityKind] = "ExtraConfigColumn";
   getSQLType() {
@@ -673,6 +731,9 @@ var IndexedColumn = class {
   static {
     __name(this, "IndexedColumn");
   }
+  static {
+    __name2(this, "IndexedColumn");
+  }
   static [entityKind] = "IndexedColumn";
   constructor(name, keyAsName, type, indexConfig) {
     this.name = name;
@@ -688,6 +749,9 @@ var IndexedColumn = class {
 var PgArrayBuilder = class extends PgColumnBuilder {
   static {
     __name(this, "PgArrayBuilder");
+  }
+  static {
+    __name2(this, "PgArrayBuilder");
   }
   static [entityKind] = "PgArrayBuilder";
   constructor(name, baseBuilder, size) {
@@ -707,7 +771,10 @@ var PgArrayBuilder = class extends PgColumnBuilder {
 };
 var PgArray = class _PgArray extends PgColumn {
   static {
-    __name(this, "PgArray");
+    __name(this, "_PgArray");
+  }
+  static {
+    __name2(this, "PgArray");
   }
   constructor(table, config, baseColumn, range) {
     super(table, config);
@@ -734,11 +801,12 @@ var PgArray = class _PgArray extends PgColumn {
     return makePgArray(a);
   }
 };
-
-// ../node_modules/drizzle-orm/pg-core/columns/enum.js
 var PgEnumObjectColumnBuilder = class extends PgColumnBuilder {
   static {
     __name(this, "PgEnumObjectColumnBuilder");
+  }
+  static {
+    __name2(this, "PgEnumObjectColumnBuilder");
   }
   static [entityKind] = "PgEnumObjectColumnBuilder";
   constructor(name, enumInstance) {
@@ -757,6 +825,9 @@ var PgEnumObjectColumn = class extends PgColumn {
   static {
     __name(this, "PgEnumObjectColumn");
   }
+  static {
+    __name2(this, "PgEnumObjectColumn");
+  }
   static [entityKind] = "PgEnumObjectColumn";
   enum;
   enumValues = this.config.enum.enumValues;
@@ -773,9 +844,13 @@ function isPgEnum(obj) {
   return !!obj && typeof obj === "function" && isPgEnumSym in obj && obj[isPgEnumSym] === true;
 }
 __name(isPgEnum, "isPgEnum");
+__name2(isPgEnum, "isPgEnum");
 var PgEnumColumnBuilder = class extends PgColumnBuilder {
   static {
     __name(this, "PgEnumColumnBuilder");
+  }
+  static {
+    __name2(this, "PgEnumColumnBuilder");
   }
   static [entityKind] = "PgEnumColumnBuilder";
   constructor(name, enumInstance) {
@@ -794,6 +869,9 @@ var PgEnumColumn = class extends PgColumn {
   static {
     __name(this, "PgEnumColumn");
   }
+  static {
+    __name2(this, "PgEnumColumn");
+  }
   static [entityKind] = "PgEnumColumn";
   enum = this.config.enum;
   enumValues = this.config.enum.enumValues;
@@ -805,11 +883,12 @@ var PgEnumColumn = class extends PgColumn {
     return this.enum.enumName;
   }
 };
-
-// ../node_modules/drizzle-orm/subquery.js
 var Subquery = class {
   static {
     __name(this, "Subquery");
+  }
+  static {
+    __name2(this, "Subquery");
   }
   static [entityKind] = "Subquery";
   constructor(sql2, fields, alias, isWith = false, usedTables = []) {
@@ -830,13 +909,12 @@ var WithSubquery = class extends Subquery {
   static {
     __name(this, "WithSubquery");
   }
+  static {
+    __name2(this, "WithSubquery");
+  }
   static [entityKind] = "WithSubquery";
 };
-
-// ../node_modules/drizzle-orm/version.js
 var version = "0.45.2";
-
-// ../node_modules/drizzle-orm/tracing.js
 var otel;
 var rawTracer;
 var tracer = {
@@ -870,14 +948,13 @@ var tracer = {
     );
   }
 };
-
-// ../node_modules/drizzle-orm/view-common.js
 var ViewBaseConfig = /* @__PURE__ */ Symbol.for("drizzle:ViewBaseConfig");
-
-// ../node_modules/drizzle-orm/sql/sql.js
 var FakePrimitiveParam = class {
   static {
     __name(this, "FakePrimitiveParam");
+  }
+  static {
+    __name2(this, "FakePrimitiveParam");
   }
   static [entityKind] = "FakePrimitiveParam";
 };
@@ -885,6 +962,7 @@ function isSQLWrapper(value) {
   return value !== null && value !== void 0 && typeof value.getSQL === "function";
 }
 __name(isSQLWrapper, "isSQLWrapper");
+__name2(isSQLWrapper, "isSQLWrapper");
 function mergeQueries(queries) {
   const result = { sql: "", params: [] };
   for (const query of queries) {
@@ -900,9 +978,13 @@ function mergeQueries(queries) {
   return result;
 }
 __name(mergeQueries, "mergeQueries");
+__name2(mergeQueries, "mergeQueries");
 var StringChunk = class {
   static {
     __name(this, "StringChunk");
+  }
+  static {
+    __name2(this, "StringChunk");
   }
   static [entityKind] = "StringChunk";
   value;
@@ -915,7 +997,10 @@ var StringChunk = class {
 };
 var SQL = class _SQL {
   static {
-    __name(this, "SQL");
+    __name(this, "_SQL");
+  }
+  static {
+    __name2(this, "SQL");
   }
   constructor(queryChunks) {
     this.queryChunks = queryChunks;
@@ -1121,6 +1206,9 @@ var Name = class {
   static {
     __name(this, "Name");
   }
+  static {
+    __name2(this, "Name");
+  }
   constructor(value) {
     this.value = value;
   }
@@ -1134,11 +1222,12 @@ function isDriverValueEncoder(value) {
   return typeof value === "object" && value !== null && "mapToDriverValue" in value && typeof value.mapToDriverValue === "function";
 }
 __name(isDriverValueEncoder, "isDriverValueEncoder");
+__name2(isDriverValueEncoder, "isDriverValueEncoder");
 var noopDecoder = {
-  mapFromDriverValue: /* @__PURE__ */ __name((value) => value, "mapFromDriverValue")
+  mapFromDriverValue: /* @__PURE__ */ __name2((value) => value, "mapFromDriverValue")
 };
 var noopEncoder = {
-  mapToDriverValue: /* @__PURE__ */ __name((value) => value, "mapToDriverValue")
+  mapToDriverValue: /* @__PURE__ */ __name2((value) => value, "mapToDriverValue")
 };
 var noopMapper = {
   ...noopDecoder,
@@ -1147,6 +1236,9 @@ var noopMapper = {
 var Param = class {
   static {
     __name(this, "Param");
+  }
+  static {
+    __name2(this, "Param");
   }
   /**
    * @param value - Parameter value
@@ -1173,21 +1265,25 @@ function sql(strings, ...params) {
   return new SQL(queryChunks);
 }
 __name(sql, "sql");
+__name2(sql, "sql");
 ((sql2) => {
   function empty() {
     return new SQL([]);
   }
   __name(empty, "empty");
+  __name2(empty, "empty");
   sql2.empty = empty;
   function fromList(list) {
     return new SQL(list);
   }
   __name(fromList, "fromList");
+  __name2(fromList, "fromList");
   sql2.fromList = fromList;
   function raw(str) {
     return new SQL([new StringChunk(str)]);
   }
   __name(raw, "raw");
+  __name2(raw, "raw");
   sql2.raw = raw;
   function join(chunks, separator) {
     const result = [];
@@ -1200,27 +1296,34 @@ __name(sql, "sql");
     return new SQL(result);
   }
   __name(join, "join");
+  __name2(join, "join");
   sql2.join = join;
   function identifier(value) {
     return new Name(value);
   }
   __name(identifier, "identifier");
+  __name2(identifier, "identifier");
   sql2.identifier = identifier;
   function placeholder2(name2) {
     return new Placeholder(name2);
   }
   __name(placeholder2, "placeholder2");
+  __name2(placeholder2, "placeholder2");
   sql2.placeholder = placeholder2;
   function param2(value, encoder) {
     return new Param(value, encoder);
   }
   __name(param2, "param2");
+  __name2(param2, "param2");
   sql2.param = param2;
 })(sql || (sql = {}));
 ((SQL2) => {
   class Aliased {
     static {
       __name(this, "Aliased");
+    }
+    static {
+      __name2(this, "Aliased");
     }
     constructor(sql2, fieldAlias) {
       this.sql = sql2;
@@ -1242,6 +1345,9 @@ __name(sql, "sql");
 var Placeholder = class {
   static {
     __name(this, "Placeholder");
+  }
+  static {
+    __name2(this, "Placeholder");
   }
   constructor(name2) {
     this.name = name2;
@@ -1269,10 +1375,14 @@ function fillPlaceholders(params, values) {
   });
 }
 __name(fillPlaceholders, "fillPlaceholders");
+__name2(fillPlaceholders, "fillPlaceholders");
 var IsDrizzleView = /* @__PURE__ */ Symbol.for("drizzle:IsDrizzleView");
 var View = class {
   static {
     __name(this, "View");
+  }
+  static {
+    __name2(this, "View");
   }
   static [entityKind] = "View";
   /** @internal */
@@ -1303,8 +1413,6 @@ Table.prototype.getSQL = function() {
 Subquery.prototype.getSQL = function() {
   return new SQL([this]);
 };
-
-// ../node_modules/drizzle-orm/utils.js
 function mapResultRow(columns, row, joinsNotNullableMap) {
   const nullifyMap = {};
   const result = columns.reduce(
@@ -1353,6 +1461,7 @@ function mapResultRow(columns, row, joinsNotNullableMap) {
   return result;
 }
 __name(mapResultRow, "mapResultRow");
+__name2(mapResultRow, "mapResultRow");
 function orderSelectedFields(fields, pathPrefix) {
   return Object.entries(fields).reduce((result, [name, field]) => {
     if (typeof name !== "string") {
@@ -1370,6 +1479,7 @@ function orderSelectedFields(fields, pathPrefix) {
   }, []);
 }
 __name(orderSelectedFields, "orderSelectedFields");
+__name2(orderSelectedFields, "orderSelectedFields");
 function haveSameKeys(left, right) {
   const leftKeys = Object.keys(left);
   const rightKeys = Object.keys(right);
@@ -1384,6 +1494,7 @@ function haveSameKeys(left, right) {
   return true;
 }
 __name(haveSameKeys, "haveSameKeys");
+__name2(haveSameKeys, "haveSameKeys");
 function mapUpdateSet(table, values) {
   const entries = Object.entries(values).filter(([, value]) => value !== void 0).map(([key, value]) => {
     if (is(value, SQL) || is(value, Column)) {
@@ -1398,6 +1509,7 @@ function mapUpdateSet(table, values) {
   return Object.fromEntries(entries);
 }
 __name(mapUpdateSet, "mapUpdateSet");
+__name2(mapUpdateSet, "mapUpdateSet");
 function applyMixins(baseClass, extendedClasses) {
   for (const extendedClass of extendedClasses) {
     for (const name of Object.getOwnPropertyNames(extendedClass.prototype)) {
@@ -1411,14 +1523,17 @@ function applyMixins(baseClass, extendedClasses) {
   }
 }
 __name(applyMixins, "applyMixins");
+__name2(applyMixins, "applyMixins");
 function getTableColumns(table) {
   return table[Table.Symbol.Columns];
 }
 __name(getTableColumns, "getTableColumns");
+__name2(getTableColumns, "getTableColumns");
 function getTableLikeName(table) {
   return is(table, Subquery) ? table._.alias : is(table, View) ? table[ViewBaseConfig].name : is(table, SQL) ? void 0 : table[Table.Symbol.IsAlias] ? table[Table.Symbol.Name] : table[Table.Symbol.BaseName];
 }
 __name(getTableLikeName, "getTableLikeName");
+__name2(getTableLikeName, "getTableLikeName");
 function getColumnNameAndConfig(a, b) {
   return {
     name: typeof a === "string" && a.length > 0 ? a : "",
@@ -1426,14 +1541,16 @@ function getColumnNameAndConfig(a, b) {
   };
 }
 __name(getColumnNameAndConfig, "getColumnNameAndConfig");
+__name2(getColumnNameAndConfig, "getColumnNameAndConfig");
 var textDecoder = typeof TextDecoder === "undefined" ? null : new TextDecoder();
-
-// ../node_modules/drizzle-orm/pg-core/table.js
 var InlineForeignKeys = /* @__PURE__ */ Symbol.for("drizzle:PgInlineForeignKeys");
 var EnableRLS = /* @__PURE__ */ Symbol.for("drizzle:EnableRLS");
 var PgTable = class extends Table {
   static {
     __name(this, "PgTable");
+  }
+  static {
+    __name2(this, "PgTable");
   }
   static [entityKind] = "PgTable";
   /** @internal */
@@ -1450,11 +1567,12 @@ var PgTable = class extends Table {
   /** @internal */
   [Table.Symbol.ExtraConfigColumns] = {};
 };
-
-// ../node_modules/drizzle-orm/pg-core/primary-keys.js
 var PrimaryKeyBuilder = class {
   static {
     __name(this, "PrimaryKeyBuilder");
+  }
+  static {
+    __name2(this, "PrimaryKeyBuilder");
   }
   static [entityKind] = "PgPrimaryKeyBuilder";
   /** @internal */
@@ -1474,6 +1592,9 @@ var PrimaryKey = class {
   static {
     __name(this, "PrimaryKey");
   }
+  static {
+    __name2(this, "PrimaryKey");
+  }
   constructor(table, columns, name) {
     this.table = table;
     this.columns = columns;
@@ -1486,8 +1607,6 @@ var PrimaryKey = class {
     return this.name ?? `${this.table[PgTable.Symbol.Name]}_${this.columns.map((column) => column.name).join("_")}_pk`;
   }
 };
-
-// ../node_modules/drizzle-orm/sql/expressions/conditions.js
 function bindIfParam(value, column) {
   if (isDriverValueEncoder(column) && !isSQLWrapper(value) && !is(value, Param) && !is(value, Placeholder) && !is(value, Column) && !is(value, Table) && !is(value, View)) {
     return new Param(value, column);
@@ -1495,10 +1614,11 @@ function bindIfParam(value, column) {
   return value;
 }
 __name(bindIfParam, "bindIfParam");
-var eq = /* @__PURE__ */ __name((left, right) => {
+__name2(bindIfParam, "bindIfParam");
+var eq = /* @__PURE__ */ __name2((left, right) => {
   return sql`${left} = ${bindIfParam(right, left)}`;
 }, "eq");
-var ne = /* @__PURE__ */ __name((left, right) => {
+var ne = /* @__PURE__ */ __name2((left, right) => {
   return sql`${left} <> ${bindIfParam(right, left)}`;
 }, "ne");
 function and(...unfilteredConditions) {
@@ -1518,6 +1638,7 @@ function and(...unfilteredConditions) {
   ]);
 }
 __name(and, "and");
+__name2(and, "and");
 function or(...unfilteredConditions) {
   const conditions = unfilteredConditions.filter(
     (c) => c !== void 0
@@ -1535,20 +1656,22 @@ function or(...unfilteredConditions) {
   ]);
 }
 __name(or, "or");
+__name2(or, "or");
 function not(condition) {
   return sql`not ${condition}`;
 }
 __name(not, "not");
-var gt = /* @__PURE__ */ __name((left, right) => {
+__name2(not, "not");
+var gt = /* @__PURE__ */ __name2((left, right) => {
   return sql`${left} > ${bindIfParam(right, left)}`;
 }, "gt");
-var gte = /* @__PURE__ */ __name((left, right) => {
+var gte = /* @__PURE__ */ __name2((left, right) => {
   return sql`${left} >= ${bindIfParam(right, left)}`;
 }, "gte");
-var lt = /* @__PURE__ */ __name((left, right) => {
+var lt = /* @__PURE__ */ __name2((left, right) => {
   return sql`${left} < ${bindIfParam(right, left)}`;
 }, "lt");
-var lte = /* @__PURE__ */ __name((left, right) => {
+var lte = /* @__PURE__ */ __name2((left, right) => {
   return sql`${left} <= ${bindIfParam(right, left)}`;
 }, "lte");
 function inArray(column, values) {
@@ -1561,6 +1684,7 @@ function inArray(column, values) {
   return sql`${column} in ${bindIfParam(values, column)}`;
 }
 __name(inArray, "inArray");
+__name2(inArray, "inArray");
 function notInArray(column, values) {
   if (Array.isArray(values)) {
     if (values.length === 0) {
@@ -1571,22 +1695,27 @@ function notInArray(column, values) {
   return sql`${column} not in ${bindIfParam(values, column)}`;
 }
 __name(notInArray, "notInArray");
+__name2(notInArray, "notInArray");
 function isNull(value) {
   return sql`${value} is null`;
 }
 __name(isNull, "isNull");
+__name2(isNull, "isNull");
 function isNotNull(value) {
   return sql`${value} is not null`;
 }
 __name(isNotNull, "isNotNull");
+__name2(isNotNull, "isNotNull");
 function exists(subquery) {
   return sql`exists ${subquery}`;
 }
 __name(exists, "exists");
+__name2(exists, "exists");
 function notExists(subquery) {
   return sql`not exists ${subquery}`;
 }
 __name(notExists, "notExists");
+__name2(notExists, "notExists");
 function between(column, min, max) {
   return sql`${column} between ${bindIfParam(min, column)} and ${bindIfParam(
     max,
@@ -1594,6 +1723,7 @@ function between(column, min, max) {
   )}`;
 }
 __name(between, "between");
+__name2(between, "between");
 function notBetween(column, min, max) {
   return sql`${column} not between ${bindIfParam(
     min,
@@ -1601,37 +1731,43 @@ function notBetween(column, min, max) {
   )} and ${bindIfParam(max, column)}`;
 }
 __name(notBetween, "notBetween");
+__name2(notBetween, "notBetween");
 function like(column, value) {
   return sql`${column} like ${value}`;
 }
 __name(like, "like");
+__name2(like, "like");
 function notLike(column, value) {
   return sql`${column} not like ${value}`;
 }
 __name(notLike, "notLike");
+__name2(notLike, "notLike");
 function ilike(column, value) {
   return sql`${column} ilike ${value}`;
 }
 __name(ilike, "ilike");
+__name2(ilike, "ilike");
 function notIlike(column, value) {
   return sql`${column} not ilike ${value}`;
 }
 __name(notIlike, "notIlike");
-
-// ../node_modules/drizzle-orm/sql/expressions/select.js
+__name2(notIlike, "notIlike");
 function asc(column) {
   return sql`${column} asc`;
 }
 __name(asc, "asc");
+__name2(asc, "asc");
 function desc(column) {
   return sql`${column} desc`;
 }
 __name(desc, "desc");
-
-// ../node_modules/drizzle-orm/relations.js
+__name2(desc, "desc");
 var Relation = class {
   static {
     __name(this, "Relation");
+  }
+  static {
+    __name2(this, "Relation");
   }
   constructor(sourceTable, referencedTable, relationName) {
     this.sourceTable = sourceTable;
@@ -1647,6 +1783,9 @@ var Relations = class {
   static {
     __name(this, "Relations");
   }
+  static {
+    __name2(this, "Relations");
+  }
   constructor(table, config) {
     this.table = table;
     this.config = config;
@@ -1655,7 +1794,10 @@ var Relations = class {
 };
 var One = class _One extends Relation {
   static {
-    __name(this, "One");
+    __name(this, "_One");
+  }
+  static {
+    __name2(this, "One");
   }
   constructor(sourceTable, referencedTable, config, isNullable) {
     super(sourceTable, referencedTable, config?.relationName);
@@ -1676,7 +1818,10 @@ var One = class _One extends Relation {
 };
 var Many = class _Many extends Relation {
   static {
-    __name(this, "Many");
+    __name(this, "_Many");
+  }
+  static {
+    __name2(this, "Many");
   }
   constructor(sourceTable, referencedTable, config) {
     super(sourceTable, referencedTable, config?.relationName);
@@ -1720,6 +1865,7 @@ function getOperators() {
   };
 }
 __name(getOperators, "getOperators");
+__name2(getOperators, "getOperators");
 function getOrderByOperators() {
   return {
     sql,
@@ -1728,6 +1874,7 @@ function getOrderByOperators() {
   };
 }
 __name(getOrderByOperators, "getOrderByOperators");
+__name2(getOrderByOperators, "getOrderByOperators");
 function extractTablesRelationalConfig(schema, configHelpers) {
   if (Object.keys(schema).length === 1 && "default" in schema && !is(schema["default"], Table)) {
     schema = schema["default"];
@@ -1792,23 +1939,26 @@ function extractTablesRelationalConfig(schema, configHelpers) {
   return { tables: tablesConfig, tableNamesMap };
 }
 __name(extractTablesRelationalConfig, "extractTablesRelationalConfig");
+__name2(extractTablesRelationalConfig, "extractTablesRelationalConfig");
 function createOne(sourceTable) {
-  return /* @__PURE__ */ __name(function one(table, config) {
+  return /* @__PURE__ */ __name2(/* @__PURE__ */ __name(function one(table, config) {
     return new One(
       sourceTable,
       table,
       config,
       config?.fields.reduce((res, f) => res && f.notNull, true) ?? false
     );
-  }, "one");
+  }, "one"), "one");
 }
 __name(createOne, "createOne");
+__name2(createOne, "createOne");
 function createMany(sourceTable) {
-  return /* @__PURE__ */ __name(function many(referencedTable, config) {
+  return /* @__PURE__ */ __name2(/* @__PURE__ */ __name(function many(referencedTable, config) {
     return new Many(sourceTable, referencedTable, config);
-  }, "many");
+  }, "many"), "many");
 }
 __name(createMany, "createMany");
+__name2(createMany, "createMany");
 function normalizeRelation(schema, tableNamesMap, relation) {
   if (is(relation, One) && relation.config) {
     return {
@@ -1859,6 +2009,7 @@ function normalizeRelation(schema, tableNamesMap, relation) {
   );
 }
 __name(normalizeRelation, "normalizeRelation");
+__name2(normalizeRelation, "normalizeRelation");
 function createTableRelationsHelpers(sourceTable) {
   return {
     one: createOne(sourceTable),
@@ -1866,6 +2017,7 @@ function createTableRelationsHelpers(sourceTable) {
   };
 }
 __name(createTableRelationsHelpers, "createTableRelationsHelpers");
+__name2(createTableRelationsHelpers, "createTableRelationsHelpers");
 function mapRelationalRow(tablesConfig, tableConfig, row, buildQueryResultSelection, mapColumnValue = (value) => value) {
   const result = {};
   for (const [
@@ -1908,11 +2060,13 @@ function mapRelationalRow(tablesConfig, tableConfig, row, buildQueryResultSelect
   return result;
 }
 __name(mapRelationalRow, "mapRelationalRow");
-
-// ../node_modules/drizzle-orm/alias.js
+__name2(mapRelationalRow, "mapRelationalRow");
 var ColumnAliasProxyHandler = class {
   static {
     __name(this, "ColumnAliasProxyHandler");
+  }
+  static {
+    __name2(this, "ColumnAliasProxyHandler");
   }
   constructor(table) {
     this.table = table;
@@ -1928,6 +2082,9 @@ var ColumnAliasProxyHandler = class {
 var TableAliasProxyHandler = class {
   static {
     __name(this, "TableAliasProxyHandler");
+  }
+  static {
+    __name2(this, "TableAliasProxyHandler");
   }
   constructor(alias, replaceOriginalName) {
     this.alias = alias;
@@ -1976,6 +2133,9 @@ var RelationTableAliasProxyHandler = class {
   static {
     __name(this, "RelationTableAliasProxyHandler");
   }
+  static {
+    __name2(this, "RelationTableAliasProxyHandler");
+  }
   constructor(alias) {
     this.alias = alias;
   }
@@ -1991,6 +2151,7 @@ function aliasedTable(table, tableAlias) {
   return new Proxy(table, new TableAliasProxyHandler(tableAlias, false));
 }
 __name(aliasedTable, "aliasedTable");
+__name2(aliasedTable, "aliasedTable");
 function aliasedTableColumn(column, tableAlias) {
   return new Proxy(
     column,
@@ -1998,10 +2159,12 @@ function aliasedTableColumn(column, tableAlias) {
   );
 }
 __name(aliasedTableColumn, "aliasedTableColumn");
+__name2(aliasedTableColumn, "aliasedTableColumn");
 function mapColumnsInAliasedSQLToAlias(query, alias) {
   return new SQL.Aliased(mapColumnsInSQLToAlias(query.sql, alias), query.fieldAlias);
 }
 __name(mapColumnsInAliasedSQLToAlias, "mapColumnsInAliasedSQLToAlias");
+__name2(mapColumnsInAliasedSQLToAlias, "mapColumnsInAliasedSQLToAlias");
 function mapColumnsInSQLToAlias(query, alias) {
   return sql.join(query.queryChunks.map((c) => {
     if (is(c, Column)) {
@@ -2017,11 +2180,13 @@ function mapColumnsInSQLToAlias(query, alias) {
   }));
 }
 __name(mapColumnsInSQLToAlias, "mapColumnsInSQLToAlias");
-
-// ../node_modules/drizzle-orm/selection-proxy.js
+__name2(mapColumnsInSQLToAlias, "mapColumnsInSQLToAlias");
 var SelectionProxyHandler = class _SelectionProxyHandler {
   static {
-    __name(this, "SelectionProxyHandler");
+    __name(this, "_SelectionProxyHandler");
+  }
+  static {
+    __name2(this, "SelectionProxyHandler");
   }
   static [entityKind] = "SelectionProxyHandler";
   config;
@@ -2088,11 +2253,12 @@ var SelectionProxyHandler = class _SelectionProxyHandler {
     return new Proxy(value, new _SelectionProxyHandler(this.config));
   }
 };
-
-// ../node_modules/drizzle-orm/query-promise.js
 var QueryPromise = class {
   static {
     __name(this, "QueryPromise");
+  }
+  static {
+    __name2(this, "QueryPromise");
   }
   static [entityKind] = "QueryPromise";
   [Symbol.toStringTag] = "QueryPromise";
@@ -2115,11 +2281,12 @@ var QueryPromise = class {
     return this.execute().then(onFulfilled, onRejected);
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/foreign-keys.js
 var ForeignKeyBuilder2 = class {
   static {
-    __name(this, "ForeignKeyBuilder");
+    __name(this, "ForeignKeyBuilder2");
+  }
+  static {
+    __name2(this, "ForeignKeyBuilder");
   }
   static [entityKind] = "SQLiteForeignKeyBuilder";
   /** @internal */
@@ -2153,7 +2320,10 @@ var ForeignKeyBuilder2 = class {
 };
 var ForeignKey2 = class {
   static {
-    __name(this, "ForeignKey");
+    __name(this, "ForeignKey2");
+  }
+  static {
+    __name2(this, "ForeignKey");
   }
   constructor(table, builder) {
     this.table = table;
@@ -2178,15 +2348,17 @@ var ForeignKey2 = class {
     return name ?? `${chunks.join("_")}_fk`;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/unique-constraint.js
 function uniqueKeyName2(table, columns) {
   return `${table[TableName]}_${columns.join("_")}_unique`;
 }
-__name(uniqueKeyName2, "uniqueKeyName");
+__name(uniqueKeyName2, "uniqueKeyName2");
+__name2(uniqueKeyName2, "uniqueKeyName");
 var UniqueConstraintBuilder2 = class {
   static {
-    __name(this, "UniqueConstraintBuilder");
+    __name(this, "UniqueConstraintBuilder2");
+  }
+  static {
+    __name2(this, "UniqueConstraintBuilder");
   }
   constructor(columns, name) {
     this.name = name;
@@ -2202,7 +2374,10 @@ var UniqueConstraintBuilder2 = class {
 };
 var UniqueOnConstraintBuilder2 = class {
   static {
-    __name(this, "UniqueOnConstraintBuilder");
+    __name(this, "UniqueOnConstraintBuilder2");
+  }
+  static {
+    __name2(this, "UniqueOnConstraintBuilder");
   }
   static [entityKind] = "SQLiteUniqueOnConstraintBuilder";
   /** @internal */
@@ -2216,7 +2391,10 @@ var UniqueOnConstraintBuilder2 = class {
 };
 var UniqueConstraint2 = class {
   static {
-    __name(this, "UniqueConstraint");
+    __name(this, "UniqueConstraint2");
+  }
+  static {
+    __name2(this, "UniqueConstraint");
   }
   constructor(table, columns, name) {
     this.table = table;
@@ -2230,11 +2408,12 @@ var UniqueConstraint2 = class {
     return this.name;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/common.js
 var SQLiteColumnBuilder = class extends ColumnBuilder {
   static {
     __name(this, "SQLiteColumnBuilder");
+  }
+  static {
+    __name2(this, "SQLiteColumnBuilder");
   }
   static [entityKind] = "SQLiteColumnBuilder";
   foreignKeyConfigs = [];
@@ -2278,6 +2457,9 @@ var SQLiteColumn = class extends Column {
   static {
     __name(this, "SQLiteColumn");
   }
+  static {
+    __name2(this, "SQLiteColumn");
+  }
   constructor(table, config) {
     if (!config.uniqueName) {
       config.uniqueName = uniqueKeyName2(table, [config.name]);
@@ -2287,11 +2469,12 @@ var SQLiteColumn = class extends Column {
   }
   static [entityKind] = "SQLiteColumn";
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/blob.js
 var SQLiteBigIntBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteBigIntBuilder");
+  }
+  static {
+    __name2(this, "SQLiteBigIntBuilder");
   }
   static [entityKind] = "SQLiteBigIntBuilder";
   constructor(name) {
@@ -2305,6 +2488,9 @@ var SQLiteBigIntBuilder = class extends SQLiteColumnBuilder {
 var SQLiteBigInt = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteBigInt");
+  }
+  static {
+    __name2(this, "SQLiteBigInt");
   }
   static [entityKind] = "SQLiteBigInt";
   getSQLType() {
@@ -2325,6 +2511,9 @@ var SQLiteBlobJsonBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteBlobJsonBuilder");
   }
+  static {
+    __name2(this, "SQLiteBlobJsonBuilder");
+  }
   static [entityKind] = "SQLiteBlobJsonBuilder";
   constructor(name) {
     super(name, "json", "SQLiteBlobJson");
@@ -2340,6 +2529,9 @@ var SQLiteBlobJsonBuilder = class extends SQLiteColumnBuilder {
 var SQLiteBlobJson = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteBlobJson");
+  }
+  static {
+    __name2(this, "SQLiteBlobJson");
   }
   static [entityKind] = "SQLiteBlobJson";
   getSQLType() {
@@ -2360,6 +2552,9 @@ var SQLiteBlobBufferBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteBlobBufferBuilder");
   }
+  static {
+    __name2(this, "SQLiteBlobBufferBuilder");
+  }
   static [entityKind] = "SQLiteBlobBufferBuilder";
   constructor(name) {
     super(name, "buffer", "SQLiteBlobBuffer");
@@ -2372,6 +2567,9 @@ var SQLiteBlobBufferBuilder = class extends SQLiteColumnBuilder {
 var SQLiteBlobBuffer = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteBlobBuffer");
+  }
+  static {
+    __name2(this, "SQLiteBlobBuffer");
   }
   static [entityKind] = "SQLiteBlobBuffer";
   mapFromDriverValue(value) {
@@ -2395,11 +2593,13 @@ function blob(a, b) {
   return new SQLiteBlobBufferBuilder(name);
 }
 __name(blob, "blob");
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/custom.js
+__name2(blob, "blob");
 var SQLiteCustomColumnBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteCustomColumnBuilder");
+  }
+  static {
+    __name2(this, "SQLiteCustomColumnBuilder");
   }
   static [entityKind] = "SQLiteCustomColumnBuilder";
   constructor(name, fieldConfig, customTypeParams) {
@@ -2418,6 +2618,9 @@ var SQLiteCustomColumnBuilder = class extends SQLiteColumnBuilder {
 var SQLiteCustomColumn = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteCustomColumn");
+  }
+  static {
+    __name2(this, "SQLiteCustomColumn");
   }
   static [entityKind] = "SQLiteCustomColumn";
   sqlName;
@@ -2450,11 +2653,13 @@ function customType(customTypeParams) {
   };
 }
 __name(customType, "customType");
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/integer.js
+__name2(customType, "customType");
 var SQLiteBaseIntegerBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteBaseIntegerBuilder");
+  }
+  static {
+    __name2(this, "SQLiteBaseIntegerBuilder");
   }
   static [entityKind] = "SQLiteBaseIntegerBuilder";
   constructor(name, dataType, columnType) {
@@ -2473,6 +2678,9 @@ var SQLiteBaseInteger = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteBaseInteger");
   }
+  static {
+    __name2(this, "SQLiteBaseInteger");
+  }
   static [entityKind] = "SQLiteBaseInteger";
   autoIncrement = this.config.autoIncrement;
   getSQLType() {
@@ -2482,6 +2690,9 @@ var SQLiteBaseInteger = class extends SQLiteColumn {
 var SQLiteIntegerBuilder = class extends SQLiteBaseIntegerBuilder {
   static {
     __name(this, "SQLiteIntegerBuilder");
+  }
+  static {
+    __name2(this, "SQLiteIntegerBuilder");
   }
   static [entityKind] = "SQLiteIntegerBuilder";
   constructor(name) {
@@ -2498,11 +2709,17 @@ var SQLiteInteger = class extends SQLiteBaseInteger {
   static {
     __name(this, "SQLiteInteger");
   }
+  static {
+    __name2(this, "SQLiteInteger");
+  }
   static [entityKind] = "SQLiteInteger";
 };
 var SQLiteTimestampBuilder = class extends SQLiteBaseIntegerBuilder {
   static {
     __name(this, "SQLiteTimestampBuilder");
+  }
+  static {
+    __name2(this, "SQLiteTimestampBuilder");
   }
   static [entityKind] = "SQLiteTimestampBuilder";
   constructor(name, mode) {
@@ -2528,6 +2745,9 @@ var SQLiteTimestamp = class extends SQLiteBaseInteger {
   static {
     __name(this, "SQLiteTimestamp");
   }
+  static {
+    __name2(this, "SQLiteTimestamp");
+  }
   static [entityKind] = "SQLiteTimestamp";
   mode = this.config.mode;
   mapFromDriverValue(value) {
@@ -2548,6 +2768,9 @@ var SQLiteBooleanBuilder = class extends SQLiteBaseIntegerBuilder {
   static {
     __name(this, "SQLiteBooleanBuilder");
   }
+  static {
+    __name2(this, "SQLiteBooleanBuilder");
+  }
   static [entityKind] = "SQLiteBooleanBuilder";
   constructor(name, mode) {
     super(name, "boolean", "SQLiteBoolean");
@@ -2563,6 +2786,9 @@ var SQLiteBooleanBuilder = class extends SQLiteBaseIntegerBuilder {
 var SQLiteBoolean = class extends SQLiteBaseInteger {
   static {
     __name(this, "SQLiteBoolean");
+  }
+  static {
+    __name2(this, "SQLiteBoolean");
   }
   static [entityKind] = "SQLiteBoolean";
   mode = this.config.mode;
@@ -2584,11 +2810,13 @@ function integer(a, b) {
   return new SQLiteIntegerBuilder(name);
 }
 __name(integer, "integer");
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/numeric.js
+__name2(integer, "integer");
 var SQLiteNumericBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteNumericBuilder");
+  }
+  static {
+    __name2(this, "SQLiteNumericBuilder");
   }
   static [entityKind] = "SQLiteNumericBuilder";
   constructor(name) {
@@ -2606,6 +2834,9 @@ var SQLiteNumeric = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteNumeric");
   }
+  static {
+    __name2(this, "SQLiteNumeric");
+  }
   static [entityKind] = "SQLiteNumeric";
   mapFromDriverValue(value) {
     if (typeof value === "string") return value;
@@ -2618,6 +2849,9 @@ var SQLiteNumeric = class extends SQLiteColumn {
 var SQLiteNumericNumberBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteNumericNumberBuilder");
+  }
+  static {
+    __name2(this, "SQLiteNumericNumberBuilder");
   }
   static [entityKind] = "SQLiteNumericNumberBuilder";
   constructor(name) {
@@ -2635,6 +2869,9 @@ var SQLiteNumericNumber = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteNumericNumber");
   }
+  static {
+    __name2(this, "SQLiteNumericNumber");
+  }
   static [entityKind] = "SQLiteNumericNumber";
   mapFromDriverValue(value) {
     if (typeof value === "number") return value;
@@ -2648,6 +2885,9 @@ var SQLiteNumericNumber = class extends SQLiteColumn {
 var SQLiteNumericBigIntBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteNumericBigIntBuilder");
+  }
+  static {
+    __name2(this, "SQLiteNumericBigIntBuilder");
   }
   static [entityKind] = "SQLiteNumericBigIntBuilder";
   constructor(name) {
@@ -2665,6 +2905,9 @@ var SQLiteNumericBigInt = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteNumericBigInt");
   }
+  static {
+    __name2(this, "SQLiteNumericBigInt");
+  }
   static [entityKind] = "SQLiteNumericBigInt";
   mapFromDriverValue = BigInt;
   mapToDriverValue = String;
@@ -2678,11 +2921,13 @@ function numeric(a, b) {
   return mode === "number" ? new SQLiteNumericNumberBuilder(name) : mode === "bigint" ? new SQLiteNumericBigIntBuilder(name) : new SQLiteNumericBuilder(name);
 }
 __name(numeric, "numeric");
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/real.js
+__name2(numeric, "numeric");
 var SQLiteRealBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteRealBuilder");
+  }
+  static {
+    __name2(this, "SQLiteRealBuilder");
   }
   static [entityKind] = "SQLiteRealBuilder";
   constructor(name) {
@@ -2697,6 +2942,9 @@ var SQLiteReal = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteReal");
   }
+  static {
+    __name2(this, "SQLiteReal");
+  }
   static [entityKind] = "SQLiteReal";
   getSQLType() {
     return "real";
@@ -2706,11 +2954,13 @@ function real(name) {
   return new SQLiteRealBuilder(name ?? "");
 }
 __name(real, "real");
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/text.js
+__name2(real, "real");
 var SQLiteTextBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteTextBuilder");
+  }
+  static {
+    __name2(this, "SQLiteTextBuilder");
   }
   static [entityKind] = "SQLiteTextBuilder";
   constructor(name, config) {
@@ -2730,6 +2980,9 @@ var SQLiteText = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteText");
   }
+  static {
+    __name2(this, "SQLiteText");
+  }
   static [entityKind] = "SQLiteText";
   enumValues = this.config.enumValues;
   length = this.config.length;
@@ -2743,6 +2996,9 @@ var SQLiteText = class extends SQLiteColumn {
 var SQLiteTextJsonBuilder = class extends SQLiteColumnBuilder {
   static {
     __name(this, "SQLiteTextJsonBuilder");
+  }
+  static {
+    __name2(this, "SQLiteTextJsonBuilder");
   }
   static [entityKind] = "SQLiteTextJsonBuilder";
   constructor(name) {
@@ -2759,6 +3015,9 @@ var SQLiteTextJsonBuilder = class extends SQLiteColumnBuilder {
 var SQLiteTextJson = class extends SQLiteColumn {
   static {
     __name(this, "SQLiteTextJson");
+  }
+  static {
+    __name2(this, "SQLiteTextJson");
   }
   static [entityKind] = "SQLiteTextJson";
   getSQLType() {
@@ -2779,8 +3038,7 @@ function text(a, b = {}) {
   return new SQLiteTextBuilder(name, config);
 }
 __name(text, "text");
-
-// ../node_modules/drizzle-orm/sqlite-core/columns/all.js
+__name2(text, "text");
 function getSQLiteColumnBuilders() {
   return {
     blob,
@@ -2792,12 +3050,14 @@ function getSQLiteColumnBuilders() {
   };
 }
 __name(getSQLiteColumnBuilders, "getSQLiteColumnBuilders");
-
-// ../node_modules/drizzle-orm/sqlite-core/table.js
+__name2(getSQLiteColumnBuilders, "getSQLiteColumnBuilders");
 var InlineForeignKeys2 = /* @__PURE__ */ Symbol.for("drizzle:SQLiteInlineForeignKeys");
 var SQLiteTable = class extends Table {
   static {
     __name(this, "SQLiteTable");
+  }
+  static {
+    __name2(this, "SQLiteTable");
   }
   static [entityKind] = "SQLiteTable";
   /** @internal */
@@ -2832,11 +3092,10 @@ function sqliteTableBase(name, columns, extraConfig, schema, baseName = name) {
   return table;
 }
 __name(sqliteTableBase, "sqliteTableBase");
-var sqliteTable = /* @__PURE__ */ __name((name, columns, extraConfig) => {
+__name2(sqliteTableBase, "sqliteTableBase");
+var sqliteTable = /* @__PURE__ */ __name2((name, columns, extraConfig) => {
   return sqliteTableBase(name, columns, extraConfig);
 }, "sqliteTable");
-
-// ../node_modules/drizzle-orm/sqlite-core/utils.js
 function extractUsedTable(table) {
   if (is(table, SQLiteTable)) {
     return [`${table[Table.Symbol.BaseName]}`];
@@ -2850,11 +3109,13 @@ function extractUsedTable(table) {
   return [];
 }
 __name(extractUsedTable, "extractUsedTable");
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/delete.js
+__name2(extractUsedTable, "extractUsedTable");
 var SQLiteDeleteBase = class extends QueryPromise {
   static {
     __name(this, "SQLiteDeleteBase");
+  }
+  static {
+    __name2(this, "SQLiteDeleteBase");
   }
   constructor(table, session, dialect, withList) {
     super();
@@ -2948,16 +3209,16 @@ var SQLiteDeleteBase = class extends QueryPromise {
   prepare() {
     return this._prepare(false);
   }
-  run = /* @__PURE__ */ __name((placeholderValues) => {
+  run = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().run(placeholderValues);
   }, "run");
-  all = /* @__PURE__ */ __name((placeholderValues) => {
+  all = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().all(placeholderValues);
   }, "all");
-  get = /* @__PURE__ */ __name((placeholderValues) => {
+  get = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().get(placeholderValues);
   }, "get");
-  values = /* @__PURE__ */ __name((placeholderValues) => {
+  values = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().values(placeholderValues);
   }, "values");
   async execute(placeholderValues) {
@@ -2967,13 +3228,12 @@ var SQLiteDeleteBase = class extends QueryPromise {
     return this;
   }
 };
-
-// ../node_modules/drizzle-orm/casing.js
 function toSnakeCase(input) {
   const words = input.replace(/['\u2019]/g, "").match(/[\da-z]+|[A-Z]+(?![a-z])|[A-Z][\da-z]+/g) ?? [];
   return words.map((word) => word.toLowerCase()).join("_");
 }
 __name(toSnakeCase, "toSnakeCase");
+__name2(toSnakeCase, "toSnakeCase");
 function toCamelCase(input) {
   const words = input.replace(/['\u2019]/g, "").match(/[\da-z]+|[A-Z]+(?![a-z])|[A-Z][\da-z]+/g) ?? [];
   return words.reduce((acc, word, i) => {
@@ -2982,13 +3242,18 @@ function toCamelCase(input) {
   }, "");
 }
 __name(toCamelCase, "toCamelCase");
+__name2(toCamelCase, "toCamelCase");
 function noopCase(input) {
   return input;
 }
 __name(noopCase, "noopCase");
+__name2(noopCase, "noopCase");
 var CasingCache = class {
   static {
     __name(this, "CasingCache");
+  }
+  static {
+    __name2(this, "CasingCache");
   }
   static [entityKind] = "CasingCache";
   /** @internal */
@@ -3025,11 +3290,12 @@ var CasingCache = class {
     this.cachedTables = {};
   }
 };
-
-// ../node_modules/drizzle-orm/errors.js
 var DrizzleError = class extends Error {
   static {
     __name(this, "DrizzleError");
+  }
+  static {
+    __name2(this, "DrizzleError");
   }
   static [entityKind] = "DrizzleError";
   constructor({ message, cause }) {
@@ -3040,7 +3306,10 @@ var DrizzleError = class extends Error {
 };
 var DrizzleQueryError = class _DrizzleQueryError extends Error {
   static {
-    __name(this, "DrizzleQueryError");
+    __name(this, "_DrizzleQueryError");
+  }
+  static {
+    __name2(this, "DrizzleQueryError");
   }
   constructor(query, params, cause) {
     super(`Failed query: ${query}
@@ -3056,24 +3325,29 @@ var TransactionRollbackError = class extends DrizzleError {
   static {
     __name(this, "TransactionRollbackError");
   }
+  static {
+    __name2(this, "TransactionRollbackError");
+  }
   static [entityKind] = "TransactionRollbackError";
   constructor() {
     super({ message: "Rollback" });
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/view-base.js
 var SQLiteViewBase = class extends View {
   static {
     __name(this, "SQLiteViewBase");
   }
+  static {
+    __name2(this, "SQLiteViewBase");
+  }
   static [entityKind] = "SQLiteViewBase";
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/dialect.js
 var SQLiteDialect = class {
   static {
     __name(this, "SQLiteDialect");
+  }
+  static {
+    __name2(this, "SQLiteDialect");
   }
   static [entityKind] = "SQLiteDialect";
   /** @internal */
@@ -3218,7 +3492,7 @@ var SQLiteDialect = class {
         const entries = Object.entries(field._.selectedFields);
         if (entries.length === 1) {
           const entry = entries[0][1];
-          const fieldDecoder = is(entry, SQL) ? entry.decoder : is(entry, Column) ? { mapFromDriverValue: /* @__PURE__ */ __name((v) => entry.mapFromDriverValue(v), "mapFromDriverValue") } : entry.sql.decoder;
+          const fieldDecoder = is(entry, SQL) ? entry.decoder : is(entry, Column) ? { mapFromDriverValue: /* @__PURE__ */ __name2((v) => entry.mapFromDriverValue(v), "mapFromDriverValue") } : entry.sql.decoder;
           if (fieldDecoder) field._.sql.decoder = fieldDecoder;
         }
         chunk.push(field);
@@ -3697,6 +3971,9 @@ var SQLiteSyncDialect = class extends SQLiteDialect {
   static {
     __name(this, "SQLiteSyncDialect");
   }
+  static {
+    __name2(this, "SQLiteSyncDialect");
+  }
   static [entityKind] = "SQLiteSyncDialect";
   migrate(migrations, session, config) {
     const migrationsTable = config === void 0 ? "__drizzle_migrations" : typeof config === "string" ? "__drizzle_migrations" : config.migrationsTable ?? "__drizzle_migrations";
@@ -3737,6 +4014,9 @@ var SQLiteAsyncDialect = class extends SQLiteDialect {
   static {
     __name(this, "SQLiteAsyncDialect");
   }
+  static {
+    __name2(this, "SQLiteAsyncDialect");
+  }
   static [entityKind] = "SQLiteAsyncDialect";
   async migrate(migrations, session, config) {
     const migrationsTable = config === void 0 ? "__drizzle_migrations" : typeof config === "string" ? "__drizzle_migrations" : config.migrationsTable ?? "__drizzle_migrations";
@@ -3768,11 +4048,12 @@ var SQLiteAsyncDialect = class extends SQLiteDialect {
     });
   }
 };
-
-// ../node_modules/drizzle-orm/query-builders/query-builder.js
 var TypedQueryBuilder = class {
   static {
     __name(this, "TypedQueryBuilder");
+  }
+  static {
+    __name2(this, "TypedQueryBuilder");
   }
   static [entityKind] = "TypedQueryBuilder";
   /** @internal */
@@ -3780,11 +4061,12 @@ var TypedQueryBuilder = class {
     return this._.selectedFields;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/select.js
 var SQLiteSelectBuilder = class {
   static {
     __name(this, "SQLiteSelectBuilder");
+  }
+  static {
+    __name2(this, "SQLiteSelectBuilder");
   }
   static [entityKind] = "SQLiteSelectBuilder";
   fields;
@@ -3829,6 +4111,9 @@ var SQLiteSelectBuilder = class {
 var SQLiteSelectQueryBuilderBase = class extends TypedQueryBuilder {
   static {
     __name(this, "SQLiteSelectQueryBuilderBase");
+  }
+  static {
+    __name2(this, "SQLiteSelectQueryBuilderBase");
   }
   static [entityKind] = "SQLiteSelectQueryBuilder";
   _;
@@ -4381,6 +4666,9 @@ var SQLiteSelectBase = class extends SQLiteSelectQueryBuilderBase {
   static {
     __name(this, "SQLiteSelectBase");
   }
+  static {
+    __name2(this, "SQLiteSelectBase");
+  }
   static [entityKind] = "SQLiteSelect";
   /** @internal */
   _prepare(isOneTimeQuery = true) {
@@ -4410,16 +4698,16 @@ var SQLiteSelectBase = class extends SQLiteSelectQueryBuilderBase {
   prepare() {
     return this._prepare(false);
   }
-  run = /* @__PURE__ */ __name((placeholderValues) => {
+  run = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().run(placeholderValues);
   }, "run");
-  all = /* @__PURE__ */ __name((placeholderValues) => {
+  all = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().all(placeholderValues);
   }, "all");
-  get = /* @__PURE__ */ __name((placeholderValues) => {
+  get = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().get(placeholderValues);
   }, "get");
-  values = /* @__PURE__ */ __name((placeholderValues) => {
+  values = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().values(placeholderValues);
   }, "values");
   async execute() {
@@ -4445,7 +4733,8 @@ function createSetOperator(type, isAll) {
   };
 }
 __name(createSetOperator, "createSetOperator");
-var getSQLiteSetOperators = /* @__PURE__ */ __name(() => ({
+__name2(createSetOperator, "createSetOperator");
+var getSQLiteSetOperators = /* @__PURE__ */ __name2(() => ({
   union,
   unionAll,
   intersect,
@@ -4455,11 +4744,12 @@ var union = createSetOperator("union", false);
 var unionAll = createSetOperator("union", true);
 var intersect = createSetOperator("intersect", false);
 var except = createSetOperator("except", false);
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/query-builder.js
 var QueryBuilder = class {
   static {
     __name(this, "QueryBuilder");
+  }
+  static {
+    __name2(this, "QueryBuilder");
   }
   static [entityKind] = "SQLiteQueryBuilder";
   dialect;
@@ -4468,9 +4758,9 @@ var QueryBuilder = class {
     this.dialect = is(dialect, SQLiteDialect) ? dialect : void 0;
     this.dialectConfig = is(dialect, SQLiteDialect) ? void 0 : dialect;
   }
-  $with = /* @__PURE__ */ __name((alias, selection) => {
+  $with = /* @__PURE__ */ __name2((alias, selection) => {
     const queryBuilder = this;
-    const as = /* @__PURE__ */ __name((qb) => {
+    const as = /* @__PURE__ */ __name2((qb) => {
       if (typeof qb === "function") {
         qb = qb(queryBuilder);
       }
@@ -4497,6 +4787,7 @@ var QueryBuilder = class {
       });
     }
     __name(select, "select");
+    __name2(select, "select");
     function selectDistinct(fields) {
       return new SQLiteSelectBuilder({
         fields: fields ?? void 0,
@@ -4507,6 +4798,7 @@ var QueryBuilder = class {
       });
     }
     __name(selectDistinct, "selectDistinct");
+    __name2(selectDistinct, "selectDistinct");
     return { select, selectDistinct };
   }
   select(fields) {
@@ -4528,11 +4820,12 @@ var QueryBuilder = class {
     return this.dialect;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/insert.js
 var SQLiteInsertBuilder = class {
   static {
     __name(this, "SQLiteInsertBuilder");
+  }
+  static {
+    __name2(this, "SQLiteInsertBuilder");
   }
   constructor(table, session, dialect, withList) {
     this.table = table;
@@ -4570,6 +4863,9 @@ var SQLiteInsertBuilder = class {
 var SQLiteInsertBase = class extends QueryPromise {
   static {
     __name(this, "SQLiteInsertBase");
+  }
+  static {
+    __name2(this, "SQLiteInsertBase");
   }
   constructor(table, values, session, dialect, withList, select) {
     super();
@@ -4688,16 +4984,16 @@ var SQLiteInsertBase = class extends QueryPromise {
   prepare() {
     return this._prepare(false);
   }
-  run = /* @__PURE__ */ __name((placeholderValues) => {
+  run = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().run(placeholderValues);
   }, "run");
-  all = /* @__PURE__ */ __name((placeholderValues) => {
+  all = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().all(placeholderValues);
   }, "all");
-  get = /* @__PURE__ */ __name((placeholderValues) => {
+  get = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().get(placeholderValues);
   }, "get");
-  values = /* @__PURE__ */ __name((placeholderValues) => {
+  values = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().values(placeholderValues);
   }, "values");
   async execute() {
@@ -4707,11 +5003,12 @@ var SQLiteInsertBase = class extends QueryPromise {
     return this;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/update.js
 var SQLiteUpdateBuilder = class {
   static {
     __name(this, "SQLiteUpdateBuilder");
+  }
+  static {
+    __name2(this, "SQLiteUpdateBuilder");
   }
   constructor(table, session, dialect, withList) {
     this.table = table;
@@ -4733,6 +5030,9 @@ var SQLiteUpdateBuilder = class {
 var SQLiteUpdateBase = class extends QueryPromise {
   static {
     __name(this, "SQLiteUpdateBase");
+  }
+  static {
+    __name2(this, "SQLiteUpdateBase");
   }
   constructor(table, set, session, dialect, withList) {
     super();
@@ -4860,16 +5160,16 @@ var SQLiteUpdateBase = class extends QueryPromise {
   prepare() {
     return this._prepare(false);
   }
-  run = /* @__PURE__ */ __name((placeholderValues) => {
+  run = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().run(placeholderValues);
   }, "run");
-  all = /* @__PURE__ */ __name((placeholderValues) => {
+  all = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().all(placeholderValues);
   }, "all");
-  get = /* @__PURE__ */ __name((placeholderValues) => {
+  get = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().get(placeholderValues);
   }, "get");
-  values = /* @__PURE__ */ __name((placeholderValues) => {
+  values = /* @__PURE__ */ __name2((placeholderValues) => {
     return this._prepare().values(placeholderValues);
   }, "values");
   async execute() {
@@ -4879,11 +5179,12 @@ var SQLiteUpdateBase = class extends QueryPromise {
     return this;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/count.js
 var SQLiteCountBuilder = class _SQLiteCountBuilder extends SQL {
   static {
-    __name(this, "SQLiteCountBuilder");
+    __name(this, "_SQLiteCountBuilder");
+  }
+  static {
+    __name2(this, "SQLiteCountBuilder");
   }
   constructor(params) {
     super(_SQLiteCountBuilder.buildEmbeddedCount(params.source, params.filters).queryChunks);
@@ -4926,11 +5227,12 @@ var SQLiteCountBuilder = class _SQLiteCountBuilder extends SQL {
     );
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/query.js
 var RelationalQueryBuilder = class {
   static {
     __name(this, "RelationalQueryBuilder");
+  }
+  static {
+    __name2(this, "RelationalQueryBuilder");
   }
   constructor(mode, fullSchema, schema, tableNamesMap, table, tableConfig, dialect, session) {
     this.mode = mode;
@@ -4993,6 +5295,9 @@ var RelationalQueryBuilder = class {
 var SQLiteRelationalQuery = class extends QueryPromise {
   static {
     __name(this, "SQLiteRelationalQuery");
+  }
+  static {
+    __name2(this, "SQLiteRelationalQuery");
   }
   constructor(fullSchema, schema, tableNamesMap, table, tableConfig, dialect, session, config, mode) {
     super();
@@ -5074,16 +5379,20 @@ var SQLiteSyncRelationalQuery = class extends SQLiteRelationalQuery {
   static {
     __name(this, "SQLiteSyncRelationalQuery");
   }
+  static {
+    __name2(this, "SQLiteSyncRelationalQuery");
+  }
   static [entityKind] = "SQLiteSyncRelationalQuery";
   sync() {
     return this.executeRaw();
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/query-builders/raw.js
 var SQLiteRaw = class extends QueryPromise {
   static {
     __name(this, "SQLiteRaw");
+  }
+  static {
+    __name2(this, "SQLiteRaw");
   }
   constructor(execute, getSQL, action, dialect, mapBatchResult) {
     super();
@@ -5110,11 +5419,12 @@ var SQLiteRaw = class extends QueryPromise {
     return false;
   }
 };
-
-// ../node_modules/drizzle-orm/sqlite-core/db.js
 var BaseSQLiteDatabase = class {
   static {
     __name(this, "BaseSQLiteDatabase");
+  }
+  static {
+    __name2(this, "BaseSQLiteDatabase");
   }
   constructor(resultKind, dialect, session, schema) {
     this.resultKind = resultKind;
@@ -5145,7 +5455,7 @@ var BaseSQLiteDatabase = class {
         );
       }
     }
-    this.$cache = { invalidate: /* @__PURE__ */ __name(async (_params) => {
+    this.$cache = { invalidate: /* @__PURE__ */ __name2(async (_params) => {
     }, "invalidate") };
   }
   static [entityKind] = "BaseSQLiteDatabase";
@@ -5182,9 +5492,9 @@ var BaseSQLiteDatabase = class {
    * const result = await db.with(sq).select({ name: sq.name }).from(sq);
    * ```
    */
-  $with = /* @__PURE__ */ __name((alias, selection) => {
+  $with = /* @__PURE__ */ __name2((alias, selection) => {
     const self = this;
-    const as = /* @__PURE__ */ __name((qb) => {
+    const as = /* @__PURE__ */ __name2((qb) => {
       if (typeof qb === "function") {
         qb = qb(new QueryBuilder(self.dialect));
       }
@@ -5233,6 +5543,7 @@ var BaseSQLiteDatabase = class {
       });
     }
     __name(select, "select");
+    __name2(select, "select");
     function selectDistinct(fields) {
       return new SQLiteSelectBuilder({
         fields: fields ?? void 0,
@@ -5243,18 +5554,22 @@ var BaseSQLiteDatabase = class {
       });
     }
     __name(selectDistinct, "selectDistinct");
+    __name2(selectDistinct, "selectDistinct");
     function update(table) {
       return new SQLiteUpdateBuilder(table, self.session, self.dialect, queries);
     }
     __name(update, "update");
+    __name2(update, "update");
     function insert(into) {
       return new SQLiteInsertBuilder(into, self.session, self.dialect, queries);
     }
     __name(insert, "insert");
+    __name2(insert, "insert");
     function delete_(from) {
       return new SQLiteDeleteBase(from, self.session, self.dialect, queries);
     }
     __name(delete_, "delete_");
+    __name2(delete_, "delete_");
     return { select, selectDistinct, update, insert, delete: delete_ };
   }
   select(fields) {
@@ -5409,17 +5724,21 @@ var BaseSQLiteDatabase = class {
     return this.session.transaction(transaction, config);
   }
 };
-
-// ../node_modules/drizzle-orm/cache/core/cache.js
 var Cache = class {
   static {
     __name(this, "Cache");
+  }
+  static {
+    __name2(this, "Cache");
   }
   static [entityKind] = "Cache";
 };
 var NoopCache = class extends Cache {
   static {
     __name(this, "NoopCache");
+  }
+  static {
+    __name2(this, "NoopCache");
   }
   strategy() {
     return "all";
@@ -5443,11 +5762,13 @@ async function hashQuery(sql2, params) {
   return hashHex;
 }
 __name(hashQuery, "hashQuery");
-
-// ../node_modules/drizzle-orm/sqlite-core/session.js
+__name2(hashQuery, "hashQuery");
 var ExecuteResultSync = class extends QueryPromise {
   static {
     __name(this, "ExecuteResultSync");
+  }
+  static {
+    __name2(this, "ExecuteResultSync");
   }
   constructor(resultCb) {
     super();
@@ -5464,6 +5785,9 @@ var ExecuteResultSync = class extends QueryPromise {
 var SQLitePreparedQuery = class {
   static {
     __name(this, "SQLitePreparedQuery");
+  }
+  static {
+    __name2(this, "SQLitePreparedQuery");
   }
   constructor(mode, executeMethod, query, cache, queryMetadata, cacheConfig) {
     this.mode = mode;
@@ -5584,6 +5908,9 @@ var SQLiteSession = class {
   static {
     __name(this, "SQLiteSession");
   }
+  static {
+    __name2(this, "SQLiteSession");
+  }
   constructor(dialect) {
     this.dialect = dialect;
   }
@@ -5641,6 +5968,9 @@ var SQLiteTransaction = class extends BaseSQLiteDatabase {
   static {
     __name(this, "SQLiteTransaction");
   }
+  static {
+    __name2(this, "SQLiteTransaction");
+  }
   constructor(resultType, dialect, session, schema, nestedIndex = 0) {
     super(resultType, dialect, session, schema);
     this.schema = schema;
@@ -5651,11 +5981,12 @@ var SQLiteTransaction = class extends BaseSQLiteDatabase {
     throw new TransactionRollbackError();
   }
 };
-
-// ../node_modules/drizzle-orm/d1/session.js
 var SQLiteD1Session = class extends SQLiteSession {
   static {
     __name(this, "SQLiteD1Session");
+  }
+  static {
+    __name2(this, "SQLiteD1Session");
   }
   constructor(client, dialect, schema, options = {}) {
     super(dialect);
@@ -5726,7 +6057,10 @@ var SQLiteD1Session = class extends SQLiteSession {
 };
 var D1Transaction = class _D1Transaction extends SQLiteTransaction {
   static {
-    __name(this, "D1Transaction");
+    __name(this, "_D1Transaction");
+  }
+  static {
+    __name2(this, "D1Transaction");
   }
   static [entityKind] = "D1Transaction";
   async transaction(transaction) {
@@ -5752,9 +6086,13 @@ function d1ToRawMapping(results) {
   return rows;
 }
 __name(d1ToRawMapping, "d1ToRawMapping");
+__name2(d1ToRawMapping, "d1ToRawMapping");
 var D1PreparedQuery = class extends SQLitePreparedQuery {
   static {
     __name(this, "D1PreparedQuery");
+  }
+  static {
+    __name2(this, "D1PreparedQuery");
   }
   constructor(stmt, query, logger, cache, queryMetadata, cacheConfig, fields, executeMethod, _isResponseInArrayMode, customResultMapper) {
     super("async", executeMethod, query, cache, queryMetadata, cacheConfig);
@@ -5844,11 +6182,12 @@ var D1PreparedQuery = class extends SQLitePreparedQuery {
     return this._isResponseInArrayMode;
   }
 };
-
-// ../node_modules/drizzle-orm/d1/driver.js
 var DrizzleD1Database = class extends BaseSQLiteDatabase {
   static {
     __name(this, "DrizzleD1Database");
+  }
+  static {
+    __name2(this, "DrizzleD1Database");
   }
   static [entityKind] = "D1Database";
   async batch(batch) {
@@ -5885,8 +6224,7 @@ function drizzle(client, config = {}) {
   return db;
 }
 __name(drizzle, "drizzle");
-
-// ../src/db/schema.ts
+__name2(drizzle, "drizzle");
 var students = sqliteTable("students", {
   id: text("id").primaryKey(),
   // We can use UUIDs or matric numbers
@@ -5905,11 +6243,13 @@ var vote_logs = sqliteTable("vote_logs", {
   ip_address: text("ip_address"),
   browser_fingerprint: text("browser_fingerprint"),
   student_matric: text("student_matric").notNull(),
+  student_name: text("student_name"),
+  device_info: text("device_info", { mode: "json" }),
+  location: text("location", { mode: "json" }),
+  network: text("network", { mode: "json" }),
   created_at: integer("created_at", { mode: "timestamp" }).notNull()
 });
-
-// api/auth/verify.ts
-var onRequestPost = /* @__PURE__ */ __name(async (context) => {
+var onRequestPost = /* @__PURE__ */ __name2(async (context) => {
   const db = drizzle(context.env.DB);
   try {
     const { matric, name } = await context.request.json();
@@ -5951,6 +6291,7 @@ var onRequestPost = /* @__PURE__ */ __name(async (context) => {
     );
     const payload = JSON.stringify({
       matric: student.matric,
+      name: student.name,
       exp: Date.now() + 1e3 * 60 * 60 * 24
     });
     const payloadBase64 = btoa(payload);
@@ -5979,9 +6320,1889 @@ var onRequestPost = /* @__PURE__ */ __name(async (context) => {
     );
   }
 }, "onRequestPost");
-
-// api/votes.ts
-var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
+var LIBVERSION = "2.0.10";
+var UA_MAX_LENGTH = 500;
+var USER_AGENT = "user-agent";
+var EMPTY = "";
+var UNKNOWN = "?";
+var TYPEOF = {
+  FUNCTION: "function",
+  OBJECT: "object",
+  STRING: "string",
+  UNDEFINED: "undefined"
+};
+var BROWSER = "browser";
+var CPU = "cpu";
+var DEVICE = "device";
+var ENGINE = "engine";
+var OS = "os";
+var RESULT = "result";
+var NAME = "name";
+var TYPE = "type";
+var VENDOR = "vendor";
+var VERSION = "version";
+var ARCHITECTURE = "architecture";
+var MAJOR = "major";
+var MODEL = "model";
+var CONSOLE = "console";
+var MOBILE = "mobile";
+var TABLET = "tablet";
+var SMARTTV = "smarttv";
+var WEARABLE = "wearable";
+var XR = "xr";
+var EMBEDDED = "embedded";
+var FETCHER = "fetcher";
+var INAPP = "inapp";
+var BRANDS = "brands";
+var FORMFACTORS = "formFactors";
+var FULLVERLIST = "fullVersionList";
+var PLATFORM = "platform";
+var PLATFORMVER = "platformVersion";
+var BITNESS = "bitness";
+var CH = "sec-ch-ua";
+var CH_FULL_VER_LIST = CH + "-full-version-list";
+var CH_ARCH = CH + "-arch";
+var CH_BITNESS = CH + "-" + BITNESS;
+var CH_FORM_FACTORS = CH + "-form-factors";
+var CH_MOBILE = CH + "-" + MOBILE;
+var CH_MODEL = CH + "-" + MODEL;
+var CH_PLATFORM = CH + "-" + PLATFORM;
+var CH_PLATFORM_VER = CH_PLATFORM + "-version";
+var CH_ALL_VALUES = [BRANDS, FULLVERLIST, MOBILE, MODEL, PLATFORM, PLATFORMVER, ARCHITECTURE, FORMFACTORS, BITNESS];
+var AMAZON = "Amazon";
+var APPLE = "Apple";
+var ASUS = "ASUS";
+var BLACKBERRY = "BlackBerry";
+var GOOGLE = "Google";
+var HUAWEI = "Huawei";
+var LENOVO = "Lenovo";
+var HONOR = "Honor";
+var LG = "LG";
+var MICROSOFT = "Microsoft";
+var MOTOROLA = "Motorola";
+var NVIDIA = "Nvidia";
+var ONEPLUS = "OnePlus";
+var OPPO = "OPPO";
+var SAMSUNG = "Samsung";
+var SHARP = "Sharp";
+var SONY = "Sony";
+var XIAOMI = "Xiaomi";
+var ZEBRA = "Zebra";
+var CHROME = "Chrome";
+var CHROMIUM = "Chromium";
+var CHROMECAST = "Chromecast";
+var EDGE = "Edge";
+var FIREFOX = "Firefox";
+var OPERA = "Opera";
+var FACEBOOK = "Facebook";
+var SOGOU = "Sogou";
+var PREFIX_MOBILE = "Mobile ";
+var SUFFIX_BROWSER = " Browser";
+var WINDOWS = "Windows";
+var isWindow = typeof window !== TYPEOF.UNDEFINED;
+var NAVIGATOR = isWindow && window.navigator ? window.navigator : void 0;
+var NAVIGATOR_UADATA = NAVIGATOR && NAVIGATOR.userAgentData ? NAVIGATOR.userAgentData : void 0;
+var extend = /* @__PURE__ */ __name2(function(defaultRgx, extensions) {
+  var mergedRgx = {};
+  var extraRgx = extensions;
+  if (!isExtensions(extensions)) {
+    extraRgx = {};
+    for (var i in extensions) {
+      for (var j in extensions[i]) {
+        extraRgx[j] = extensions[i][j].concat(extraRgx[j] ? extraRgx[j] : []);
+      }
+    }
+  }
+  for (var k in defaultRgx) {
+    mergedRgx[k] = extraRgx[k] && extraRgx[k].length % 2 === 0 ? extraRgx[k].concat(defaultRgx[k]) : defaultRgx[k];
+  }
+  return mergedRgx;
+}, "extend");
+var enumerize = /* @__PURE__ */ __name2(function(arr) {
+  var enums = {};
+  for (var i = 0; i < arr.length; i++) {
+    enums[arr[i].toUpperCase()] = arr[i];
+  }
+  return enums;
+}, "enumerize");
+var has = /* @__PURE__ */ __name2(function(str1, str2) {
+  if (typeof str1 === TYPEOF.OBJECT && str1.length > 0) {
+    for (var i in str1) {
+      if (lowerize(str2) == lowerize(str1[i])) return true;
+    }
+    return false;
+  }
+  return isString(str1) ? lowerize(str2) == lowerize(str1) : false;
+}, "has");
+var isExtensions = /* @__PURE__ */ __name2(function(obj, deep) {
+  for (var prop in obj) {
+    return /^(browser|cpu|device|engine|os)$/.test(prop) || (deep ? isExtensions(obj[prop]) : false);
+  }
+}, "isExtensions");
+var isString = /* @__PURE__ */ __name2(function(val) {
+  return typeof val === TYPEOF.STRING;
+}, "isString");
+var itemListToArray = /* @__PURE__ */ __name2(function(header) {
+  if (!header) return void 0;
+  var arr = [];
+  var tokens = normalizeHeaderValue(header).split(",");
+  for (var i = 0; i < tokens.length; i++) {
+    if (tokens[i].indexOf(";") > -1) {
+      var token = trim(tokens[i]).split(";v=");
+      arr[i] = { brand: token[0], version: token[1] };
+    } else {
+      arr[i] = trim(tokens[i]);
+    }
+  }
+  return arr;
+}, "itemListToArray");
+var lowerize = /* @__PURE__ */ __name2(function(str) {
+  return isString(str) ? str.toLowerCase() : str;
+}, "lowerize");
+var majorize = /* @__PURE__ */ __name2(function(version2) {
+  return isString(version2) ? strip(/[^\d\.]/g, version2).split(".")[0] : void 0;
+}, "majorize");
+var normalizeHeaderValue = /* @__PURE__ */ __name2(function(str) {
+  return isString(str) ? trim(strip(/\\?\"/g, str), UA_MAX_LENGTH) : void 0;
+}, "normalizeHeaderValue");
+var setProps = /* @__PURE__ */ __name2(function(arr) {
+  for (var i in arr) {
+    if (!arr.hasOwnProperty(i)) continue;
+    var propName = arr[i];
+    if (typeof propName == TYPEOF.OBJECT && propName.length == 2) {
+      this[propName[0]] = propName[1];
+    } else {
+      this[propName] = void 0;
+    }
+  }
+  return this;
+}, "setProps");
+var strip = /* @__PURE__ */ __name2(function(pattern, str) {
+  return isString(str) ? str.replace(pattern, EMPTY) : str;
+}, "strip");
+var trim = /* @__PURE__ */ __name2(function(str, len) {
+  str = strip(/^\s\s*/, String(str));
+  return typeof len === TYPEOF.UNDEFINED ? str : str.substring(0, len);
+}, "trim");
+var rgxMapper = /* @__PURE__ */ __name2(function(ua, arrays) {
+  if (!ua || !arrays) return;
+  var i = 0, j, k, p, q, matches, match2;
+  while (i < arrays.length && !matches) {
+    var regex = arrays[i], props = arrays[i + 1];
+    j = k = 0;
+    while (j < regex.length && !matches) {
+      if (!regex[j]) {
+        break;
+      }
+      matches = regex[j++].exec(ua);
+      if (!!matches) {
+        for (p = 0; p < props.length; p++) {
+          match2 = matches[++k];
+          q = props[p];
+          if (typeof q === TYPEOF.OBJECT && q.length > 0) {
+            if (q.length === 2) {
+              if (typeof q[1] == TYPEOF.FUNCTION) {
+                this[q[0]] = q[1].call(this, match2);
+              } else {
+                this[q[0]] = q[1];
+              }
+            } else if (q.length >= 3) {
+              if (typeof q[1] === TYPEOF.FUNCTION && !(q[1].exec && q[1].test)) {
+                if (q.length > 3) {
+                  this[q[0]] = match2 ? q[1].apply(this, q.slice(2)) : void 0;
+                } else {
+                  this[q[0]] = match2 ? q[1].call(this, match2, q[2]) : void 0;
+                }
+              } else {
+                if (q.length == 3) {
+                  this[q[0]] = match2 ? match2.replace(q[1], q[2]) : void 0;
+                } else if (q.length == 4) {
+                  this[q[0]] = match2 ? q[3].call(this, match2.replace(q[1], q[2])) : void 0;
+                } else if (q.length > 4) {
+                  this[q[0]] = match2 ? q[3].apply(this, [match2.replace(q[1], q[2])].concat(q.slice(4))) : void 0;
+                }
+              }
+            }
+          } else {
+            this[q] = match2 ? match2 : void 0;
+          }
+        }
+      }
+    }
+    i += 2;
+  }
+}, "rgxMapper");
+var strTest = /* @__PURE__ */ __name2(function(str, map) {
+  return map.test.test(str) ? map.ifTrue : map.ifFalse;
+}, "strTest");
+var strMapper = /* @__PURE__ */ __name2(function(str, map) {
+  for (var i in map) {
+    if (typeof map[i] === TYPEOF.OBJECT && map[i].length > 0) {
+      for (var j = 0; j < map[i].length; j++) {
+        if (has(map[i][j], str)) {
+          return i === UNKNOWN ? void 0 : i;
+        }
+      }
+    } else if (has(map[i], str)) {
+      return i === UNKNOWN ? void 0 : i;
+    }
+  }
+  return map.hasOwnProperty("*") ? map["*"] : str;
+}, "strMapper");
+var windowsVersionMap = {
+  "ME": "4.90",
+  "NT 3.51": "3.51",
+  "NT 4.0": "4.0",
+  "2000": ["5.0", "5.01"],
+  "XP": ["5.1", "5.2"],
+  "Vista": "6.0",
+  "7": "6.1",
+  "8": "6.2",
+  "8.1": "6.3",
+  "10": ["6.4", "10.0"],
+  "NT": ""
+};
+var formFactorsMap = {
+  "embedded": "Automotive",
+  "mobile": "Mobile",
+  "tablet": ["Tablet", "EInk"],
+  "smarttv": "TV",
+  "wearable": "Watch",
+  "xr": ["VR", "XR"],
+  "?": ["Desktop", "Unknown"],
+  "*": void 0
+};
+var browserHintsMap = {
+  "Chrome": "Google Chrome",
+  "Edge": "Microsoft Edge",
+  "Edge WebView2": "Microsoft Edge WebView2",
+  "Chrome WebView": "Android WebView",
+  "Chrome Headless": "HeadlessChrome",
+  "Huawei Browser": "HuaweiBrowser",
+  "MIUI Browser": "Miui Browser",
+  "Opera Mobi": "OperaMobile",
+  "Yandex": "YaBrowser"
+};
+var defaultRegexes = {
+  browser: [
+    [
+      // Most common regardless engine
+      /\b(?:crmo|crios)\/([\w\.]+)/i
+      // Chrome for Android/iOS
+    ],
+    [VERSION, [NAME, PREFIX_MOBILE + "Chrome"]],
+    [
+      /webview.+edge\/([\w\.]+)/i
+      // Microsoft Edge
+    ],
+    [VERSION, [NAME, EDGE + " WebView"], [TYPE, INAPP]],
+    [
+      /edg(?:e|ios|a)?\/([\w\.]+)/i
+    ],
+    [VERSION, [NAME, "Edge"]],
+    [
+      // Presto based
+      /(opera mini)\/([-\w\.]+)/i,
+      // Opera Mini
+      /(opera [mobiletab]{3,6})\b.+version\/([-\w\.]+)/i,
+      // Opera Mobi/Tablet
+      /(opera)(?:.+version\/|[\/ ]+)([\w\.]+)/i
+      // Opera
+    ],
+    [NAME, VERSION],
+    [
+      /opios[\/ ]+([\w\.]+)/i
+      // Opera mini on iphone >= 8.0
+    ],
+    [VERSION, [NAME, OPERA + " Mini"]],
+    [
+      /\bop(?:rg)?x\/([\w\.]+)/i
+      // Opera GX
+    ],
+    [VERSION, [NAME, OPERA + " GX"]],
+    [
+      /\bopr\/([\w\.]+)/i
+      // Opera Webkit
+    ],
+    [VERSION, [NAME, OPERA]],
+    [
+      // Mixed
+      /\bb[ai]*d(?:uhd|[ub]*[aekoprswx]{5,6})[\/ ]?([\w\.]+)/i
+      // Baidu
+    ],
+    [VERSION, [NAME, "Baidu"]],
+    [
+      /\b(?:mxbrowser|mxios|myie2)\/?([-\w\.]*)\b/i
+      // Maxthon
+    ],
+    [VERSION, [NAME, "Maxthon"]],
+    [
+      /(kindle)\/([\w\.]+)/i,
+      // Kindle
+      /(lunascape|maxthon|netfront|jasmine|blazer|sleipnir)[\/ ]?([\w\.]*)/i,
+      // Lunascape/Maxthon/Netfront/Jasmine/Blazer/Sleipnir
+      // Trident based
+      /(avant|iemobile|slim(?:browser|boat|jet))[\/ ]?([\d\.]*)/i,
+      // Avant/IEMobile/SlimBrowser/SlimBoat/Slimjet
+      /(?:ms|\()(ie) ([\w\.]+)/i,
+      // Internet Explorer
+      // Blink/Webkit/KHTML based                                         // Flock/RockMelt/Midori/Epiphany/Silk/Skyfire/Bolt/Iron/Iridium/PhantomJS/Bowser/QupZilla/Falkon/LG Browser/Otter/qutebrowser/Dooble/Palemoon/HiBrowser
+      /(atlas|flock|rockmelt|midori|epiphany|silk|skyfire|bolt|iron|vivaldi|iridium|phantomjs|bowser|qupzilla|falkon|rekonq|puffin|whale(?!.+naver)|qqbrowserlite|duckduckgo|klar|helio|(?=comodo_)?dragon|otter|dooble|(?:hi|lg |ovi|qute)browser|palemoon)\/v?([-\w\.]+)/i,
+      // Atlas/Rekonq/Puffin/Whale/QQBrowserLite/QQ//Vivaldi/DuckDuckGo/Klar/Helio/Dragon
+      /(brave)(?: chrome)?\/([\d\.]+)/i,
+      // Brave
+      /(aloha|heytap|ovi|115|surf|qwant)browser\/([\d\.]+)/i,
+      // Aloha/HeyTap/Ovi/115/Surf
+      /(qwant)(?:ios|mobile)\/([\d\.]+)/i,
+      // Qwant
+      /(ecosia|weibo)(?:__| \w+@)([\d\.]+)/i
+      // Ecosia/Weibo
+    ],
+    [NAME, VERSION],
+    [
+      /quark(?:pc)?\/([-\w\.]+)/i
+      // Quark
+    ],
+    [VERSION, [NAME, "Quark"]],
+    [
+      /\bddg\/([\w\.]+)/i
+      // DuckDuckGo
+    ],
+    [VERSION, [NAME, "DuckDuckGo"]],
+    [
+      /(?:\buc? ?browser|(?:juc.+)ucweb| ucpc)[\/ ]?([\w\.]+)/i
+      // UCBrowser
+    ],
+    [VERSION, [NAME, "UCBrowser"]],
+    [
+      /microm.+\bqbcore\/([\w\.]+)/i,
+      // WeChat Desktop for Windows Built-in Browser
+      /\bqbcore\/([\w\.]+).+microm/i,
+      /micromessenger\/([\w\.]+)/i
+      // WeChat
+    ],
+    [VERSION, [NAME, "WeChat"]],
+    [
+      /konqueror\/([\w\.]+)/i
+      // Konqueror
+    ],
+    [VERSION, [NAME, "Konqueror"]],
+    [
+      /trident.+rv[: ]([\w\.]{1,9})\b.+like gecko/i
+      // IE11
+    ],
+    [VERSION, [NAME, "IE"]],
+    [
+      /ya(?:search)?browser\/([\w\.]+)/i
+      // Yandex
+    ],
+    [VERSION, [NAME, "Yandex"]],
+    [
+      /slbrowser\/([\w\.]+)/i
+      // Smart Lenovo Browser
+    ],
+    [VERSION, [NAME, "Smart " + LENOVO + SUFFIX_BROWSER]],
+    [
+      /(av(?:ast|g|ira))\/([\w\.]+)/i
+      // Avast/AVG/Avira Secure Browser
+    ],
+    [[NAME, /(.+)/, "$1 Secure" + SUFFIX_BROWSER], VERSION],
+    [
+      /norton\/([\w\.]+)/i
+      // Norton Private Browser
+    ],
+    [VERSION, [NAME, "Norton Private" + SUFFIX_BROWSER]],
+    [
+      /\bfocus\/([\w\.]+)/i
+      // Firefox Focus
+    ],
+    [VERSION, [NAME, FIREFOX + " Focus"]],
+    [
+      / mms\/([\w\.]+)$/i
+      // Opera Neon
+    ],
+    [VERSION, [NAME, OPERA + " Neon"]],
+    [
+      / opt\/([\w\.]+)$/i
+      // Opera Touch
+    ],
+    [VERSION, [NAME, OPERA + " Touch"]],
+    [
+      /coc_coc\w+\/([\w\.]+)/i
+      // Coc Coc Browser
+    ],
+    [VERSION, [NAME, "Coc Coc"]],
+    [
+      /dolfin\/([\w\.]+)/i
+      // Dolphin
+    ],
+    [VERSION, [NAME, "Dolphin"]],
+    [
+      /coast\/([\w\.]+)/i
+      // Opera Coast
+    ],
+    [VERSION, [NAME, OPERA + " Coast"]],
+    [
+      /miuibrowser\/([\w\.]+)/i
+      // MIUI Browser
+    ],
+    [VERSION, [NAME, "MIUI" + SUFFIX_BROWSER]],
+    [
+      /fxios\/([\w\.-]+)/i
+      // Firefox for iOS
+    ],
+    [VERSION, [NAME, PREFIX_MOBILE + FIREFOX]],
+    [
+      /\bqihoobrowser\/?([\w\.]*)/i
+      // 360
+    ],
+    [VERSION, [NAME, "360"]],
+    [
+      /\b(qq)\/([\w\.]+)/i
+      // QQ
+    ],
+    [[NAME, /(.+)/, "$1Browser"], VERSION],
+    [
+      /(oculus|sailfish|huawei|vivo|pico)browser\/([\w\.]+)/i
+    ],
+    [[NAME, /(.+)/, "$1" + SUFFIX_BROWSER], VERSION],
+    [
+      // Oculus/Sailfish/VivoBrowser/PicoBrowser
+      / HBPC\/([\w\.]+)/
+      // Huawei Browser
+    ],
+    [VERSION, [NAME, HUAWEI + SUFFIX_BROWSER]],
+    [
+      /samsungbrowser\/([\w\.]+)/i
+      // Samsung Internet
+    ],
+    [VERSION, [NAME, SAMSUNG + " Internet"]],
+    [
+      /metasr[\/ ]?([\d\.]+)/i
+      // Sogou Explorer
+    ],
+    [VERSION, [NAME, SOGOU + " Explorer"]],
+    [
+      /(sogou)mo\w+\/([\d\.]+)/i
+      // Sogou Mobile
+    ],
+    [[NAME, SOGOU + " Mobile"], VERSION],
+    [
+      /(electron)\/([\w\.]+) safari/i,
+      // Electron-based App
+      /(tesla)(?: qtcarbrowser|\/(20\d\d\.[-\w\.]+))/i,
+      // Tesla
+      /m?(qqbrowser|2345(?=browser|chrome|explorer))\w*[\/ ]?v?([\w\.]+)/i
+      // QQ/2345
+    ],
+    [NAME, VERSION],
+    [
+      /(lbbrowser|luakit|rekonq|steam(?= (clie|tenf|gameo)))/i
+      // LieBao Browser/Luakit/Rekonq/Steam
+    ],
+    [NAME],
+    [
+      /ome\/([\w\.]+).+(iron(?= saf)|360(?=[es]e$))/i
+      // Iron / 360
+    ],
+    [VERSION, NAME],
+    [
+      // WebView
+      /((?:fban\/fbios|fb_iab\/fb4a)(?!.+fbav)|;fbav\/([\w\.]+);)/i
+      // Facebook App for iOS & Android
+    ],
+    [[NAME, FACEBOOK], VERSION, [TYPE, INAPP]],
+    [
+      /(kakao(?:talk|story))[\/ ]([\w\.]+)/i,
+      // Kakao App
+      /(naver)\(.*?(\d+\.[\w\.]+).*\)/i,
+      // Naver InApp
+      /(daum)apps[\/ ]([\w\.]+)/i,
+      // Daum App
+      /safari (line)\/([\w\.]+)/i,
+      // Line App for iOS
+      /\b(line)\/([\w\.]+)\/iab/i,
+      // Line App for Android
+      /(alipay)client\/([\w\.]+)/i,
+      // Alipay
+      /(twitter)(?:and| f.+e\/([\w\.]+))/i,
+      // Twitter
+      /(bing)(?:web|sapphire)\/([\w\.]+)/i,
+      // Bing
+      /(instagram|snapchat|klarna)[\/ ]([-\w\.]+)/i
+      // Instagram/Snapchat/Klarna
+    ],
+    [NAME, VERSION, [TYPE, INAPP]],
+    [
+      /\bgsa\/([\w\.]+) .*safari\//i
+      // Google Search Appliance on iOS
+    ],
+    [VERSION, [NAME, "GSA"], [TYPE, INAPP]],
+    [
+      /(?:musical_ly|trill)(?:.+app_?version\/|_)([\w\.]+)/i
+      // TikTok
+    ],
+    [VERSION, [NAME, "TikTok"], [TYPE, INAPP]],
+    [
+      /\[(linkedin)app\]/i
+      // LinkedIn App for iOS & Android
+    ],
+    [NAME, [TYPE, INAPP]],
+    [
+      /(zalo(?:app)?)[\/\sa-z]*([\w\.-]+)/i
+      // Zalo 
+    ],
+    [[NAME, /(.+)/, "Zalo"], VERSION, [TYPE, INAPP]],
+    [
+      /(chromium)[\/ ]([-\w\.]+)/i
+      // Chromium
+    ],
+    [NAME, VERSION],
+    [
+      /ome-(lighthouse)$/i
+      // Chrome Lighthouse
+    ],
+    [NAME, [TYPE, FETCHER]],
+    [
+      /headlesschrome(?:\/([\w\.]+)| )/i
+      // Chrome Headless
+    ],
+    [VERSION, [NAME, CHROME + " Headless"]],
+    [
+      /wv\).+chrome\/([\w\.]+).+edgw\//i
+      // Edge WebView2
+    ],
+    [VERSION, [NAME, EDGE + " WebView2"], [TYPE, INAPP]],
+    [
+      /; wv\).+(chrome)\/([\w\.]+)/i
+      // Chrome WebView
+    ],
+    [[NAME, CHROME + " WebView"], VERSION, [TYPE, INAPP]],
+    [
+      /droid.+ version\/([\w\.]+)\b.+(?:mobile safari|safari)/i
+      // Android Browser
+    ],
+    [VERSION, [NAME, "Android" + SUFFIX_BROWSER]],
+    [
+      /chrome\/([\w\.]+) mobile/i
+      // Chrome Mobile
+    ],
+    [VERSION, [NAME, PREFIX_MOBILE + "Chrome"]],
+    [
+      /(chrome|omniweb|arora|[tizenoka]{5} ?browser)\/v?([\w\.]+)/i
+      // Chrome/OmniWeb/Arora/Tizen/Nokia
+    ],
+    [NAME, VERSION],
+    [
+      /version\/([\w\.\,]+) .*mobile(?:\/\w+ | ?)safari/i
+      // Safari Mobile
+    ],
+    [VERSION, [NAME, PREFIX_MOBILE + "Safari"]],
+    [
+      /iphone .*mobile(?:\/\w+ | ?)safari/i
+    ],
+    [[NAME, PREFIX_MOBILE + "Safari"]],
+    [
+      /version\/([\w\.\,]+) .*(safari)/i
+      // Safari
+    ],
+    [VERSION, NAME],
+    [
+      /webkit.+?(mobile ?safari|safari)(\/[\w\.]+)/i
+      // Safari < 3.0
+    ],
+    [NAME, [VERSION, "1"]],
+    [
+      /(webkit|khtml)\/([\w\.]+)/i
+    ],
+    [NAME, VERSION],
+    [
+      // Gecko based
+      /(?:mobile|tablet);.*(firefox)\/([\w\.-]+)/i
+      // Firefox Mobile
+    ],
+    [[NAME, PREFIX_MOBILE + FIREFOX], VERSION],
+    [
+      /(navigator|netscape\d?)\/([-\w\.]+)/i
+      // Netscape
+    ],
+    [[NAME, "Netscape"], VERSION],
+    [
+      /(wolvic|librewolf)\/([\w\.]+)/i
+      // Wolvic/LibreWolf
+    ],
+    [NAME, VERSION],
+    [
+      /mobile vr; rv:([\w\.]+)\).+firefox/i
+      // Firefox Reality
+    ],
+    [VERSION, [NAME, FIREFOX + " Reality"]],
+    [
+      /ekiohf.+(flow)\/([\w\.]+)/i,
+      // Flow
+      /(swiftfox)/i,
+      // Swiftfox
+      /(icedragon|iceweasel|camino|chimera|fennec|maemo browser|minimo|conkeror)[\/ ]?([\w\.\+]+)/i,
+      // IceDragon/Iceweasel/Camino/Chimera/Fennec/Maemo/Minimo/Conkeror
+      /(seamonkey|k-meleon|icecat|iceape|firebird|phoenix|basilisk|waterfox)\/([-\w\.]+)$/i,
+      // Firefox/SeaMonkey/K-Meleon/IceCat/IceApe/Firebird/Phoenix
+      /(firefox)\/([\w\.]+)/i,
+      // Other Firefox-based
+      /(mozilla)\/([\w\.]+(?= .+rv\:.+gecko\/\d+)|[0-4][\w\.]+(?!.+compatible))/i,
+      // Mozilla
+      // Other
+      /(amaya|dillo|doris|icab|ladybird|lynx|mosaic|netsurf|obigo|polaris|w3m|(?:go|ice|up)[\. ]?browser)[-\/ ]?v?([\w\.]+)/i,
+      // Polaris/Lynx/Dillo/iCab/Doris/Amaya/w3m/NetSurf/Obigo/Mosaic/Go/ICE/UP.Browser/Ladybird
+      /\b(links) \(([\w\.]+)/i
+      // Links
+    ],
+    [NAME, [VERSION, /_/g, "."]],
+    [
+      /(cobalt)\/([\w\.]+)/i
+      // Cobalt
+    ],
+    [NAME, [VERSION, /[^\d\.]+./, EMPTY]]
+  ],
+  cpu: [
+    [
+      /\b((amd|x|x86[-_]?|wow|win)64)\b/i
+      // AMD64 (x64)
+    ],
+    [[ARCHITECTURE, "amd64"]],
+    [
+      /(ia32(?=;))/i,
+      // IA32 (quicktime)
+      /\b((i[346]|x)86)(pc)?\b/i
+      // IA32 (x86)
+    ],
+    [[ARCHITECTURE, "ia32"]],
+    [
+      /\b(aarch64|arm(v?[89]e?l?|_?64))\b/i
+      // ARM64
+    ],
+    [[ARCHITECTURE, "arm64"]],
+    [
+      /\b(arm(v[67])?ht?n?[fl]p?)\b/i
+      // ARMHF
+    ],
+    [[ARCHITECTURE, "armhf"]],
+    [
+      // PocketPC mistakenly identified as PowerPC
+      /( (ce|mobile); ppc;|\/[\w\.]+arm\b)/i
+    ],
+    [[ARCHITECTURE, "arm"]],
+    [
+      / sun4\w[;\)]/i
+      // SPARC
+    ],
+    [[ARCHITECTURE, "sparc"]],
+    [
+      // IA64, 68K, ARM/64, AVR/32, IRIX/64, MIPS/64, SPARC/64, PA-RISC
+      /\b(avr32|ia64(?=;)|68k(?=\))|\barm(?=v([1-7]|[5-7]1)l?|;|eabi)|(irix|mips|sparc)(64)?\b|pa-risc)/i,
+      /((ppc|powerpc)(64)?)( mac|;|\))/i,
+      // PowerPC
+      /(?:osf1|[freopnt]{3,4}bsd) (alpha)/i
+      // Alpha
+    ],
+    [[ARCHITECTURE, /ower/, EMPTY, lowerize]],
+    [
+      /mc680.0/i
+    ],
+    [[ARCHITECTURE, "68k"]],
+    [
+      /winnt.+\[axp/i
+    ],
+    [[ARCHITECTURE, "alpha"]]
+  ],
+  device: [
+    [
+      //////////////////////////
+      // MOBILES & TABLETS
+      /////////////////////////
+      // Samsung
+      /\b(sch-i[89]0\d|shw-m380s|sm-[ptx]\w{2,4}|gt-[pn]\d{2,4}|sgh-t8[56]9|nexus 10)/i
+    ],
+    [MODEL, [VENDOR, SAMSUNG], [TYPE, TABLET]],
+    [
+      /\b((?:s[cgp]h|gt|sm)-(?![lr])\w+|sc[g-]?[\d]+a?|galaxy nexus)/i,
+      /samsung[- ]((?!sm-[lr]|browser)[-\w]+)/i,
+      /sec-(sgh\w+)/i
+    ],
+    [MODEL, [VENDOR, SAMSUNG], [TYPE, MOBILE]],
+    [
+      // Apple
+      /(?:\/|\()(ip(?:hone|od)[\w, ]*)[\/\);]/i
+      // iPod/iPhone
+    ],
+    [MODEL, [VENDOR, APPLE], [TYPE, MOBILE]],
+    [
+      /\b(?:ios|apple\w+)\/.+[\(\/](ipad)/i,
+      // iPad
+      /\b(ipad)[\d,]*[;\] ].+(mac |i(pad)?)os/i
+    ],
+    [MODEL, [VENDOR, APPLE], [TYPE, TABLET]],
+    [
+      /(macintosh);/i
+    ],
+    [MODEL, [VENDOR, APPLE]],
+    [
+      // Sharp
+      /\b(sh-?[altvz]?\d\d[a-ekm]?)/i
+    ],
+    [MODEL, [VENDOR, SHARP], [TYPE, MOBILE]],
+    [
+      // Honor
+      /\b((?:brt|eln|hey2?|gdi|jdn)-a?[lnw]09|(?:ag[rm]3?|jdn2|kob2)-a?[lw]0[09]hn)(?: bui|\)|;)/i
+    ],
+    [MODEL, [VENDOR, HONOR], [TYPE, TABLET]],
+    [
+      /honor([-\w ]+)[;\)]/i
+    ],
+    [MODEL, [VENDOR, HONOR], [TYPE, MOBILE]],
+    [
+      // Huawei
+      /\b((?:ag[rs][2356]?k?|bah[234]?|bg[2o]|bt[kv]|cmr|cpn|db[ry]2?|jdn2|got|kob2?k?|mon|pce|scm|sht?|[tw]gr|vrd)-[ad]?[lw][0125][09]b?|605hw|bg2-u03|(?:gem|fdr|m2|ple|t1)-[7a]0[1-4][lu]|t1-a2[13][lw]|mediapad[\w\. ]*(?= bui|\)))\b(?!.+d\/s)/i
+    ],
+    [MODEL, [VENDOR, HUAWEI], [TYPE, TABLET]],
+    [
+      /(?:huawei) ?([-\w ]+)[;\)]/i,
+      /\b(nexus 6p|\w{2,4}e?-[atu]?[ln][\dx][\dc][adnt]?)\b(?!.+d\/s)/i
+    ],
+    [MODEL, [VENDOR, HUAWEI], [TYPE, MOBILE]],
+    [
+      // Xiaomi
+      /oid[^\)]+; (2[\dbc]{4}(182|283|rp\w{2})[cgl]|m2105k81a?c)(?: bui|\))/i,
+      /\b(?:xiao)?((?:red)?mi[-_ ]?pad[\w- ]*)(?: bui|\))/i
+      // Mi Pad tablets
+    ],
+    [[MODEL, /_/g, " "], [VENDOR, XIAOMI], [TYPE, TABLET]],
+    [
+      /\b; (\w+) build\/hm\1/i,
+      // Xiaomi Hongmi 'numeric' models
+      /\b(hm[-_ ]?note?[_ ]?(?:\d\w)?) bui/i,
+      // Xiaomi Hongmi
+      // Xiaomi Redmi / POCO / Black Shark / Qin
+      /oid[^\)]+; (redmi[\-_ ]?(?:note|k)?[\w_ ]+|m?[12]\d[01]\d\w{3,6}|poco[\w ]+|(shark )?\w{3}-[ah]0|qin ?[1-3](s\+|ultra| pro)?)( bui|; wv|\))/i,
+      // Xiaomi Mi
+      /\b(mi[-_ ]?(?:a\d|one|one[_ ]plus|note|max|cc)?[_ ]?(?:\d{0,2}\w?)[_ ]?(?:plus|se|lite|pro)?( 5g|lte)?)(?: bui|\))/i,
+      /; ([\w ]+) miui\/v?\d/i
+    ],
+    [[MODEL, /_/g, " "], [VENDOR, XIAOMI], [TYPE, MOBILE]],
+    [
+      // OnePlus
+      /droid.+; (cph2[3-6]\d[13579]|((gm|hd)19|(ac|be|in|kb)20|(d[en]|eb|le|mt)21|ne22)[0-2]\d|p[g-l]\w[1m]10)\b/i,
+      /(?:one)?(?:plus)? (a\d0\d\d)(?: b|\))/i
+    ],
+    [MODEL, [VENDOR, ONEPLUS], [TYPE, MOBILE]],
+    [
+      // OPPO
+      /; (\w+) bui.+ oppo/i,
+      /\b(cph[12]\d{3}|p(?:af|c[al]|d\w|e[ar])[mt]\d0|x9007|a101op)\b/i
+    ],
+    [MODEL, [VENDOR, OPPO], [TYPE, MOBILE]],
+    [
+      /\b(opd2(\d{3}a?))(?: bui|\))/i
+    ],
+    [MODEL, [VENDOR, strMapper, { "OnePlus": ["203", "304", "403", "404", "413", "415"], "*": OPPO }], [TYPE, TABLET]],
+    [
+      // BLU
+      /(vivo (5r?|6|8l?|go|one|s|x[il]?[2-4]?)[\w\+ ]*)(?: bui|\))/i
+      // Vivo series
+    ],
+    [MODEL, [VENDOR, "BLU"], [TYPE, MOBILE]],
+    [
+      // Vivo
+      /; vivo (\w+)(?: bui|\))/i,
+      /\b(v[12]\d{3}\w?[at])(?: bui|;)/i
+    ],
+    [MODEL, [VENDOR, "Vivo"], [TYPE, MOBILE]],
+    [
+      // Realme
+      /\b(rmx[1-3]\d{3})(?: bui|;|\))/i
+    ],
+    [MODEL, [VENDOR, "Realme"], [TYPE, MOBILE]],
+    [
+      // Lenovo
+      /(ideatab[-\w ]+|602lv|d-42a|a101lv|a2109a|a3500-hv|s[56]000|pb-6505[my]|tb-?x?\d{3,4}(?:f[cu]|xu|[av])|yt\d?-[jx]?\d+[lfmx])( bui|;|\)|\/)/i,
+      /lenovo ?(b[68]0[08]0-?[hf]?|tab(?:[\w- ]+?)|tb[\w-]{6,7})( bui|;|\)|\/)/i
+    ],
+    [MODEL, [VENDOR, LENOVO], [TYPE, TABLET]],
+    [
+      /lenovo[-_ ]?([-\w ]+?)(?: bui|\)|\/)/i
+    ],
+    [MODEL, [VENDOR, LENOVO], [TYPE, MOBILE]],
+    [
+      // Motorola
+      /\b(milestone|droid(?:[2-4x]| (?:bionic|x2|pro|razr))?:?( 4g)?)\b[\w ]+build\//i,
+      /\bmot(?:orola)?[- ]([\w\s]+)(\)| bui)/i,
+      /((?:moto(?! 360)[-\w\(\) ]+|xt\d{3,4}[cgkosw\+]?[-\d]*|nexus 6)(?= bui|\)))/i
+    ],
+    [MODEL, [VENDOR, MOTOROLA], [TYPE, MOBILE]],
+    [
+      /\b(mz60\d|xoom[2 ]{0,2}) build\//i
+    ],
+    [MODEL, [VENDOR, MOTOROLA], [TYPE, TABLET]],
+    [
+      // LG
+      /\b(?:lg)?([vl]k\-?\d{3}) bui| 3\.[-\w; ]{10}lg?-([06cv9]{3,4})/i
+    ],
+    [MODEL, [VENDOR, LG], [TYPE, TABLET]],
+    [
+      /(lm(?:-?f100[nv]?|-[\w\.]+)(?= bui|\))|nexus [45])/i,
+      /\blg[-e;\/ ]+(?!.*(?:browser|netcast|android tv|watch|webos))(\w+)/i,
+      /\blg-?([\d\w]+) bui/i
+    ],
+    [MODEL, [VENDOR, LG], [TYPE, MOBILE]],
+    [
+      // Nokia
+      /(nokia) (t[12][01])/i
+    ],
+    [VENDOR, MODEL, [TYPE, TABLET]],
+    [
+      /(?:maemo|nokia).*(n900|lumia \d+|rm-\d+)/i,
+      /nokia[-_ ]?(([-\w\. ]*?))( bui|\)|;|\/)/i
+    ],
+    [[MODEL, /_/g, " "], [TYPE, MOBILE], [VENDOR, "Nokia"]],
+    [
+      // Google
+      /(pixel (c|tablet))\b/i
+      // Google Pixel C/Tablet
+    ],
+    [MODEL, [VENDOR, GOOGLE], [TYPE, TABLET]],
+    [
+      // Google Pixel
+      /droid.+;(?: google)? (g(01[13]a|020[aem]|025[jn]|1b60|1f8f|2ybb|4s1m|576d|5nz6|8hhn|8vou|a02099|c15s|d1yq|e2ae|ec77|gh2x|kv4x|p4bc|pj41|r83y|tt9q|ur25|wvk6)|pixel[\d ]*a?( pro)?( xl)?( fold)?( \(5g\))?)( bui|\))/i
+    ],
+    [MODEL, [VENDOR, GOOGLE], [TYPE, MOBILE]],
+    [
+      /(google) (pixelbook( go)?)/i
+    ],
+    [VENDOR, MODEL],
+    [
+      // Sony
+      /droid.+; (a?\d[0-2]{2}so|[c-g]\d{4}|so[-gl]\w+|xq-\w\w\d\d)(?= bui|\).+chrome\/(?![1-6]{0,1}\d\.))/i
+    ],
+    [MODEL, [VENDOR, SONY], [TYPE, MOBILE]],
+    [
+      /sony tablet [ps]/i,
+      /\b(?:sony)?sgp\w+(?: bui|\))/i
+    ],
+    [[MODEL, "Xperia Tablet"], [VENDOR, SONY], [TYPE, TABLET]],
+    [
+      // Amazon
+      /(alexa)webm/i,
+      /(kf[a-z]{2}wi|aeo(?!bc)\w\w)( bui|\))/i,
+      // Kindle Fire without Silk / Echo Show
+      /(kf[a-z]+)( bui|\)).+silk\//i
+      // Kindle Fire HD
+    ],
+    [MODEL, [VENDOR, AMAZON], [TYPE, TABLET]],
+    [
+      /((?:sd|kf)[0349hijorstuw]+)( bui|\)).+silk\//i
+      // Fire Phone
+    ],
+    [[MODEL, /(.+)/g, "Fire Phone $1"], [VENDOR, AMAZON], [TYPE, MOBILE]],
+    [
+      // BlackBerry
+      /(playbook);[-\w\),; ]+(rim)/i
+      // BlackBerry PlayBook
+    ],
+    [MODEL, VENDOR, [TYPE, TABLET]],
+    [
+      /\b((?:bb[a-f]|st[hv])100-\d)/i,
+      /(?:blackberry|\(bb10;) (\w+)/i
+    ],
+    [MODEL, [VENDOR, BLACKBERRY], [TYPE, MOBILE]],
+    [
+      // Asus
+      /(?:\b|asus_)(transfo[prime ]{4,10} \w+|eeepc|slider \w+|nexus 7|padfone|p00[cj])/i
+    ],
+    [MODEL, [VENDOR, ASUS], [TYPE, TABLET]],
+    [
+      / (z[bes]6[027][012][km][ls]|zenfone \d\w?)\b/i
+    ],
+    [MODEL, [VENDOR, ASUS], [TYPE, MOBILE]],
+    [
+      // HTC
+      /(nexus 9)/i
+      // HTC Nexus 9
+    ],
+    [MODEL, [VENDOR, "HTC"], [TYPE, TABLET]],
+    [
+      /(htc)[-;_ ]{1,2}([\w ]+(?=\)| bui)|\w+)/i,
+      // HTC
+      // ZTE
+      /(zte)[- ]([\w ]+?)(?: bui|\/|\))/i,
+      /(alcatel|geeksphone|nexian|panasonic(?!(?:;|\.))|sony(?!-bra))[-_ ]?([-\w]*)/i
+      // Alcatel/GeeksPhone/Nexian/Panasonic/Sony
+    ],
+    [VENDOR, [MODEL, /_/g, " "], [TYPE, MOBILE]],
+    [
+      // TCL
+      /tcl (xess p17aa)/i,
+      /droid [\w\.]+; ((?:8[14]9[16]|9(?:0(?:48|60|8[01])|1(?:3[27]|66)|2(?:6[69]|9[56])|466))[gqswx])(_\w(\w|\w\w))?(\)| bui)/i
+    ],
+    [MODEL, [VENDOR, "TCL"], [TYPE, TABLET]],
+    [
+      /droid [\w\.]+; (418(?:7d|8v)|5087z|5102l|61(?:02[dh]|25[adfh]|27[ai]|56[dh]|59k|65[ah])|a509dl|t(?:43(?:0w|1[adepqu])|50(?:6d|7[adju])|6(?:09dl|10k|12b|71[efho]|76[hjk])|7(?:66[ahju]|67[hw]|7[045][bh]|71[hk]|73o|76[ho]|79w|81[hks]?|82h|90[bhsy]|99b)|810[hs]))(_\w(\w|\w\w))?(\)| bui)/i
+    ],
+    [MODEL, [VENDOR, "TCL"], [TYPE, MOBILE]],
+    [
+      // itel
+      /(itel) ((\w+))/i
+    ],
+    [[VENDOR, lowerize], MODEL, [TYPE, strMapper, { "tablet": ["p10001l", "w7001"], "*": "mobile" }]],
+    [
+      // Acer
+      /droid.+; ([ab][1-7]-?[0178a]\d\d?)/i
+    ],
+    [MODEL, [VENDOR, "Acer"], [TYPE, TABLET]],
+    [
+      // Meizu
+      /droid.+; (m[1-5] note) bui/i,
+      /\bmz-([-\w]{2,})/i
+    ],
+    [MODEL, [VENDOR, "Meizu"], [TYPE, MOBILE]],
+    [
+      // Ulefone
+      /; ((?:power )?armor(?:[\w ]{0,8}))(?: bui|\))/i
+    ],
+    [MODEL, [VENDOR, "Ulefone"], [TYPE, MOBILE]],
+    [
+      // Energizer
+      /; (energy ?\w+)(?: bui|\))/i,
+      /; energizer ([\w ]+)(?: bui|\))/i
+    ],
+    [MODEL, [VENDOR, "Energizer"], [TYPE, MOBILE]],
+    [
+      // Cat
+      /; cat (b35);/i,
+      /; (b15q?|s22 flip|s48c|s62 pro)(?: bui|\))/i
+    ],
+    [MODEL, [VENDOR, "Cat"], [TYPE, MOBILE]],
+    [
+      // Smartfren
+      /((?:new )?andromax[\w- ]+)(?: bui|\))/i
+    ],
+    [MODEL, [VENDOR, "Smartfren"], [TYPE, MOBILE]],
+    [
+      // Nothing
+      /droid.+; (a(in)?(0(15|59|6[35])|142)p?)/i
+    ],
+    [MODEL, [VENDOR, "Nothing"], [TYPE, MOBILE]],
+    [
+      // Archos
+      /; (x67 5g|tikeasy \w+|ac[1789]\d\w+)( b|\))/i,
+      /archos ?(5|gamepad2?|([\w ]*[t1789]|hello) ?\d+[\w ]*)( b|\))/i
+    ],
+    [MODEL, [VENDOR, "Archos"], [TYPE, TABLET]],
+    [
+      /archos ([\w ]+)( b|\))/i,
+      /; (ac[3-6]\d\w{2,8})( b|\))/i
+    ],
+    [MODEL, [VENDOR, "Archos"], [TYPE, MOBILE]],
+    [
+      // Blackview
+      /blackview ([-\w ]+)( b|\))/i,
+      /; (bv\d{4}[-\w ]*)( b|\))/i
+    ],
+    [MODEL, [VENDOR, "Blackview"], [TYPE, MOBILE]],
+    [
+      // HMD
+      /; (n159v)/i
+    ],
+    [MODEL, [VENDOR, "HMD"], [TYPE, MOBILE]],
+    [
+      // T-Mobile
+      /((revvl[ \w\+]+|tm(?:rv|af)\w*[45]g(?:tb)?))( b|\))/i
+    ],
+    [MODEL, [TYPE, strTest, { "test": /ta?b/i, "ifTrue": TABLET, "ifFalse": MOBILE }], [VENDOR, "T-Mobile"]],
+    [
+      // MIXED
+      /(imo) (tab \w+)/i,
+      // IMO
+      /(infinix|tecno) (x1101b?|p904|dp(7c|8d|10a)( pro)?|p70[1-3]a?|p904|t1101)/i
+      // Infinix XPad / Tecno
+    ],
+    [VENDOR, MODEL, [TYPE, TABLET]],
+    [
+      /(blackberry|benq|palm(?=\-)|sonyericsson|acer|asus(?! zenw)|dell|jolla|meizu|motorola|polytron|tecno|micromax|advan)[-_ ]?([-\w]*)/i,
+      // BlackBerry/BenQ/Palm/Sony-Ericsson/Acer/Asus/Dell/Meizu/Motorola/Polytron/Tecno/Micromax/Advan
+      // BLU/Coolpad/CUBOT/HMD/IMO/Infinix/Lava/OnePlus/TCL/Wiko
+      /; (blu|coolpad|cubot|hmd|imo|infinix|lava|oneplus|tcl|wiko)[_ ]([-\w\+ ]+?)(?: bui|\)|; r)/i,
+      /(hp) ([\w ]+\w)/i,
+      // HP iPAQ
+      /(microsoft); (lumia[\w ]+)/i,
+      // Microsoft Lumia
+      /(oppo) ?([\w ]+) bui/i,
+      // OPPO
+      /(hisense) ([ehv][\w ]+)\)/i,
+      // Hisense
+      /droid[^;]+; (philips)[_ ]([sv-x][\d]{3,4}[xz]?)/i
+      // Philips
+    ],
+    [VENDOR, MODEL, [TYPE, MOBILE]],
+    [
+      /(kobo)\s(ereader|touch)/i,
+      // Kobo
+      /(hp).+(touchpad(?!.+tablet)|tablet)/i,
+      // HP TouchPad
+      /(kindle)\/([\w\.]+)/i
+      // Kindle
+    ],
+    [VENDOR, MODEL, [TYPE, TABLET]],
+    [
+      /(surface duo)/i
+      // Surface Duo
+    ],
+    [MODEL, [VENDOR, MICROSOFT], [TYPE, TABLET]],
+    [
+      /droid [\d\.]+; (fp\du?)(?: b|\))/i
+      // Fairphone
+    ],
+    [MODEL, [VENDOR, "Fairphone"], [TYPE, MOBILE]],
+    [
+      /((?:tegranote|shield t(?!.+d tv))[\w- ]*?)(?: b|\))/i
+      // Nvidia Tablets
+    ],
+    [MODEL, [VENDOR, NVIDIA], [TYPE, TABLET]],
+    [
+      /(sprint) (\w+)/i
+      // Sprint Phones
+    ],
+    [VENDOR, MODEL, [TYPE, MOBILE]],
+    [
+      /(kin\.[onetw]{3})/i
+      // Microsoft Kin
+    ],
+    [[MODEL, /\./g, " "], [VENDOR, MICROSOFT], [TYPE, MOBILE]],
+    [
+      /droid.+; ([c6]+|et5[16]|mc[239][23]x?|vc8[03]x?)\)/i
+      // Zebra
+    ],
+    [MODEL, [VENDOR, ZEBRA], [TYPE, TABLET]],
+    [
+      /droid.+; (ec30|ps20|tc[2-8]\d[kx])\)/i
+    ],
+    [MODEL, [VENDOR, ZEBRA], [TYPE, MOBILE]],
+    [
+      ///////////////////
+      // SMARTTVS
+      ///////////////////
+      /(philips)[\w ]+tv/i,
+      // Philips
+      /smart-tv.+(samsung)/i
+      // Samsung
+    ],
+    [VENDOR, [TYPE, SMARTTV]],
+    [
+      /hbbtv.+maple;(\d+)/i
+    ],
+    [[MODEL, /^/, "SmartTV"], [VENDOR, SAMSUNG], [TYPE, SMARTTV]],
+    [
+      /(vizio)(?: |.+model\/)(\w+-\w+)/i,
+      // Vizio
+      /tcast.+(lg)e?. ([-\w]+)/i
+      // LG SmartTV
+    ],
+    [VENDOR, MODEL, [TYPE, SMARTTV]],
+    [
+      /(nux; netcast.+smarttv|lg (netcast\.tv-201\d|android tv))/i
+    ],
+    [[VENDOR, LG], [TYPE, SMARTTV]],
+    [
+      /(apple) ?tv/i
+      // Apple TV
+    ],
+    [VENDOR, [MODEL, APPLE + " TV"], [TYPE, SMARTTV]],
+    [
+      /crkey.*devicetype\/chromecast/i
+      // Google Chromecast Third Generation
+    ],
+    [[MODEL, CHROMECAST + " Third Generation"], [VENDOR, GOOGLE], [TYPE, SMARTTV]],
+    [
+      /crkey.*devicetype\/([^/]*)/i
+      // Google Chromecast with specific device type
+    ],
+    [[MODEL, /^/, "Chromecast "], [VENDOR, GOOGLE], [TYPE, SMARTTV]],
+    [
+      /fuchsia.*crkey/i
+      // Google Chromecast Nest Hub
+    ],
+    [[MODEL, CHROMECAST + " Nest Hub"], [VENDOR, GOOGLE], [TYPE, SMARTTV]],
+    [
+      /crkey/i
+      // Google Chromecast, Linux-based or unknown
+    ],
+    [[MODEL, CHROMECAST], [VENDOR, GOOGLE], [TYPE, SMARTTV]],
+    [
+      /(portaltv)/i
+      // Facebook Portal TV
+    ],
+    [MODEL, [VENDOR, FACEBOOK], [TYPE, SMARTTV]],
+    [
+      /droid.+aft(\w+)( bui|\))/i
+      // Fire TV
+    ],
+    [MODEL, [VENDOR, AMAZON], [TYPE, SMARTTV]],
+    [
+      /(shield \w+ tv)/i
+      // Nvidia Shield TV
+    ],
+    [MODEL, [VENDOR, NVIDIA], [TYPE, SMARTTV]],
+    [
+      /\(dtv[\);].+(aquos)/i,
+      /(aquos-tv[\w ]+)\)/i
+      // Sharp
+    ],
+    [MODEL, [VENDOR, SHARP], [TYPE, SMARTTV]],
+    [
+      /(bravia[\w ]+)( bui|\))/i
+      // Sony
+    ],
+    [MODEL, [VENDOR, SONY], [TYPE, SMARTTV]],
+    [
+      /(mi(tv|box)-?\w+) bui/i
+      // Xiaomi
+    ],
+    [MODEL, [VENDOR, XIAOMI], [TYPE, SMARTTV]],
+    [
+      /Hbbtv.*(technisat) (.*);/i
+      // TechniSAT
+    ],
+    [VENDOR, MODEL, [TYPE, SMARTTV]],
+    [
+      /\b(roku)[\dx]*[\)\/]((?:dvp-)?[\d\.]*)/i,
+      // Roku
+      /hbbtv\/\d+\.\d+\.\d+ +\([\w\+ ]*; *([\w\d][^;]*);([^;]*)/i
+      // HbbTV devices
+    ],
+    [[VENDOR, /.+\/(\w+)/, "$1", strMapper, { "LG": "lge" }], [MODEL, trim], [TYPE, SMARTTV]],
+    [
+      ///////////////////
+      // CONSOLES
+      ///////////////////
+      /(playstation \w+)/i
+      // Playstation
+    ],
+    [MODEL, [VENDOR, SONY], [TYPE, CONSOLE]],
+    [
+      /\b(xbox(?: one)?(?!; xbox))[\); ]/i
+      // Microsoft Xbox
+    ],
+    [MODEL, [VENDOR, MICROSOFT], [TYPE, CONSOLE]],
+    [
+      /(ouya)/i,
+      // Ouya
+      /(nintendo) (\w+)/i,
+      // Nintendo
+      /(retroid) (pocket ([^\)]+))/i,
+      // Retroid Pocket
+      /(valve).+(steam deck)/i,
+      /droid.+; ((shield|rgcube|gr0006))( bui|\))/i
+      // Nvidia Portable/Anbernic/Logitech
+    ],
+    [[VENDOR, strMapper, { "Nvidia": "Shield", "Anbernic": "RGCUBE", "Logitech": "GR0006" }], MODEL, [TYPE, CONSOLE]],
+    [
+      ///////////////////
+      // WEARABLES
+      ///////////////////
+      /\b(sm-[lr]\d\d[0156][fnuw]?s?|gear live)\b/i
+      // Samsung Galaxy Watch
+    ],
+    [MODEL, [VENDOR, SAMSUNG], [TYPE, WEARABLE]],
+    [
+      /((pebble))app/i,
+      // Pebble
+      /(asus|google|lg|oppo|xiaomi) ((pixel |zen)?watch[\w ]*)( bui|\))/i
+      // Asus ZenWatch / LG Watch / Pixel Watch / Xiaomi Watch
+    ],
+    [VENDOR, MODEL, [TYPE, WEARABLE]],
+    [
+      /(ow(?:19|20)?we?[1-3]{1,3})/i
+      // Oppo Watch
+    ],
+    [MODEL, [VENDOR, OPPO], [TYPE, WEARABLE]],
+    [
+      /(watch)(?: ?os[,\/]|\d,\d\/)[\d\.]+/i
+      // Apple Watch
+    ],
+    [MODEL, [VENDOR, APPLE], [TYPE, WEARABLE]],
+    [
+      /(opwwe\d{3})/i
+      // OnePlus Watch
+    ],
+    [MODEL, [VENDOR, ONEPLUS], [TYPE, WEARABLE]],
+    [
+      /(moto 360)/i
+      // Motorola 360
+    ],
+    [MODEL, [VENDOR, MOTOROLA], [TYPE, WEARABLE]],
+    [
+      /(smartwatch 3)/i
+      // Sony SmartWatch
+    ],
+    [MODEL, [VENDOR, SONY], [TYPE, WEARABLE]],
+    [
+      /(g watch r)/i
+      // LG G Watch R
+    ],
+    [MODEL, [VENDOR, LG], [TYPE, WEARABLE]],
+    [
+      /droid.+; (wt63?0{2,3})\)/i
+    ],
+    [MODEL, [VENDOR, ZEBRA], [TYPE, WEARABLE]],
+    [
+      ///////////////////
+      // XR
+      ///////////////////
+      /droid.+; (glass) \d/i
+      // Google Glass
+    ],
+    [MODEL, [VENDOR, GOOGLE], [TYPE, XR]],
+    [
+      /(pico) ([\w ]+) os\d/i
+      // Pico
+    ],
+    [VENDOR, MODEL, [TYPE, XR]],
+    [
+      /(quest( \d| pro)?s?).+vr/i
+      // Meta Quest
+    ],
+    [MODEL, [VENDOR, FACEBOOK], [TYPE, XR]],
+    [
+      /mobile vr; rv.+firefox/i
+      // Unidentifiable VR device using Firefox Reality / Wolvic
+    ],
+    [[TYPE, XR]],
+    [
+      ///////////////////
+      // EMBEDDED
+      ///////////////////
+      /(tesla)(?: qtcarbrowser|\/[-\w\.]+)/i
+      // Tesla
+    ],
+    [VENDOR, [TYPE, EMBEDDED]],
+    [
+      /(aeobc)\b/i
+      // Echo Dot
+    ],
+    [MODEL, [VENDOR, AMAZON], [TYPE, EMBEDDED]],
+    [
+      /(homepod).+mac os/i
+      // Apple HomePod
+    ],
+    [MODEL, [VENDOR, APPLE], [TYPE, EMBEDDED]],
+    [
+      /windows iot/i
+      // Unidentifiable embedded device using Windows IoT
+    ],
+    [[TYPE, EMBEDDED]],
+    [
+      ////////////////////
+      // MIXED (GENERIC)
+      ///////////////////
+      /droid.+; ([\w- ]+) (4k|android|smart|google)[- ]?tv/i
+      // Unidentifiable SmartTV
+    ],
+    [MODEL, [TYPE, SMARTTV]],
+    [
+      /\b((4k|android|smart|opera)[- ]?tv|tv; rv:|large screen[\w ]+safari)\b/i
+    ],
+    [[TYPE, SMARTTV]],
+    [
+      /droid .+?; ([^;]+?)(?: bui|; wv\)|\) applew|; hmsc).+?(mobile|vr|\d) safari/i
+    ],
+    [MODEL, [TYPE, strMapper, { "mobile": "Mobile", "xr": "VR", "*": TABLET }]],
+    [
+      /\b((tablet|tab)[;\/]|focus\/\d(?!.+mobile))/i
+      // Unidentifiable Tablet
+    ],
+    [[TYPE, TABLET]],
+    [
+      /(phone|mobile(?:[;\/]| [ \w\/\.]*safari)|pda(?=.+windows ce))/i
+      // Unidentifiable Mobile
+    ],
+    [[TYPE, MOBILE]],
+    [
+      /droid .+?; ([\w\. -]+)( bui|\))/i
+      // Generic Android Device
+    ],
+    [MODEL, [VENDOR, "Generic"]]
+  ],
+  engine: [
+    [
+      /windows.+ edge\/([\w\.]+)/i
+      // EdgeHTML
+    ],
+    [VERSION, [NAME, EDGE + "HTML"]],
+    [
+      /(arkweb)\/([\w\.]+)/i
+      // ArkWeb
+    ],
+    [NAME, VERSION],
+    [
+      /webkit\/537\.36.+chrome\/(?!27)([\w\.]+)/i
+      // Blink
+    ],
+    [VERSION, [NAME, "Blink"]],
+    [
+      /(presto)\/([\w\.]+)/i,
+      // Presto
+      /(webkit|trident|netfront|netsurf|amaya|lynx|w3m|goanna|servo)\/([\w\.]+)/i,
+      // WebKit/Trident/NetFront/NetSurf/Amaya/Lynx/w3m/Goanna/Servo
+      /ekioh(flow)\/([\w\.]+)/i,
+      // Flow
+      /(khtml|tasman|links|dillo)[\/ ]\(?([\w\.]+)/i,
+      // KHTML/Tasman/Links/Dillo
+      /(icab)[\/ ]([23]\.[\d\.]+)/i,
+      // iCab
+      /\b(libweb)/i
+      // LibWeb
+    ],
+    [NAME, VERSION],
+    [
+      /ladybird\//i
+    ],
+    [[NAME, "LibWeb"]],
+    [
+      /rv\:([\w\.]{1,9})\b.+(gecko)/i
+      // Gecko
+    ],
+    [VERSION, NAME]
+  ],
+  os: [
+    [
+      // Windows
+      /(windows nt) (6\.[23]); arm/i
+      // Windows RT
+    ],
+    [[NAME, /N/, "R"], [VERSION, strMapper, windowsVersionMap]],
+    [
+      /(windows (?:phone|mobile|iot))(?: os)?[\/ ]?([\d\.]*( se)?)/i,
+      // Windows IoT/Mobile/Phone
+      // Windows NT/3.1/95/98/ME/2000/XP/Vista/7/8/8.1/10/11
+      /(windows)[\/ ](1[01]|2000|3\.1|7|8(\.1)?|9[58]|me|server 20\d\d( r2)?|vista|xp)/i
+    ],
+    [NAME, VERSION],
+    [
+      /windows nt ?([\d\.\)]*)(?!.+xbox)/i,
+      /\bwin(?=3| ?9|n)(?:nt| 9x )?([\d\.;]*)/i
+    ],
+    [[VERSION, /(;|\))/g, "", strMapper, windowsVersionMap], [NAME, WINDOWS]],
+    [
+      /(windows ce)\/?([\d\.]*)/i
+      // Windows CE
+    ],
+    [NAME, VERSION],
+    [
+      // iOS/macOS
+      /[adehimnop]{4,7}\b(?:.*os ([\w]+) like mac|; opera)/i,
+      // iOS
+      /(?:ios;fbsv|ios(?=.+ip(?:ad|hone)|.+apple ?tv)|ip(?:ad|hone)(?: |.+i(?:pad)?)os|apple ?tv.+ios)[\/ ]([\w\.]+)/i,
+      /\btvos ?([\w\.]+)/i,
+      /cfnetwork\/.+darwin/i
+    ],
+    [[VERSION, /_/g, "."], [NAME, "iOS"]],
+    [
+      /(mac os x) ?([\w\. ]*)/i,
+      /(macintosh|mac_powerpc\b)(?!.+(haiku|morphos))/i
+      // Mac OS
+    ],
+    [[NAME, "macOS"], [VERSION, /_/g, "."]],
+    [
+      // Google Chromecast
+      /android ([\d\.]+).*crkey/i
+      // Google Chromecast, Android-based
+    ],
+    [VERSION, [NAME, CHROMECAST + " Android"]],
+    [
+      /fuchsia.*crkey\/([\d\.]+)/i
+      // Google Chromecast, Fuchsia-based
+    ],
+    [VERSION, [NAME, CHROMECAST + " Fuchsia"]],
+    [
+      /crkey\/([\d\.]+).*devicetype\/smartspeaker/i
+      // Google Chromecast, Linux-based Smart Speaker
+    ],
+    [VERSION, [NAME, CHROMECAST + " SmartSpeaker"]],
+    [
+      /linux.*crkey\/([\d\.]+)/i
+      // Google Chromecast, Legacy Linux-based
+    ],
+    [VERSION, [NAME, CHROMECAST + " Linux"]],
+    [
+      /crkey\/([\d\.]+)/i
+      // Google Chromecast, unknown
+    ],
+    [VERSION, [NAME, CHROMECAST]],
+    [
+      // Mobile OSes
+      /droid ([\w\.]+)\b.+(android[- ]x86)/i
+      // Android-x86
+    ],
+    [VERSION, NAME],
+    [
+      /(ubuntu) ([\w\.]+) like android/i
+      // Ubuntu Touch
+    ],
+    [[NAME, /(.+)/, "$1 Touch"], VERSION],
+    [
+      /(harmonyos)[\/ ]?([\d\.]*)/i,
+      // HarmonyOS
+      // Android/Blackberry/WebOS/QNX/Bada/RIM/KaiOS/Maemo/MeeGo/S40/Sailfish OS/OpenHarmony/Tizen
+      /(android|bada|blackberry|kaios|maemo|meego|openharmony|qnx|rim tablet os|sailfish|series40|symbian|tizen)\w*[-\/\.; ]?([\d\.]*)/i
+    ],
+    [NAME, VERSION],
+    [
+      /\(bb(10);/i
+      // BlackBerry 10
+    ],
+    [VERSION, [NAME, BLACKBERRY]],
+    [
+      /(?:symbian ?os|symbos|s60(?=;)|series ?60)[-\/ ]?([\w\.]*)/i
+      // Symbian
+    ],
+    [VERSION, [NAME, "Symbian"]],
+    [
+      /mozilla\/[\d\.]+ \((?:mobile[;\w ]*|tablet|tv|[^\)]*(?:viera|lg(?:l25|-d300)|alcatel ?o.+|y300-f1)); rv:([\w\.]+)\).+gecko\//i
+      // Firefox OS
+    ],
+    [VERSION, [NAME, FIREFOX + " OS"]],
+    [
+      /\b(?:hp)?wos(?:browser)?\/([\w\.]+)/i,
+      // WebOS
+      /webos(?:[ \/]?|\.tv-20(?=2[2-9]))(\d[\d\.]*)/i
+    ],
+    [VERSION, [NAME, "webOS"]],
+    [
+      /web0s;.+?(?:chr[o0]me|safari)\/(\d+)/i
+      // https://webostv.developer.lge.com/develop/specifications/web-api-and-web-engine
+    ],
+    [[VERSION, strMapper, { "25": "120", "24": "108", "23": "94", "22": "87", "6": "79", "5": "68", "4": "53", "3": "38", "2": "538", "1": "537", "*": "TV" }], [NAME, "webOS"]],
+    [
+      /watch(?: ?os[,\/ ]|\d,\d\/)([\d\.]+)/i
+      // watchOS
+    ],
+    [VERSION, [NAME, "watchOS"]],
+    [
+      // Google ChromeOS
+      /cros [\w]+(?:\)| ([\w\.]+)\b)/i
+      // Chromium OS
+    ],
+    [VERSION, [NAME, "Chrome OS"]],
+    [
+      // Smart TVs
+      /kepler ([\w\.]+); (aft|aeo)/i
+      // Vega OS
+    ],
+    [VERSION, [NAME, "Vega OS"]],
+    [
+      /(netrange)mmh/i,
+      // Netrange
+      /(nettv)\/(\d+\.[\w\.]+)/i,
+      // NetTV
+      // Console
+      /(nintendo|playstation) (\w+)/i,
+      // Nintendo/Playstation
+      /(xbox); +xbox ([^\);]+)/i,
+      // Microsoft Xbox (360, One, X, S, Series X, Series S)
+      /(pico) .+os([\w\.]+)/i,
+      // Pico
+      // Other
+      /\b(joli|palm)\b ?(?:os)?\/?([\w\.]*)/i,
+      // Joli/Palm
+      /linux.+(mint)[\/\(\) ]?([\w\.]*)/i,
+      // Mint
+      /(mageia|vectorlinux|fuchsia|arcaos|arch(?= ?linux))[;l ]([\d\.]*)/i,
+      // Mageia/VectorLinux/Fuchsia/ArcaOS/Arch
+      /([kxln]?ubuntu|debian|suse|opensuse|gentoo|slackware|fedora|mandriva|centos|pclinuxos|red ?hat|zenwalk|linpus|raspbian|plan 9|minix|risc os|contiki|deepin|manjaro|elementary os|sabayon|linspire|knoppix)(?: gnu[\/ ]linux)?(?: enterprise)?(?:[- ]linux)?(?:-gnu)?[-\/ ]?(?!chrom|package)([-\w\.]*)/i,
+      // Ubuntu/Debian/SUSE/Gentoo/Slackware/Fedora/Mandriva/CentOS/PCLinuxOS/RedHat/Zenwalk/Linpus/Raspbian/Plan9/Minix/RISCOS/Contiki/Deepin/Manjaro/elementary/Sabayon/Linspire/Knoppix
+      /((?:open)?solaris)[-\/ ]?([\w\.]*)/i,
+      // Solaris
+      /\b(aix)[; ]([1-9\.]{0,4})/i,
+      // AIX
+      /(hurd|linux|morphos)(?: (?:arm|x86|ppc)\w*| ?)([\w\.]*)/i,
+      // Hurd/Linux/MorphOS
+      /(gnu) ?([\w\.]*)/i,
+      // GNU
+      /\b([-frentopcghs]{0,5}bsd|dragonfly)[\/ ]?(?!amd|[ix346]{1,2}86)([\w\.]*)/i,
+      // FreeBSD/NetBSD/OpenBSD/PC-BSD/GhostBSD/DragonFly
+      /(haiku) ?(r\d)?/i
+      // Haiku
+    ],
+    [NAME, VERSION],
+    [
+      /(sunos) ?([\d\.]*)/i
+      // Solaris
+    ],
+    [[NAME, "Solaris"], VERSION],
+    [
+      /\b(beos|os\/2|amigaos|openvms|hp-ux|serenityos)/i,
+      // BeOS/OS2/AmigaOS/OpenVMS/HP-UX/SerenityOS
+      /(unix) ?([\w\.]*)/i
+      // UNIX
+    ],
+    [NAME, VERSION]
+  ]
+};
+var defaultProps = (function() {
+  var props = { init: {}, isIgnore: {}, isIgnoreRgx: {}, toString: {} };
+  setProps.call(props.init, [
+    [BROWSER, [NAME, VERSION, MAJOR, TYPE]],
+    [CPU, [ARCHITECTURE]],
+    [DEVICE, [TYPE, MODEL, VENDOR]],
+    [ENGINE, [NAME, VERSION]],
+    [OS, [NAME, VERSION]]
+  ]);
+  setProps.call(props.isIgnore, [
+    [BROWSER, [VERSION, MAJOR]],
+    [ENGINE, [VERSION]],
+    [OS, [VERSION]]
+  ]);
+  setProps.call(props.isIgnoreRgx, [
+    [BROWSER, / ?browser$/i],
+    [OS, / ?os$/i]
+  ]);
+  setProps.call(props.toString, [
+    [BROWSER, [NAME, VERSION]],
+    [CPU, [ARCHITECTURE]],
+    [DEVICE, [VENDOR, MODEL]],
+    [ENGINE, [NAME, VERSION]],
+    [OS, [NAME, VERSION]]
+  ]);
+  return props;
+})();
+var createIData = /* @__PURE__ */ __name2(function(item, itemType) {
+  var init_props = defaultProps.init[itemType], is_ignoreProps = defaultProps.isIgnore[itemType] || 0, is_ignoreRgx = defaultProps.isIgnoreRgx[itemType] || 0, toString_props = defaultProps.toString[itemType] || 0;
+  function IData() {
+    setProps.call(this, init_props);
+  }
+  __name(IData, "IData");
+  __name2(IData, "IData");
+  IData.prototype.getItem = function() {
+    return item;
+  };
+  IData.prototype.withClientHints = function() {
+    if (!NAVIGATOR_UADATA) {
+      return item.parseCH().get();
+    }
+    return NAVIGATOR_UADATA.getHighEntropyValues(CH_ALL_VALUES).then(function(res) {
+      return item.setCH(new UACHData(res, false)).parseCH().get();
+    });
+  };
+  IData.prototype.withFeatureCheck = function() {
+    return item.detectFeature().get();
+  };
+  if (itemType != RESULT) {
+    IData.prototype.is = function(strToCheck) {
+      var is2 = false;
+      for (var i in this) {
+        if (this.hasOwnProperty(i) && !has(is_ignoreProps, i) && lowerize(is_ignoreRgx ? strip(is_ignoreRgx, this[i]) : this[i]) == lowerize(is_ignoreRgx ? strip(is_ignoreRgx, strToCheck) : strToCheck)) {
+          is2 = true;
+          if (strToCheck != TYPEOF.UNDEFINED) break;
+        } else if (strToCheck == TYPEOF.UNDEFINED && is2) {
+          is2 = !is2;
+          break;
+        }
+      }
+      return is2;
+    };
+    IData.prototype.toString = function() {
+      var str = EMPTY;
+      for (var i in toString_props) {
+        if (typeof this[toString_props[i]] !== TYPEOF.UNDEFINED) {
+          str += (str ? " " : EMPTY) + this[toString_props[i]];
+        }
+      }
+      return str || TYPEOF.UNDEFINED;
+    };
+  }
+  IData.prototype.then = function(cb) {
+    var that = this;
+    var IDataResolve = /* @__PURE__ */ __name2(function() {
+      for (var prop in that) {
+        if (that.hasOwnProperty(prop)) {
+          this[prop] = that[prop];
+        }
+      }
+    }, "IDataResolve");
+    IDataResolve.prototype = {
+      is: IData.prototype.is,
+      toString: IData.prototype.toString,
+      withClientHints: IData.prototype.withClientHints,
+      withFeatureCheck: IData.prototype.withFeatureCheck
+    };
+    var resolveData = new IDataResolve();
+    cb(resolveData);
+    return resolveData;
+  };
+  return new IData();
+}, "createIData");
+function UACHData(uach, isHttpUACH) {
+  uach = uach || {};
+  setProps.call(this, CH_ALL_VALUES);
+  if (isHttpUACH) {
+    setProps.call(this, [
+      [BRANDS, itemListToArray(uach[CH])],
+      [FULLVERLIST, itemListToArray(uach[CH_FULL_VER_LIST])],
+      [MOBILE, /\?1/.test(uach[CH_MOBILE])],
+      [MODEL, normalizeHeaderValue(uach[CH_MODEL])],
+      [PLATFORM, normalizeHeaderValue(uach[CH_PLATFORM])],
+      [PLATFORMVER, normalizeHeaderValue(uach[CH_PLATFORM_VER])],
+      [ARCHITECTURE, normalizeHeaderValue(uach[CH_ARCH])],
+      [FORMFACTORS, itemListToArray(uach[CH_FORM_FACTORS])],
+      [BITNESS, normalizeHeaderValue(uach[CH_BITNESS])]
+    ]);
+  } else {
+    for (var prop in uach) {
+      if (this.hasOwnProperty(prop) && typeof uach[prop] !== TYPEOF.UNDEFINED) this[prop] = uach[prop];
+    }
+  }
+}
+__name(UACHData, "UACHData");
+__name2(UACHData, "UACHData");
+function UAItem(itemType, ua, rgxMap, uaCH) {
+  setProps.call(this, [
+    ["itemType", itemType],
+    ["ua", ua],
+    ["uaCH", uaCH],
+    ["rgxMap", rgxMap],
+    ["data", createIData(this, itemType)]
+  ]);
+  return this;
+}
+__name(UAItem, "UAItem");
+__name2(UAItem, "UAItem");
+UAItem.prototype.get = function(prop) {
+  if (!prop) return this.data;
+  return this.data.hasOwnProperty(prop) ? this.data[prop] : void 0;
+};
+UAItem.prototype.set = function(prop, val) {
+  this.data[prop] = val;
+  return this;
+};
+UAItem.prototype.setCH = function(ch) {
+  this.uaCH = ch;
+  return this;
+};
+UAItem.prototype.detectFeature = function() {
+  if (NAVIGATOR && NAVIGATOR.userAgent == this.ua) {
+    switch (this.itemType) {
+      case BROWSER:
+        if (NAVIGATOR.brave && typeof NAVIGATOR.brave.isBrave == TYPEOF.FUNCTION) {
+          this.set(NAME, "Brave");
+        }
+        break;
+      case DEVICE:
+        if (!this.get(TYPE) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[MOBILE]) {
+          this.set(TYPE, MOBILE);
+        }
+        if (this.get(MODEL) == "Macintosh" && NAVIGATOR && typeof NAVIGATOR.standalone !== TYPEOF.UNDEFINED && NAVIGATOR.maxTouchPoints && NAVIGATOR.maxTouchPoints > 2) {
+          this.set(MODEL, "iPad").set(TYPE, TABLET);
+        }
+        break;
+      case OS:
+        if (!this.get(NAME) && NAVIGATOR_UADATA && NAVIGATOR_UADATA[PLATFORM]) {
+          this.set(NAME, NAVIGATOR_UADATA[PLATFORM]);
+        }
+        break;
+      case RESULT:
+        var data = this.data;
+        var detect = /* @__PURE__ */ __name2(function(itemType) {
+          return data[itemType].getItem().detectFeature().get();
+        }, "detect");
+        this.set(BROWSER, detect(BROWSER)).set(CPU, detect(CPU)).set(DEVICE, detect(DEVICE)).set(ENGINE, detect(ENGINE)).set(OS, detect(OS));
+    }
+  }
+  return this;
+};
+UAItem.prototype.parseUA = function() {
+  if (this.itemType != RESULT) {
+    rgxMapper.call(this.data, this.ua, this.rgxMap);
+  }
+  switch (this.itemType) {
+    case BROWSER:
+      this.set(MAJOR, majorize(this.get(VERSION)));
+      break;
+    case OS:
+      if (this.get(NAME) == "iOS" && this.get(VERSION)) {
+        if (/^1[89][^\d]/.exec(this.get(VERSION))) {
+          var realVersion = /\) Version\/((\d+)[\d\.]*)/.exec(this.ua);
+          if (realVersion && parseInt(realVersion[2], 10) >= 26) {
+            this.set(VERSION, realVersion[1]);
+          }
+        }
+      }
+      break;
+  }
+  return this;
+};
+UAItem.prototype.parseCH = function() {
+  var uaCH = this.uaCH, rgxMap = this.rgxMap;
+  switch (this.itemType) {
+    case BROWSER:
+    case ENGINE:
+      var brands = uaCH[FULLVERLIST] || uaCH[BRANDS], prevName;
+      if (brands) {
+        for (var i = 0; i < brands.length; i++) {
+          var brandName = brands[i].brand || brands[i], brandVersion = brands[i].version;
+          if (this.itemType == BROWSER && !/not.a.brand/i.test(brandName) && (!prevName || /Chrom/.test(prevName) && brandName != CHROMIUM || prevName == EDGE && /WebView2/.test(brandName))) {
+            brandName = strMapper(brandName, browserHintsMap);
+            prevName = this.get(NAME);
+            if (!(prevName && !/Chrom/.test(prevName) && /Chrom/.test(brandName))) {
+              this.set(NAME, brandName).set(VERSION, brandVersion).set(MAJOR, majorize(brandVersion));
+            }
+            prevName = brandName;
+          }
+          if (this.itemType == ENGINE && brandName == CHROMIUM) {
+            this.set(VERSION, brandVersion);
+          }
+        }
+      }
+      break;
+    case CPU:
+      var archName = uaCH[ARCHITECTURE];
+      if (archName) {
+        if (archName && uaCH[BITNESS] == "64") archName += "64";
+        rgxMapper.call(this.data, archName + ";", rgxMap);
+      }
+      break;
+    case DEVICE:
+      if (uaCH[MOBILE]) {
+        this.set(TYPE, MOBILE);
+      }
+      if (uaCH[MODEL]) {
+        this.set(MODEL, uaCH[MODEL]);
+        if (!this.get(TYPE) || !this.get(VENDOR)) {
+          var reParse = {};
+          rgxMapper.call(reParse, "droid 9; " + uaCH[MODEL] + ")", rgxMap);
+          if (!this.get(TYPE) && !!reParse.type) {
+            this.set(TYPE, reParse.type);
+          }
+          if (!this.get(VENDOR) && !!reParse.vendor) {
+            this.set(VENDOR, reParse.vendor);
+          }
+        }
+      }
+      if (uaCH[FORMFACTORS]) {
+        var ff;
+        if (typeof uaCH[FORMFACTORS] !== "string") {
+          var idx = 0;
+          while (!ff && idx < uaCH[FORMFACTORS].length) {
+            ff = strMapper(uaCH[FORMFACTORS][idx++], formFactorsMap);
+          }
+        } else {
+          ff = strMapper(uaCH[FORMFACTORS], formFactorsMap);
+        }
+        this.set(TYPE, ff);
+      }
+      break;
+    case OS:
+      var osName = uaCH[PLATFORM];
+      if (osName) {
+        var osVersion = uaCH[PLATFORMVER];
+        if (osName == WINDOWS) osVersion = parseInt(majorize(osVersion), 10) >= 13 ? "11" : "10";
+        this.set(NAME, osName).set(VERSION, osVersion);
+      }
+      if (this.get(NAME) == WINDOWS && uaCH[MODEL] == "Xbox") {
+        this.set(NAME, "Xbox").set(VERSION, void 0);
+      }
+      break;
+    case RESULT:
+      var data = this.data;
+      var parse2 = /* @__PURE__ */ __name2(function(itemType) {
+        return data[itemType].getItem().setCH(uaCH).parseCH().get();
+      }, "parse");
+      this.set(BROWSER, parse2(BROWSER)).set(CPU, parse2(CPU)).set(DEVICE, parse2(DEVICE)).set(ENGINE, parse2(ENGINE)).set(OS, parse2(OS));
+  }
+  return this;
+};
+function UAParser(ua, extensions, headers) {
+  if (typeof ua === TYPEOF.OBJECT) {
+    if (isExtensions(ua, true)) {
+      if (typeof extensions === TYPEOF.OBJECT) {
+        headers = extensions;
+      }
+      extensions = ua;
+    } else {
+      headers = ua;
+      extensions = void 0;
+    }
+    ua = void 0;
+  } else if (typeof ua === TYPEOF.STRING && !isExtensions(extensions, true)) {
+    headers = extensions;
+    extensions = void 0;
+  }
+  if (headers) {
+    if (typeof headers.append === TYPEOF.FUNCTION) {
+      var kv = {};
+      headers.forEach(function(v, k) {
+        kv[String(k).toLowerCase()] = v;
+      });
+      headers = kv;
+    } else {
+      var normalized = {};
+      for (var header in headers) {
+        if (headers.hasOwnProperty(header)) {
+          normalized[String(header).toLowerCase()] = headers[header];
+        }
+      }
+      headers = normalized;
+    }
+  }
+  if (!(this instanceof UAParser)) {
+    return new UAParser(ua, extensions, headers).getResult();
+  }
+  var userAgent = typeof ua === TYPEOF.STRING ? ua : (
+    // Passed user-agent string
+    headers && headers[USER_AGENT] ? headers[USER_AGENT] : (
+      // User-Agent from passed headers
+      NAVIGATOR && NAVIGATOR.userAgent ? NAVIGATOR.userAgent : (
+        // navigator.userAgent
+        EMPTY
+      )
+    )
+  ), httpUACH = new UACHData(headers, true), regexMap = defaultRegexes, createItemFunc = /* @__PURE__ */ __name2(function(itemType) {
+    if (itemType == RESULT) {
+      return function() {
+        return new UAItem(itemType, userAgent, regexMap, httpUACH).set("ua", userAgent).set(BROWSER, this.getBrowser()).set(CPU, this.getCPU()).set(DEVICE, this.getDevice()).set(ENGINE, this.getEngine()).set(OS, this.getOS()).get();
+      };
+    } else {
+      return function() {
+        return new UAItem(itemType, userAgent, regexMap[itemType], httpUACH).parseUA().get();
+      };
+    }
+  }, "createItemFunc");
+  setProps.call(this, [
+    ["getBrowser", createItemFunc(BROWSER)],
+    ["getCPU", createItemFunc(CPU)],
+    ["getDevice", createItemFunc(DEVICE)],
+    ["getEngine", createItemFunc(ENGINE)],
+    ["getOS", createItemFunc(OS)],
+    ["getResult", createItemFunc(RESULT)],
+    ["getUA", function() {
+      return userAgent;
+    }],
+    ["setUA", function(ua2) {
+      if (isString(ua2)) userAgent = trim(ua2, UA_MAX_LENGTH);
+      return this;
+    }],
+    ["useExtension", function(exts) {
+      if (exts) regexMap = extend(regexMap, exts);
+      return this;
+    }]
+  ]).setUA(userAgent).useExtension(extensions);
+  return this;
+}
+__name(UAParser, "UAParser");
+__name2(UAParser, "UAParser");
+UAParser.VERSION = LIBVERSION;
+UAParser.BROWSER = enumerize([NAME, VERSION, MAJOR, TYPE]);
+UAParser.CPU = enumerize([ARCHITECTURE]);
+UAParser.DEVICE = enumerize([MODEL, VENDOR, TYPE, CONSOLE, MOBILE, SMARTTV, TABLET, WEARABLE, EMBEDDED]);
+UAParser.ENGINE = UAParser.OS = enumerize([NAME, VERSION]);
+var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
   const db = drizzle(context.env.DB);
   try {
     const authHeader = context.request.headers.get("Authorization");
@@ -6026,15 +8247,24 @@ var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
     const body = await context.request.json();
     const ip = context.request.headers.get("CF-Connecting-IP") || "unknown-ip";
     const fingerprint = body.fingerprint || "unknown-fingerprint";
-    const existingLogs = await db.select().from(vote_logs).where(
-      or(
-        eq(vote_logs.ip_address, ip),
-        eq(vote_logs.browser_fingerprint, fingerprint)
-      )
-    ).limit(1);
-    if (existingLogs.length > 0 && existingLogs[0].student_matric !== matric) {
-      return Response.json({ error: "A vote has already been cast from this device or network." }, { status: 403 });
-    }
+    const userAgent = context.request.headers.get("User-Agent") || "";
+    const uap = new UAParser(userAgent);
+    const device_info = {
+      browser: uap.getBrowser(),
+      os: uap.getOS(),
+      device: uap.getDevice(),
+      userAgent
+    };
+    const location = {
+      country: context.request.cf?.country,
+      city: context.request.cf?.city,
+      region: context.request.cf?.region,
+      continent: context.request.cf?.continent
+    };
+    const network = {
+      asn: context.request.cf?.asn,
+      asOrganization: context.request.cf?.asOrganization
+    };
     const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
     if (existingVote.length > 0) {
       await db.update(votes).set({
@@ -6047,21 +8277,23 @@ var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
         selections: body.selections,
         created_at: /* @__PURE__ */ new Date()
       });
-      await db.insert(vote_logs).values({
-        id: crypto.randomUUID(),
-        ip_address: ip,
-        browser_fingerprint: fingerprint,
-        student_matric: matric,
-        created_at: /* @__PURE__ */ new Date()
-      });
     }
+    await db.insert(vote_logs).values({
+      id: crypto.randomUUID(),
+      ip_address: ip,
+      browser_fingerprint: fingerprint,
+      student_matric: matric,
+      student_name: payload.name,
+      device_info,
+      location,
+      network,
+      created_at: /* @__PURE__ */ new Date()
+    });
     return Response.json({ success: true });
   } catch (err) {
     return Response.json({ error: "Server error", details: err.message }, { status: 500 });
   }
 }, "onRequestPost");
-
-// ../.wrangler/tmp/pages-HBYBRD/functionsRoutes-0.9324829950572162.mjs
 var routes = [
   {
     routePath: "/api/auth/verify",
@@ -6078,8 +8310,6 @@ var routes = [
     modules: [onRequestPost2]
   }
 ];
-
-// ../../../../../../opt/homebrew/lib/node_modules/wrangler/node_modules/path-to-regexp/dist.es2015/index.js
 function lexer(str) {
   var tokens = [];
   var i = 0;
@@ -6164,6 +8394,7 @@ function lexer(str) {
   return tokens;
 }
 __name(lexer, "lexer");
+__name2(lexer, "lexer");
 function parse(str, options) {
   if (options === void 0) {
     options = {};
@@ -6174,18 +8405,18 @@ function parse(str, options) {
   var key = 0;
   var i = 0;
   var path = "";
-  var tryConsume = /* @__PURE__ */ __name(function(type) {
+  var tryConsume = /* @__PURE__ */ __name2(function(type) {
     if (i < tokens.length && tokens[i].type === type)
       return tokens[i++].value;
   }, "tryConsume");
-  var mustConsume = /* @__PURE__ */ __name(function(type) {
+  var mustConsume = /* @__PURE__ */ __name2(function(type) {
     var value2 = tryConsume(type);
     if (value2 !== void 0)
       return value2;
     var _a2 = tokens[i], nextType = _a2.type, index = _a2.index;
     throw new TypeError("Unexpected ".concat(nextType, " at ").concat(index, ", expected ").concat(type));
   }, "mustConsume");
-  var consumeText = /* @__PURE__ */ __name(function() {
+  var consumeText = /* @__PURE__ */ __name2(function() {
     var result2 = "";
     var value2;
     while (value2 = tryConsume("CHAR") || tryConsume("ESCAPED_CHAR")) {
@@ -6193,7 +8424,7 @@ function parse(str, options) {
     }
     return result2;
   }, "consumeText");
-  var isSafe = /* @__PURE__ */ __name(function(value2) {
+  var isSafe = /* @__PURE__ */ __name2(function(value2) {
     for (var _i = 0, delimiter_1 = delimiter; _i < delimiter_1.length; _i++) {
       var char2 = delimiter_1[_i];
       if (value2.indexOf(char2) > -1)
@@ -6201,7 +8432,7 @@ function parse(str, options) {
     }
     return false;
   }, "isSafe");
-  var safePattern = /* @__PURE__ */ __name(function(prefix2) {
+  var safePattern = /* @__PURE__ */ __name2(function(prefix2) {
     var prev = result[result.length - 1];
     var prevText = prefix2 || (prev && typeof prev === "string" ? prev : "");
     if (prev && !prevText) {
@@ -6264,12 +8495,14 @@ function parse(str, options) {
   return result;
 }
 __name(parse, "parse");
+__name2(parse, "parse");
 function match(str, options) {
   var keys = [];
   var re = pathToRegexp(str, keys, options);
   return regexpToFunction(re, keys, options);
 }
 __name(match, "match");
+__name2(match, "match");
 function regexpToFunction(re, keys, options) {
   if (options === void 0) {
     options = {};
@@ -6283,7 +8516,7 @@ function regexpToFunction(re, keys, options) {
       return false;
     var path = m[0], index = m.index;
     var params = /* @__PURE__ */ Object.create(null);
-    var _loop_1 = /* @__PURE__ */ __name(function(i2) {
+    var _loop_1 = /* @__PURE__ */ __name2(function(i2) {
       if (m[i2] === void 0)
         return "continue";
       var key = keys[i2 - 1];
@@ -6302,14 +8535,17 @@ function regexpToFunction(re, keys, options) {
   };
 }
 __name(regexpToFunction, "regexpToFunction");
+__name2(regexpToFunction, "regexpToFunction");
 function escapeString(str) {
   return str.replace(/([.+*?=^!:${}()[\]|/\\])/g, "\\$1");
 }
 __name(escapeString, "escapeString");
+__name2(escapeString, "escapeString");
 function flags(options) {
   return options && options.sensitive ? "" : "i";
 }
 __name(flags, "flags");
+__name2(flags, "flags");
 function regexpToRegexp(path, keys) {
   if (!keys)
     return path;
@@ -6330,6 +8566,7 @@ function regexpToRegexp(path, keys) {
   return path;
 }
 __name(regexpToRegexp, "regexpToRegexp");
+__name2(regexpToRegexp, "regexpToRegexp");
 function arrayToRegexp(paths, keys, options) {
   var parts = paths.map(function(path) {
     return pathToRegexp(path, keys, options).source;
@@ -6337,10 +8574,12 @@ function arrayToRegexp(paths, keys, options) {
   return new RegExp("(?:".concat(parts.join("|"), ")"), flags(options));
 }
 __name(arrayToRegexp, "arrayToRegexp");
+__name2(arrayToRegexp, "arrayToRegexp");
 function stringToRegexp(path, keys, options) {
   return tokensToRegexp(parse(path, options), keys, options);
 }
 __name(stringToRegexp, "stringToRegexp");
+__name2(stringToRegexp, "stringToRegexp");
 function tokensToRegexp(tokens, keys, options) {
   if (options === void 0) {
     options = {};
@@ -6396,6 +8635,7 @@ function tokensToRegexp(tokens, keys, options) {
   return new RegExp(route, flags(options));
 }
 __name(tokensToRegexp, "tokensToRegexp");
+__name2(tokensToRegexp, "tokensToRegexp");
 function pathToRegexp(path, keys, options) {
   if (path instanceof RegExp)
     return regexpToRegexp(path, keys);
@@ -6404,8 +8644,7 @@ function pathToRegexp(path, keys, options) {
   return stringToRegexp(path, keys, options);
 }
 __name(pathToRegexp, "pathToRegexp");
-
-// ../../../../../../opt/homebrew/lib/node_modules/wrangler/templates/pages-template-worker.ts
+__name2(pathToRegexp, "pathToRegexp");
 var escapeRegex = /[.+?^${}()|[\]\\]/g;
 function* executeRequest(request) {
   const requestPath = new URL(request.url).pathname;
@@ -6456,13 +8695,14 @@ function* executeRequest(request) {
   }
 }
 __name(executeRequest, "executeRequest");
+__name2(executeRequest, "executeRequest");
 var pages_template_worker_default = {
   async fetch(originalRequest, env, workerContext) {
     let request = originalRequest;
     const handlerIterator = executeRequest(request);
     let data = {};
     let isFailOpen = false;
-    const next = /* @__PURE__ */ __name(async (input, init) => {
+    const next = /* @__PURE__ */ __name2(async (input, init) => {
       if (input !== void 0) {
         let url = input;
         if (typeof input === "string") {
@@ -6489,7 +8729,7 @@ var pages_template_worker_default = {
           },
           env,
           waitUntil: workerContext.waitUntil.bind(workerContext),
-          passThroughOnException: /* @__PURE__ */ __name(() => {
+          passThroughOnException: /* @__PURE__ */ __name2(() => {
             isFailOpen = true;
           }, "passThroughOnException")
         };
@@ -6517,16 +8757,14 @@ var pages_template_worker_default = {
     }
   }
 };
-var cloneResponse = /* @__PURE__ */ __name((response) => (
+var cloneResponse = /* @__PURE__ */ __name2((response) => (
   // https://fetch.spec.whatwg.org/#null-body-status
   new Response(
     [101, 204, 205, 304].includes(response.status) ? null : response.body,
     response
   )
 ), "cloneResponse");
-
-// ../../../../../../opt/homebrew/lib/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
-var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+var drainBody = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
   } finally {
@@ -6542,8 +8780,6 @@ var drainBody = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
   }
 }, "drainBody");
 var middleware_ensure_req_body_drained_default = drainBody;
-
-// ../../../../../../opt/homebrew/lib/node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
 function reduceError(e) {
   return {
     name: e?.name,
@@ -6553,7 +8789,8 @@ function reduceError(e) {
   };
 }
 __name(reduceError, "reduceError");
-var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+__name2(reduceError, "reduceError");
+var jsonError = /* @__PURE__ */ __name2(async (request, env, _ctx, middlewareCtx) => {
   try {
     return await middlewareCtx.next(request, env);
   } catch (e) {
@@ -6565,20 +8802,17 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
   }
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
-
-// ../.wrangler/tmp/bundle-cuP7us/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
 ];
 var middleware_insertion_facade_default = pages_template_worker_default;
-
-// ../../../../../../opt/homebrew/lib/node_modules/wrangler/templates/middleware/common.ts
 var __facade_middleware__ = [];
 function __facade_register__(...args) {
   __facade_middleware__.push(...args.flat());
 }
 __name(__facade_register__, "__facade_register__");
+__name2(__facade_register__, "__facade_register__");
 function __facade_invokeChain__(request, env, ctx, dispatch, middlewareChain) {
   const [head, ...tail] = middlewareChain;
   const middlewareCtx = {
@@ -6590,6 +8824,7 @@ function __facade_invokeChain__(request, env, ctx, dispatch, middlewareChain) {
   return head(request, env, ctx, middlewareCtx);
 }
 __name(__facade_invokeChain__, "__facade_invokeChain__");
+__name2(__facade_invokeChain__, "__facade_invokeChain__");
 function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
   return __facade_invokeChain__(request, env, ctx, dispatch, [
     ...__facade_middleware__,
@@ -6597,16 +8832,18 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
   ]);
 }
 __name(__facade_invoke__, "__facade_invoke__");
-
-// ../.wrangler/tmp/bundle-cuP7us/middleware-loader.entry.ts
+__name2(__facade_invoke__, "__facade_invoke__");
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
+  static {
+    __name(this, "___Facade_ScheduledController__");
+  }
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
     this.cron = cron;
     this.#noRetry = noRetry;
   }
   static {
-    __name(this, "__Facade_ScheduledController__");
+    __name2(this, "__Facade_ScheduledController__");
   }
   #noRetry;
   noRetry() {
@@ -6623,7 +8860,7 @@ function wrapExportedHandler(worker) {
   for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__) {
     __facade_register__(middleware);
   }
-  const fetchDispatcher = /* @__PURE__ */ __name(function(request, env, ctx) {
+  const fetchDispatcher = /* @__PURE__ */ __name2(function(request, env, ctx) {
     if (worker.fetch === void 0) {
       throw new Error("Handler does not export a fetch() function.");
     }
@@ -6632,7 +8869,7 @@ function wrapExportedHandler(worker) {
   return {
     ...worker,
     fetch(request, env, ctx) {
-      const dispatcher = /* @__PURE__ */ __name(function(type, init) {
+      const dispatcher = /* @__PURE__ */ __name2(function(type, init) {
         if (type === "scheduled" && worker.scheduled !== void 0) {
           const controller = new __Facade_ScheduledController__(
             Date.now(),
@@ -6648,6 +8885,7 @@ function wrapExportedHandler(worker) {
   };
 }
 __name(wrapExportedHandler, "wrapExportedHandler");
+__name2(wrapExportedHandler, "wrapExportedHandler");
 function wrapWorkerEntrypoint(klass) {
   if (__INTERNAL_WRANGLER_MIDDLEWARE__ === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__.length === 0) {
     return klass;
@@ -6656,7 +8894,7 @@ function wrapWorkerEntrypoint(klass) {
     __facade_register__(middleware);
   }
   return class extends klass {
-    #fetchDispatcher = /* @__PURE__ */ __name((request, env, ctx) => {
+    #fetchDispatcher = /* @__PURE__ */ __name2((request, env, ctx) => {
       this.env = env;
       this.ctx = ctx;
       if (super.fetch === void 0) {
@@ -6664,7 +8902,7 @@ function wrapWorkerEntrypoint(klass) {
       }
       return super.fetch(request);
     }, "#fetchDispatcher");
-    #dispatcher = /* @__PURE__ */ __name((type, init) => {
+    #dispatcher = /* @__PURE__ */ __name2((type, init) => {
       if (type === "scheduled" && super.scheduled !== void 0) {
         const controller = new __Facade_ScheduledController__(
           Date.now(),
@@ -6687,6 +8925,7 @@ function wrapWorkerEntrypoint(klass) {
   };
 }
 __name(wrapWorkerEntrypoint, "wrapWorkerEntrypoint");
+__name2(wrapWorkerEntrypoint, "wrapWorkerEntrypoint");
 var WRAPPED_ENTRY;
 if (typeof middleware_insertion_facade_default === "object") {
   WRAPPED_ENTRY = wrapExportedHandler(middleware_insertion_facade_default);
@@ -6694,8 +8933,178 @@ if (typeof middleware_insertion_facade_default === "object") {
   WRAPPED_ENTRY = wrapWorkerEntrypoint(middleware_insertion_facade_default);
 }
 var middleware_loader_entry_default = WRAPPED_ENTRY;
-export {
-  __INTERNAL_WRANGLER_MIDDLEWARE__,
-  middleware_loader_entry_default as default
+
+// ../../../../../opt/homebrew/lib/node_modules/wrangler/templates/middleware/middleware-ensure-req-body-drained.ts
+var drainBody2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+  try {
+    return await middlewareCtx.next(request, env);
+  } finally {
+    try {
+      if (request.body !== null && !request.bodyUsed) {
+        const reader = request.body.getReader();
+        while (!(await reader.read()).done) {
+        }
+      }
+    } catch (e) {
+      console.error("Failed to drain the unused request body.", e);
+    }
+  }
+}, "drainBody");
+var middleware_ensure_req_body_drained_default2 = drainBody2;
+
+// ../../../../../opt/homebrew/lib/node_modules/wrangler/templates/middleware/middleware-miniflare3-json-error.ts
+function reduceError2(e) {
+  return {
+    name: e?.name,
+    message: e?.message ?? String(e),
+    stack: e?.stack,
+    cause: e?.cause === void 0 ? void 0 : reduceError2(e.cause)
+  };
+}
+__name(reduceError2, "reduceError");
+var jsonError2 = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx) => {
+  try {
+    return await middlewareCtx.next(request, env);
+  } catch (e) {
+    const error = reduceError2(e);
+    return Response.json(error, {
+      status: 500,
+      headers: { "MF-Experimental-Error-Stack": "true" }
+    });
+  }
+}, "jsonError");
+var middleware_miniflare3_json_error_default2 = jsonError2;
+
+// .wrangler/tmp/bundle-f0NL4C/middleware-insertion-facade.js
+var __INTERNAL_WRANGLER_MIDDLEWARE__2 = [
+  middleware_ensure_req_body_drained_default2,
+  middleware_miniflare3_json_error_default2
+];
+var middleware_insertion_facade_default2 = middleware_loader_entry_default;
+
+// ../../../../../opt/homebrew/lib/node_modules/wrangler/templates/middleware/common.ts
+var __facade_middleware__2 = [];
+function __facade_register__2(...args) {
+  __facade_middleware__2.push(...args.flat());
+}
+__name(__facade_register__2, "__facade_register__");
+function __facade_invokeChain__2(request, env, ctx, dispatch, middlewareChain) {
+  const [head, ...tail] = middlewareChain;
+  const middlewareCtx = {
+    dispatch,
+    next(newRequest, newEnv) {
+      return __facade_invokeChain__2(newRequest, newEnv, ctx, dispatch, tail);
+    }
+  };
+  return head(request, env, ctx, middlewareCtx);
+}
+__name(__facade_invokeChain__2, "__facade_invokeChain__");
+function __facade_invoke__2(request, env, ctx, dispatch, finalMiddleware) {
+  return __facade_invokeChain__2(request, env, ctx, dispatch, [
+    ...__facade_middleware__2,
+    finalMiddleware
+  ]);
+}
+__name(__facade_invoke__2, "__facade_invoke__");
+
+// .wrangler/tmp/bundle-f0NL4C/middleware-loader.entry.ts
+var __Facade_ScheduledController__2 = class ___Facade_ScheduledController__2 {
+  constructor(scheduledTime, cron, noRetry) {
+    this.scheduledTime = scheduledTime;
+    this.cron = cron;
+    this.#noRetry = noRetry;
+  }
+  static {
+    __name(this, "__Facade_ScheduledController__");
+  }
+  #noRetry;
+  noRetry() {
+    if (!(this instanceof ___Facade_ScheduledController__2)) {
+      throw new TypeError("Illegal invocation");
+    }
+    this.#noRetry();
+  }
 };
-//# sourceMappingURL=functionsWorker-0.7959619448828574.mjs.map
+function wrapExportedHandler2(worker) {
+  if (__INTERNAL_WRANGLER_MIDDLEWARE__2 === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__2.length === 0) {
+    return worker;
+  }
+  for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__2) {
+    __facade_register__2(middleware);
+  }
+  const fetchDispatcher = /* @__PURE__ */ __name(function(request, env, ctx) {
+    if (worker.fetch === void 0) {
+      throw new Error("Handler does not export a fetch() function.");
+    }
+    return worker.fetch(request, env, ctx);
+  }, "fetchDispatcher");
+  return {
+    ...worker,
+    fetch(request, env, ctx) {
+      const dispatcher = /* @__PURE__ */ __name(function(type, init) {
+        if (type === "scheduled" && worker.scheduled !== void 0) {
+          const controller = new __Facade_ScheduledController__2(
+            Date.now(),
+            init.cron ?? "",
+            () => {
+            }
+          );
+          return worker.scheduled(controller, env, ctx);
+        }
+      }, "dispatcher");
+      return __facade_invoke__2(request, env, ctx, dispatcher, fetchDispatcher);
+    }
+  };
+}
+__name(wrapExportedHandler2, "wrapExportedHandler");
+function wrapWorkerEntrypoint2(klass) {
+  if (__INTERNAL_WRANGLER_MIDDLEWARE__2 === void 0 || __INTERNAL_WRANGLER_MIDDLEWARE__2.length === 0) {
+    return klass;
+  }
+  for (const middleware of __INTERNAL_WRANGLER_MIDDLEWARE__2) {
+    __facade_register__2(middleware);
+  }
+  return class extends klass {
+    #fetchDispatcher = /* @__PURE__ */ __name((request, env, ctx) => {
+      this.env = env;
+      this.ctx = ctx;
+      if (super.fetch === void 0) {
+        throw new Error("Entrypoint class does not define a fetch() function.");
+      }
+      return super.fetch(request);
+    }, "#fetchDispatcher");
+    #dispatcher = /* @__PURE__ */ __name((type, init) => {
+      if (type === "scheduled" && super.scheduled !== void 0) {
+        const controller = new __Facade_ScheduledController__2(
+          Date.now(),
+          init.cron ?? "",
+          () => {
+          }
+        );
+        return super.scheduled(controller);
+      }
+    }, "#dispatcher");
+    fetch(request) {
+      return __facade_invoke__2(
+        request,
+        this.env,
+        this.ctx,
+        this.#dispatcher,
+        this.#fetchDispatcher
+      );
+    }
+  };
+}
+__name(wrapWorkerEntrypoint2, "wrapWorkerEntrypoint");
+var WRAPPED_ENTRY2;
+if (typeof middleware_insertion_facade_default2 === "object") {
+  WRAPPED_ENTRY2 = wrapExportedHandler2(middleware_insertion_facade_default2);
+} else if (typeof middleware_insertion_facade_default2 === "function") {
+  WRAPPED_ENTRY2 = wrapWorkerEntrypoint2(middleware_insertion_facade_default2);
+}
+var middleware_loader_entry_default2 = WRAPPED_ENTRY2;
+export {
+  __INTERNAL_WRANGLER_MIDDLEWARE__2 as __INTERNAL_WRANGLER_MIDDLEWARE__,
+  middleware_loader_entry_default2 as default
+};
+//# sourceMappingURL=functionsWorker-0.7332658211381387.js.map

@@ -8,6 +8,20 @@
       "when": 1783626769804,
       "tag": "0000_broken_nicolaos",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1783628470720,
+      "tag": "0001_far_ender_wiggin",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1783628605394,
+      "tag": "0002_real_ken_ellis",
+      "breakpoints": true
     }
   ]
 }

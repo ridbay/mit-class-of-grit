@@ -18,5 +18,9 @@ export const vote_logs = sqliteTable("vote_logs", {
   ip_address: text("ip_address"),
   browser_fingerprint: text("browser_fingerprint"),
   student_matric: text("student_matric").notNull(),
+  student_name: text("student_name"),
+  device_info: text("device_info", { mode: "json" }),
+  location: text("location", { mode: "json" }),
+  network: text("network", { mode: "json" }),
   created_at: integer("created_at", { mode: "timestamp" }).notNull(),
 });
