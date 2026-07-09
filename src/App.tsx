@@ -296,49 +296,38 @@ export default function App() {
     const matric = (formData.get("matric") as string)?.trim();
     const name = (formData.get("name") as string)?.trim();
 
-    if (!matric || !name) {
-      setMatricError(
-        "Hold up! We need both your Name and Matric Number to let you in.",
-      );
+    if (!matric) {
+      setMatricError("Hold up! We need your Matric Number to let you in.");
       return;
     }
 
     try {
-      // Query Supabase for an EXACT matching matric AND a partial matching name
-      let query = supabase.from("students").select("*");
+      const response = await fetch("/api/auth/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matric, name }),
+      });
 
-      if (matric) query = query.eq("matric", matric);
-      if (name) {
-        const nameParts = name.split(/\s+/).filter(Boolean);
-        if (nameParts.length > 0) {
-          const orCondition = nameParts
-            .map((part) => `name.ilike.%${part}%`)
-            .join(",");
-          query = query.or(orCondition);
-        }
+      const data = (await response.json()) as any;
+
+      if (!response.ok) {
+        setMatricError(data.error || "Verification failed. Check your details.");
+        return;
       }
 
-      const { data, error } = await query.limit(1);
+      setMatricError("");
+      setMatricNumber(data.student.matric);
+      setStudentName(data.student.name);
+      
+      // Store token and student data
+      localStorage.setItem("grit_token", data.token);
+      localStorage.setItem("grit_matric", data.student.matric);
+      localStorage.setItem("grit_name", data.student.name);
 
-      if (error) {
-        throw error;
-      }
-
-      if (data && data.length > 0) {
-        setMatricError("");
-        setMatricNumber(data[0].matric);
-        setStudentName(data[0].name);
-        localStorage.setItem("grit_matric", data[0].matric);
-        localStorage.setItem("grit_name", data[0].name);
-      } else {
-        setMatricError(
-          "Hmm... we couldn't find you in the Class of GRIT database. Double-check your details!",
-        );
-      }
     } catch (err: any) {
       console.error(err);
       setMatricError(
-        "Oops, our servers had a little hiccup verifying you. Give it another shot!",
+        "Oops, our servers had a little hiccup verifying you. Give it another shot!"
       );
     }
   };

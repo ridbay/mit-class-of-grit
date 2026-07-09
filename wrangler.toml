@@ -1,0 +1,11 @@
+name = "mit-awards-voting"
+compatibility_date = "2024-03-20"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "mit-awards-db"
+database_id = "mit-awards-db" # Update this with the real ID after creating the DB in Cloudflare
+
+[[r2_buckets]]
+binding = "AVATAR_BUCKET"
+bucket_name = "mit-awards-avatars" # Update with the real bucket name
