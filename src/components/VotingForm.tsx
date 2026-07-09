@@ -67,6 +67,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🤝",
         isLecturer: false,
         sectionId: "student-merit",
+        nominees: ["s96", "s21", "s100", "s10", "s208", "s92"],
       },
       {
         id: "sm3",
@@ -76,6 +77,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "⚡",
         isLecturer: false,
         sectionId: "student-merit",
+        nominees: ["s21", "s256", "s59", "s10", "s92", "s34"],
       },
       {
         id: "sm4",
@@ -85,6 +87,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🌟",
         isLecturer: false,
         sectionId: "student-merit",
+        nominees: ["s96", "s252", "s55", "s120", "s66", "s216"],
       },
     ],
   },
@@ -105,6 +108,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🎤",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s77", "s219", "s195", "s9", "s216", "s51"],
       },
       {
         id: "sr2",
@@ -586,12 +590,23 @@ export const VotingForm = ({
       return;
     }
     setError("");
+
+    const currentSelections = { ...selections };
+    if (skip) delete currentSelections[currentCategory.id];
+
+    if (currentStep < totalSteps - 1) {
+      // Just advance to the next screen if not on the last step
+      if (skip) {
+        setSelections(currentSelections);
+      }
+      setCurrentStep((p) => p + 1);
+      setSearchQuery("");
+      return;
+    }
+
+    // It is the last screen, time to submit!
     setIsSubmitting(true);
-
     try {
-      const currentSelections = { ...selections };
-      if (skip) delete currentSelections[currentCategory.id];
-
       // Map IDs to names for storage
       const allNominees = [...LECTURERS, ...STUDENTS];
       const namedSelections = Object.fromEntries(
@@ -621,12 +636,7 @@ export const VotingForm = ({
         throw new Error(data.error || "Failed to submit vote");
       }
 
-      if (currentStep < totalSteps - 1) {
-        setCurrentStep((p) => p + 1);
-        setSearchQuery("");
-      } else {
-        setIsComplete(true);
-      }
+      setIsComplete(true);
     } catch (err: unknown) {
       const e = err as Error;
       console.error(e);
