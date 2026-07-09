@@ -323,6 +323,7 @@ export default function App() {
       localStorage.setItem("grit_token", data.token);
       localStorage.setItem("grit_matric", data.student.matric);
       localStorage.setItem("grit_name", data.student.name);
+      localStorage.setItem("grit_hasVoted", data.hasVoted ? "true" : "false");
 
     } catch (err: any) {
       console.error(err);
@@ -339,6 +340,7 @@ export default function App() {
     localStorage.removeItem("grit_matric");
     localStorage.removeItem("grit_name");
     localStorage.removeItem("grit_password");
+    localStorage.removeItem("grit_hasVoted");
   };
 
   return (

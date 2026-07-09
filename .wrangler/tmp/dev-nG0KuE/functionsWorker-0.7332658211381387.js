@@ -6305,13 +6305,16 @@ var onRequestPost = /* @__PURE__ */ __name2(async (context) => {
       String.fromCharCode.apply(null, signatureArray)
     ).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
     const token = `${payloadBase64}.${signatureBase64}`;
+    const existingVote = await db.select().from(votes).where(eq(votes.student_matric, student.matric)).limit(1);
+    const hasVoted = existingVote.length > 0;
     return Response.json({
       success: true,
       token,
       student: {
         matric: student.matric,
         name: student.name
-      }
+      },
+      hasVoted
     });
   } catch (err) {
     return Response.json(
@@ -8267,9 +8270,7 @@ var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
     };
     const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
     if (existingVote.length > 0) {
-      await db.update(votes).set({
-        selections: body.selections
-      }).where(eq(votes.student_matric, matric));
+      return Response.json({ error: "You have already cast your votes. Multiple submissions are not allowed." }, { status: 403 });
     } else {
       await db.insert(votes).values({
         id: crypto.randomUUID(),

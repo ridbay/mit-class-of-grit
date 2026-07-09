@@ -247,7 +247,7 @@ const VOTE_SECTIONS: VoteSection[] = [
 
 // Flatten all categories for step tracking
 const ALL_CATEGORIES: VoteCategory[] = VOTE_SECTIONS.flatMap(
-  (s) => s.categories
+  (s) => s.categories,
 );
 
 // ─── Avatar / Photo Card ───────────────────────────────────────────────────────
@@ -566,7 +566,10 @@ const PreviewScreen = ({
           <div className="space-y-8">
             {VOTE_SECTIONS.map((section) => (
               <div key={section.id} className="mb-2">
-                <h3 className="text-lg font-black border-b border-slate-100 pb-2 mb-4" style={{ color: section.color }}>
+                <h3
+                  className="text-lg font-black border-b border-slate-100 pb-2 mb-4"
+                  style={{ color: section.color }}
+                >
                   {section.name}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -574,10 +577,21 @@ const PreviewScreen = ({
                     const nomineeId = selections[cat.id];
                     const nominee = allNominees.find((n) => n.id === nomineeId);
                     return (
-                      <div key={cat.id} className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col gap-1">
-                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{cat.name}</span>
+                      <div
+                        key={cat.id}
+                        className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col gap-1"
+                      >
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                          {cat.name}
+                        </span>
                         <span className="text-sm font-black text-slate-700">
-                          {nominee ? nominee.name : <span className="text-slate-400 italic">No selection (Skipped)</span>}
+                          {nominee ? (
+                            nominee.name
+                          ) : (
+                            <span className="text-slate-400 italic">
+                              No selection (Skipped)
+                            </span>
+                          )}
                         </span>
                       </div>
                     );
@@ -605,11 +619,17 @@ const PreviewScreen = ({
           >
             {isSubmitting ? (
               <>
-                <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                />
                 Submitting...
               </>
             ) : (
-              <>Confirm & Submit Votes <Trophy size={16} /></>
+              <>
+                Confirm & Submit Votes <Trophy size={16} />
+              </>
             )}
           </motion.button>
         </div>
@@ -642,14 +662,12 @@ export const VotingForm = ({
 
   // Find which section this step belongs to
   const currentSection = VOTE_SECTIONS.find((s) =>
-    s.categories.some((c) => c.id === currentCategory.id)
+    s.categories.some((c) => c.id === currentCategory.id),
   )!;
 
   // Compute nominee list
   const baseNominees = useMemo(() => {
-    let list = currentCategory.isLecturer
-      ? [...LECTURERS]
-      : [...STUDENTS];
+    let list = currentCategory.isLecturer ? [...LECTURERS] : [...STUDENTS];
 
     if (currentCategory.nominees && currentCategory.nominees.length > 0) {
       list = list.filter((p) => currentCategory.nominees!.includes(p.id));
@@ -663,13 +681,13 @@ export const VotingForm = ({
       }
     }
     return list;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentCategory.id]);
 
   const nominees = useMemo(() => {
     if (!searchQuery.trim()) return baseNominees;
     return baseNominees.filter((n) =>
-      n.name.toLowerCase().includes(searchQuery.toLowerCase())
+      n.name.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   }, [baseNominees, searchQuery]);
 
@@ -682,7 +700,10 @@ export const VotingForm = ({
   const [fingerprint, setFingerprint] = useState<string>("");
 
   useEffect(() => {
-    fpPromise.load().then((fp) => fp.get()).then((result) => setFingerprint(result.visitorId));
+    fpPromise
+      .load()
+      .then((fp) => fp.get())
+      .then((result) => setFingerprint(result.visitorId));
   }, []);
 
   const handleSelect = (nomineeId: string) => {
@@ -693,7 +714,7 @@ export const VotingForm = ({
   const handleNext = async (skip = false) => {
     if (!skip && !selections[currentCategory.id]) {
       setError(
-        "Please select a nominee before proceeding — every vote counts! 🗳️"
+        "Please select a nominee before proceeding — every vote counts! 🗳️",
       );
       return;
     }
@@ -725,16 +746,16 @@ export const VotingForm = ({
         Object.entries(selections).map(([catId, nomineeId]) => {
           const nominee = allNominees.find((n) => n.id === nomineeId);
           return [catId, nominee ? nominee.name : nomineeId];
-        })
+        }),
       );
 
       const token = localStorage.getItem("grit_token");
-      
+
       const response = await fetch("/api/votes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           fingerprint,
@@ -748,13 +769,14 @@ export const VotingForm = ({
         throw new Error(data.error || "Failed to submit vote");
       }
 
+      localStorage.setItem("grit_hasVoted", "true");
       setIsComplete(true);
     } catch (err: unknown) {
       const e = err as Error;
       console.error(e);
       setError(
         e.message ||
-          "Oops, couldn't save your vote. Please check your connection and try again."
+          "Oops, couldn't save your vote. Please check your connection and try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -791,7 +813,7 @@ export const VotingForm = ({
   const getSectionProgress = (sectionId: string) => {
     const section = VOTE_SECTIONS.find((s) => s.id === sectionId)!;
     const sectionStepIndices = section.categories.map((c) =>
-      ALL_CATEGORIES.findIndex((ac) => ac.id === c.id)
+      ALL_CATEGORIES.findIndex((ac) => ac.id === c.id),
     );
     const lastSectionStep = Math.max(...sectionStepIndices);
     return currentStep > lastSectionStep;
@@ -908,7 +930,7 @@ export const VotingForm = ({
                 {(() => {
                   const all = [...STUDENTS, ...LECTURERS];
                   const found = all.find(
-                    (n) => n.id === selections[currentCategory.id]
+                    (n) => n.id === selections[currentCategory.id],
                   );
                   return found
                     ? found.name
@@ -916,7 +938,7 @@ export const VotingForm = ({
                         .map(
                           (w) =>
                             w.charAt(0).toUpperCase() +
-                            w.slice(1).toLowerCase()
+                            w.slice(1).toLowerCase(),
                         )
                         .join(" ")
                     : "";
@@ -943,7 +965,9 @@ export const VotingForm = ({
                       sectionColor={currentSection.color}
                     />
                   );
-                  return <React.Fragment key={nominee.id}>{card}</React.Fragment>;
+                  return (
+                    <React.Fragment key={nominee.id}>{card}</React.Fragment>
+                  );
                 })
               ) : (
                 <div className="col-span-full text-center py-16 text-slate-400 font-medium">
@@ -999,7 +1023,11 @@ export const VotingForm = ({
                   <>
                     <motion.div
                       animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "linear",
+                      }}
                       className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
                     />
                     Saving...
@@ -1023,7 +1051,7 @@ export const VotingForm = ({
       <div className="flex items-center justify-center gap-1.5 flex-wrap px-4">
         {ALL_CATEGORIES.map((cat, i) => {
           const section = VOTE_SECTIONS.find((s) =>
-            s.categories.some((c) => c.id === cat.id)
+            s.categories.some((c) => c.id === cat.id),
           )!;
           return (
             <div

@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/d1";
 import { eq } from "drizzle-orm";
-import { students } from "../../../src/db/schema";
+import { students, votes } from "../../../src/db/schema";
 
 export interface Env {
   DB: D1Database;
@@ -87,6 +87,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const token = `${payloadBase64}.${signatureBase64}`;
 
+    const existingVote = await db.select().from(votes).where(eq(votes.student_matric, student.matric)).limit(1);
+    const hasVoted = existingVote.length > 0;
+
     return Response.json({
       success: true,
       token,
@@ -94,6 +97,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         matric: student.matric,
         name: student.name,
       },
+      hasVoted,
     });
   } catch (err: any) {
     return Response.json(

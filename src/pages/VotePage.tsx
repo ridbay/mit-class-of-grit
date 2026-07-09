@@ -438,7 +438,30 @@ export const VotePage = ({
         ) : (
           /* ── Voting Area ──────────────────────────────────────────────── */
           <AnimatePresence mode="wait">
-            {!hasStarted ? (
+            {localStorage.getItem("grit_hasVoted") === "true" ? (
+              <motion.div
+                key="already_voted"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="max-w-2xl mx-auto text-center py-20"
+              >
+                <div className="w-24 h-24 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-blue">
+                  <Trophy size={48} />
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">
+                  Vote Cast Successfully!
+                </h2>
+                <p className="text-slate-500 font-medium text-lg mb-8 max-w-lg mx-auto">
+                  Thank you for participating in the MIT Connect &apos;26 Excellence Awards. Your selections have been securely recorded. Multiple submissions are not allowed.
+                </p>
+                <button
+                  onClick={onLogout}
+                  className="px-8 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
+                >
+                  Log out securely
+                </button>
+              </motion.div>
+            ) : !hasStarted ? (
               <motion.div
                 key="landing"
                 initial={{ opacity: 0 }}

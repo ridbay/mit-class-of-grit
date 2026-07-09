@@ -93,10 +93,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
 
     if (existingVote.length > 0) {
-      // Update existing vote
-      await db.update(votes).set({
-        selections: body.selections
-      }).where(eq(votes.student_matric, matric));
+      return Response.json({ error: "You have already cast your votes. Multiple submissions are not allowed." }, { status: 403 });
     } else {
       // Insert new vote and log the device
       await db.insert(votes).values({

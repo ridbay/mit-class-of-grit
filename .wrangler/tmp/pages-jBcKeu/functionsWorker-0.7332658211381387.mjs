@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-RFY0Nr/checked-fetch.js
+// ../.wrangler/tmp/bundle-nSF8Yg/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -5969,13 +5969,16 @@ var onRequestPost = /* @__PURE__ */ __name(async (context) => {
       String.fromCharCode.apply(null, signatureArray)
     ).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
     const token = `${payloadBase64}.${signatureBase64}`;
+    const existingVote = await db.select().from(votes).where(eq(votes.student_matric, student.matric)).limit(1);
+    const hasVoted = existingVote.length > 0;
     return Response.json({
       success: true,
       token,
       student: {
         matric: student.matric,
         name: student.name
-      }
+      },
+      hasVoted
     });
   } catch (err) {
     return Response.json(
@@ -7931,9 +7934,7 @@ var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
     };
     const existingVote = await db.select().from(votes).where(eq(votes.student_matric, matric)).limit(1);
     if (existingVote.length > 0) {
-      await db.update(votes).set({
-        selections: body.selections
-      }).where(eq(votes.student_matric, matric));
+      return Response.json({ error: "You have already cast your votes. Multiple submissions are not allowed." }, { status: 403 });
     } else {
       await db.insert(votes).values({
         id: crypto.randomUUID(),
@@ -8464,7 +8465,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-RFY0Nr/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-nSF8Yg/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -8496,7 +8497,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-RFY0Nr/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-nSF8Yg/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;
