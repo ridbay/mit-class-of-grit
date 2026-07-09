@@ -118,6 +118,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "💻",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s140", "s48", "s62", "s21", "s10", "s188"],
       },
       {
         id: "sr3",
@@ -127,6 +128,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "💡",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s183", "s252", "s100", "s47", "s28", "s39"],
       },
       {
         id: "sr4",
@@ -136,6 +138,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🔗",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s169", "s91", "s7", "s123", "s233", "s104"],
       },
       {
         id: "sr5",
@@ -145,6 +148,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🚀",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s177", "s14", "s76", "s23", "s258", "s1"],
       },
       {
         id: "sr6",
@@ -154,6 +158,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "👔",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s41", "s14", "s76", "s111", "s230", "s137"],
       },
       {
         id: "sr7",
@@ -163,6 +168,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "👗",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s13", "s7", "s59", "s12", "s35", "s119"],
       },
       {
         id: "sr8",
@@ -172,6 +178,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🎨",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s140", "s183", "s252", "s47", "s39", "s230"],
       },
       {
         id: "sr9",
@@ -181,6 +188,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🙋",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s183", "s217", "s255", "s200", "s83", "s66"],
       },
       {
         id: "sr10",
@@ -190,6 +198,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "✨",
         isLecturer: false,
         sectionId: "student-recognition",
+        nominees: ["s67", "s73", "s179", "s35", "s99", "s123"],
       },
     ],
   },
@@ -210,6 +219,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "🏅",
         isLecturer: true,
         sectionId: "lecturer-awards",
+        nominees: ["lec1", "lec5", "lec7", "lec10", "lec18", "lec6"],
       },
       {
         id: "l2",
@@ -219,6 +229,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "💫",
         isLecturer: true,
         sectionId: "lecturer-awards",
+        nominees: ["lec15", "lec9", "lec8", "lec14", "lec10", "lec18"],
       },
       {
         id: "l3",
@@ -228,6 +239,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         icon: "❤️",
         isLecturer: true,
         sectionId: "lecturer-awards",
+        nominees: ["lec13", "lec1", "lec5", "lec11", "lec18", "lec16"],
       },
     ],
   },
