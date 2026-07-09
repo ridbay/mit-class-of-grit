@@ -522,6 +522,102 @@ const ThankYouScreen = ({ studentName }: { studentName?: string }) => (
   </div>
 );
 
+// ─── Preview Screen ─────────────────────────────────────────────────────────
+
+const PreviewScreen = ({
+  selections,
+  onSubmit,
+  onBack,
+  isSubmitting,
+  error,
+}: {
+  selections: Record<string, string>;
+  onSubmit: () => void;
+  onBack: () => void;
+  isSubmitting: boolean;
+  error: string;
+}) => {
+  const allNominees = [...LECTURERS, ...STUDENTS];
+
+  return (
+    <div className="w-full max-w-4xl mx-auto flex flex-col gap-6">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="bg-white rounded-3xl shadow-xl shadow-slate-200/60 overflow-hidden border border-slate-100"
+      >
+        <div className="px-6 sm:px-10 py-8 bg-gradient-to-br from-brand-blue/10 to-blue-500/5 border-b border-slate-100">
+          <h2 className="text-2xl sm:text-3xl font-black text-slate-900 leading-tight mb-2">
+            Review Your Votes 📋
+          </h2>
+          <p className="text-slate-500 font-medium">
+            Please take a moment to review your selections before submitting.
+          </p>
+        </div>
+
+        <div className="px-6 sm:px-10 py-8">
+          {error && (
+            <div className="mb-6 flex items-center gap-3 p-4 rounded-2xl bg-red-50 border border-red-100 text-red-600 font-bold text-sm">
+              <AlertCircle size={18} className="flex-shrink-0" />
+              {error}
+            </div>
+          )}
+
+          <div className="space-y-8">
+            {VOTE_SECTIONS.map((section) => (
+              <div key={section.id} className="mb-2">
+                <h3 className="text-lg font-black border-b border-slate-100 pb-2 mb-4" style={{ color: section.color }}>
+                  {section.name}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {section.categories.map((cat) => {
+                    const nomineeId = selections[cat.id];
+                    const nominee = allNominees.find((n) => n.id === nomineeId);
+                    return (
+                      <div key={cat.id} className="bg-slate-50 p-4 rounded-2xl border border-slate-100 flex flex-col gap-1">
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">{cat.name}</span>
+                        <span className="text-sm font-black text-slate-700">
+                          {nominee ? nominee.name : <span className="text-slate-400 italic">No selection (Skipped)</span>}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-6 sm:px-10 py-6 border-t border-slate-100 flex items-center justify-between gap-4 bg-slate-50/50">
+          <button
+            onClick={onBack}
+            disabled={isSubmitting}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm text-slate-500 hover:bg-white hover:shadow-sm border border-transparent hover:border-slate-200 transition-all"
+          >
+            <ChevronLeft size={18} /> Back to Edit
+          </button>
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={onSubmit}
+            disabled={isSubmitting}
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-black text-sm text-white transition-all shadow-md bg-brand-blue hover:bg-blue-600"
+          >
+            {isSubmitting ? (
+              <>
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }} className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+                Submitting...
+              </>
+            ) : (
+              <>Confirm & Submit Votes <Trophy size={16} /></>
+            )}
+          </motion.button>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 // ─── Main Voting Form ─────────────────────────────────────────────────────────
 
 export const VotingForm = ({
@@ -533,6 +629,7 @@ export const VotingForm = ({
 }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [selections, setSelections] = useState<Record<string, string>>({});
+  const [isPreviewing, setIsPreviewing] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [isComplete, setIsComplete] = useState(false);
@@ -579,7 +676,6 @@ export const VotingForm = ({
   // Scroll to top of grid on step change
   useEffect(() => {
     gridRef.current?.scrollTo({ top: 0, behavior: "smooth" });
-    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [currentStep]);
 
   // Fingerprint logic
@@ -616,13 +712,17 @@ export const VotingForm = ({
       return;
     }
 
-    // It is the last screen, time to submit!
+    // Instead of submitting immediately, show preview screen
+    setIsPreviewing(true);
+  };
+
+  const handleSubmitVotes = async () => {
     setIsSubmitting(true);
     try {
       // Map IDs to names for storage
       const allNominees = [...LECTURERS, ...STUDENTS];
       const namedSelections = Object.fromEntries(
-        Object.entries(currentSelections).map(([catId, nomineeId]) => {
+        Object.entries(selections).map(([catId, nomineeId]) => {
           const nominee = allNominees.find((n) => n.id === nomineeId);
           return [catId, nominee ? nominee.name : nomineeId];
         })
@@ -672,6 +772,19 @@ export const VotingForm = ({
   // ─── Completion Screen ─────────────────────────────────────────────────────
   if (isComplete) {
     return <ThankYouScreen studentName={studentName} />;
+  }
+
+  // ─── Preview Screen ────────────────────────────────────────────────────────
+  if (isPreviewing) {
+    return (
+      <PreviewScreen
+        selections={selections}
+        onSubmit={handleSubmitVotes}
+        onBack={() => setIsPreviewing(false)}
+        isSubmitting={isSubmitting}
+        error={error}
+      />
+    );
   }
 
   // ─── Determine completed sections for chips ────────────────────────────────
@@ -781,30 +894,6 @@ export const VotingForm = ({
                 </motion.div>
               )}
             </AnimatePresence>
-
-            {/* Search */}
-            <div className="relative mb-6">
-              <Search
-                size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"
-              />
-              <input
-                id={`search-${currentCategory.id}`}
-                type="text"
-                placeholder={`Search ${currentCategory.isLecturer ? "lecturers" : "students"}...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-slate-50 border-2 border-slate-200 outline-none focus:border-brand-blue focus:bg-white transition-all font-medium text-slate-900 placeholder:text-slate-400 text-sm"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-slate-200 transition-colors"
-                >
-                  <X size={14} className="text-slate-500" />
-                </button>
-              )}
-            </div>
 
             {/* Selected indicator */}
             {selections[currentCategory.id] && (
@@ -917,7 +1006,7 @@ export const VotingForm = ({
                   </>
                 ) : currentStep === totalSteps - 1 ? (
                   <>
-                    Submit My Votes <Trophy size={16} />
+                    Review Votes <ChevronRight size={18} />
                   </>
                 ) : (
                   <>
