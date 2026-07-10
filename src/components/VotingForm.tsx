@@ -252,13 +252,19 @@ const ALL_CATEGORIES: VoteCategory[] = VOTE_SECTIONS.flatMap(
 
 // ─── Avatar / Photo Card ───────────────────────────────────────────────────────
 
+import avatarMap from '../data/avatarMap.json';
+
 const getAvatarUrl = (name: string, seed: string) => {
-  // If you provide a photo in the public/avatars folder named by ID, it will load it.
-  // We extract the ID from the seed (e.g., "s1" from "s1John Doe")
-  // Note: The seed passed here is `nominee.id + nominee.name`.
   const idMatch = seed.match(/^(s\d+|l\d+)/);
   if (idMatch) {
-    return `/avatars/${idMatch[1]}.jpg`;
+    const id = idMatch[1];
+    // Check if there is a known mapped file for this ID
+    const mappedUrl = (avatarMap as Record<string, string>)[id];
+    if (mappedUrl) {
+      return mappedUrl;
+    }
+    // Fallback to strict ID naming
+    return `/avatars/${id}.jpg`;
   }
 
   const encoded = encodeURIComponent(seed);

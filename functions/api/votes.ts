@@ -108,7 +108,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       const existingDeviceLog = await db
         .select()
         .from(vote_logs)
-        .where(or(...conditions))
+        .where(conditions.length === 1 ? conditions[0] : or(...conditions))
         .limit(1);
       if (existingDeviceLog.length > 0) {
         return Response.json(
