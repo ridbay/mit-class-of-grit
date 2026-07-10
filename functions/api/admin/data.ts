@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/d1";
-import { votes, vote_logs } from "../../../src/db/schema";
+import { votes, vote_logs, students } from "../../../src/db/schema";
 import { desc } from "drizzle-orm";
 
 export interface Env {
@@ -32,14 +32,16 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
     const db = drizzle(context.env.DB);
 
-    const [nominations, deviceLogs] = await Promise.all([
+    const [nominations, deviceLogs, studentsList] = await Promise.all([
       db.select().from(votes).orderBy(desc(votes.created_at)),
-      db.select().from(vote_logs).orderBy(desc(vote_logs.created_at))
+      db.select().from(vote_logs).orderBy(desc(vote_logs.created_at)),
+      db.select().from(students)
     ]);
 
     return Response.json({
       nominations,
-      deviceLogs
+      deviceLogs,
+      students: studentsList
     });
   } catch (err: any) {
     return Response.json(

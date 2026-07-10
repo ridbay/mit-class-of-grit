@@ -11,9 +11,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const db = drizzle(context.env.DB);
 
   try {
-    const { matric, name } = (await context.request.json()) as {
+    const { matric, name, email } = (await context.request.json()) as {
       matric?: string;
       name?: string;
+      email?: string;
     };
 
     if (!matric) {
@@ -51,6 +52,13 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           { status: 400 },
         );
       }
+    }
+
+    if (email) {
+      await db
+        .update(students)
+        .set({ email })
+        .where(eq(students.matric, matric));
     }
 
     // Simple stateless token (HMAC SHA-256)

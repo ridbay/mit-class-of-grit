@@ -60,6 +60,20 @@ export const IdentificationForm = ({
           className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
         />
       </div>
+      <div className="relative">
+        <User
+          className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+          size={20}
+        />
+        <input
+          name="email"
+          type="email"
+          placeholder="Email Address"
+          required
+          onChange={onClearError}
+          className={`w-full pl-12 pr-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${error ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
+        />
+      </div>
       {!hidePassword && (
         <div className="relative">
           <User

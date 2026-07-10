@@ -22,6 +22,13 @@
       "when": 1783628605394,
       "tag": "0002_real_ken_ellis",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1783699054832,
+      "tag": "0003_clever_blob",
+      "breakpoints": true
     }
   ]
 }

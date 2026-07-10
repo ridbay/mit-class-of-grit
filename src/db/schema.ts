@@ -4,6 +4,7 @@ export const students = sqliteTable("students", {
   id: text("id").primaryKey(), // We can use UUIDs or matric numbers
   matric: text("matric").notNull().unique(),
   name: text("name").notNull(),
+  email: text("email"),
 });
 
 export const votes = sqliteTable("votes", {

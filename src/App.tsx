@@ -295,6 +295,7 @@ export default function App() {
     const formData = new FormData(e.currentTarget);
     const matric = (formData.get("matric") as string)?.trim();
     const name = (formData.get("name") as string)?.trim();
+    const email = (formData.get("email") as string)?.trim();
 
     if (!matric) {
       setMatricError("Hold up! We need your Matric Number to let you in.");
@@ -305,7 +306,7 @@ export default function App() {
       const response = await fetch("/api/auth/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matric, name }),
+        body: JSON.stringify({ matric, name, email }),
       });
 
       const data = (await response.json()) as any;
