@@ -219,6 +219,8 @@ export const VotePage = ({
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
+  console.log("[VotePage.tsx] Rendering with matricNumber:", matricNumber, "hasEmail:", hasEmail);
+
   const [emailInput, setEmailInput] = useState("");
   const [emailLoading, setEmailLoading] = useState(false);
   const [emailError, setEmailError] = useState("");

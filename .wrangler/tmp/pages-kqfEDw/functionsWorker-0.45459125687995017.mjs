@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-t30kFM/checked-fetch.js
+// ../.wrangler/tmp/bundle-dFRvVp/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -6048,6 +6048,13 @@ var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
   }
 }, "onRequestPost");
 
+// api/test-db.ts
+var onRequestGet2 = /* @__PURE__ */ __name(async (context) => {
+  const db = drizzle(context.env.DB);
+  const user = await db.select().from(students).limit(1);
+  return Response.json({ user: user[0], type: typeof user[0].email });
+}, "onRequestGet");
+
 // ../node_modules/ua-parser-js/src/main/ua-parser.mjs
 var LIBVERSION = "2.0.10";
 var UA_MAX_LENGTH = 500;
@@ -8073,6 +8080,13 @@ var routes = [
     modules: [onRequestPost2]
   },
   {
+    routePath: "/api/test-db",
+    mountPath: "/api",
+    method: "GET",
+    middlewares: [],
+    modules: [onRequestGet2]
+  },
+  {
     routePath: "/api/votes",
     mountPath: "/api",
     method: "POST",
@@ -8568,7 +8582,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-t30kFM/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-dFRvVp/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -8600,7 +8614,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-t30kFM/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-dFRvVp/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

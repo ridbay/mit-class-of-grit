@@ -322,14 +322,17 @@ export default function App() {
       setMatricError("");
       setMatricNumber(data.student.matric);
       setStudentName(data.student.name);
-      setHasEmail(!!data.student.email);
+      
+      // The user wants to ALWAYS show the email field on login
+      setHasEmail(false);
       
       // Store token and student data
       localStorage.setItem("grit_token", data.token);
       localStorage.setItem("grit_matric", data.student.matric);
       localStorage.setItem("grit_name", data.student.name);
       localStorage.setItem("grit_hasVoted", data.hasVoted ? "true" : "false");
-      localStorage.setItem("grit_hasEmail", data.student.email ? "true" : "false");
+      // Intentionally clear grit_hasEmail so it always asks on fresh login
+      localStorage.removeItem("grit_hasEmail");
 
     } catch (err: any) {
       console.error(err);

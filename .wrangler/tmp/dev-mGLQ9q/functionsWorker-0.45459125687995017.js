@@ -6379,6 +6379,11 @@ var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
     );
   }
 }, "onRequestPost");
+var onRequestGet2 = /* @__PURE__ */ __name2(async (context) => {
+  const db = drizzle(context.env.DB);
+  const user = await db.select().from(students).limit(1);
+  return Response.json({ user: user[0], type: typeof user[0].email });
+}, "onRequestGet");
 var LIBVERSION = "2.0.10";
 var UA_MAX_LENGTH = 500;
 var USER_AGENT = "user-agent";
@@ -8401,6 +8406,13 @@ var routes = [
     method: "POST",
     middlewares: [],
     modules: [onRequestPost2]
+  },
+  {
+    routePath: "/api/test-db",
+    mountPath: "/api",
+    method: "GET",
+    middlewares: [],
+    modules: [onRequestGet2]
   },
   {
     routePath: "/api/votes",

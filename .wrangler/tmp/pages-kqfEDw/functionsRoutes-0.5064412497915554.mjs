@@ -1,6 +1,7 @@
 import { onRequestGet as __api_admin_data_ts_onRequestGet } from "/Users/ridbay/Projects/mit/class-of-grit/functions/api/admin/data.ts"
 import { onRequestPost as __api_auth_update_email_ts_onRequestPost } from "/Users/ridbay/Projects/mit/class-of-grit/functions/api/auth/update-email.ts"
 import { onRequestPost as __api_auth_verify_ts_onRequestPost } from "/Users/ridbay/Projects/mit/class-of-grit/functions/api/auth/verify.ts"
+import { onRequestGet as __api_test_db_ts_onRequestGet } from "/Users/ridbay/Projects/mit/class-of-grit/functions/api/test-db.ts"
 import { onRequestPost as __api_votes_ts_onRequestPost } from "/Users/ridbay/Projects/mit/class-of-grit/functions/api/votes.ts"
 
 export const routes = [
@@ -24,6 +25,13 @@ export const routes = [
       method: "POST",
       middlewares: [],
       modules: [__api_auth_verify_ts_onRequestPost],
+    },
+  {
+      routePath: "/api/test-db",
+      mountPath: "/api",
+      method: "GET",
+      middlewares: [],
+      modules: [__api_test_db_ts_onRequestGet],
     },
   {
       routePath: "/api/votes",
