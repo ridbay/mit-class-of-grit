@@ -185,7 +185,7 @@ const VoteLanding = ({ onStart }: { onStart: () => void }) => (
 export const VotePage = ({
   matricNumber,
   studentName,
-  // password,
+  password,
   handleIdentify,
   matricError,
   setMatricError,
@@ -195,7 +195,7 @@ export const VotePage = ({
 }: {
   matricNumber: string;
   studentName?: string;
-  // password: string;
+  password: string;
   handleIdentify: (e: React.FormEvent<HTMLFormElement>) => void;
   matricError: string;
   setMatricError: (err: string) => void;
@@ -469,7 +469,7 @@ export const VotePage = ({
               onSubmit={handleIdentify}
               error={matricError}
               onClearError={() => setMatricError("")}
-              // hidePassword={true}
+              hidePassword={true}
               title="Who goes there? 🎓"
               description="Enter your Full Name and 9-digit Matric Number to access the voting ballot."
             />
