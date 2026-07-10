@@ -2,7 +2,7 @@ INSERT INTO public.students (matric, name) VALUES
   ('840404062', 'Unuigboje Aisagbonhi Ohimai'),
   ('950403029', 'DIKE SAMUEL CHINWE'),
   ('249074104', 'Okoh Victor Iduh'),
-  ('60403042', 'HASSAN ABDULLAHI ADEWALE'),
+  ('060403042', 'HASSAN ABDULLAHI ADEWALE'),
   ('249074097', 'Olajide Ronke Opeyemi'),
   ('100808017', 'Adeyemo David Oluwatosin'),
   ('100903065', 'ECHEWODOR CHINANU SONIA'),

@@ -10,19 +10,19 @@ export const CATEGORY_GROUPS = [
         id: "l1",
         name: "Outstanding Lecturer of the Year",
         description:
-          "Awarded to the lecturer who consistently demonstrates exceptional teaching quality, thorough knowledge of their subject, and a genuine commitment to student success. This lecturer shows up prepared, engaged, and passionate every single time.",
+          "Recognizes a lecturer who has delivered excellent teaching, strong academic guidance, and outstanding overall impact on students.",
       },
       {
         id: "l2",
-        name: "Most Impactful Lecturer",
+        name: "Most Impactful Lecturer of the Year",
         description:
-          "For the lecturer whose influence extends beyond the classroom — one whose lessons, advice, or mentorship has meaningfully shaped the way students think, work, or see the world. Their impact is felt long after the semester ends.",
+          "Honors a lecturer whose teaching, mentorship, and academic support have made a big positive difference to students.",
       },
       {
         id: "l3",
-        name: "Student's Choice Lecturer Award",
+        name: "Student Choice Lecturer of the Year",
         description:
-          "A people's award — purely driven by student appreciation. This goes to the lecturer who students genuinely love: approachable, fair, supportive, and always in their corner.",
+          "Celebrates the lecturer most appreciated by students for teaching style, accessibility, support, and overall student experience.",
       },
     ],
   },
@@ -35,31 +35,25 @@ export const CATEGORY_GROUPS = [
         id: "sm1",
         name: "Outstanding Student of the Year",
         description:
-          "For the student who best represents excellence across academics, character, class participation, responsibility, and overall contribution.",
+          "Recognizes a student who has shown exceptional academic effort, leadership, class participation, and overall positive impact within the MIT Class of Grit.",
       },
       {
         id: "sm2",
-        name: "Leadership Excellence Award",
+        name: "Most Supportive Classmate",
         description:
-          "For the student who has shown leadership through service, initiative, responsibility, and the ability to guide, influence, or represent others positively.",
+          "Celebrates a student who consistently supports others, offers help when needed, and contributes to the success and comfort of classmates.",
       },
       {
         id: "sm3",
-        name: "Most Supportive Classmate",
+        name: "Best Team Player",
         description:
-          "For the student who is always willing to help others — sharing information, explaining things, checking up on classmates, offering encouragement, and making sure no one is left behind.",
+          "Honors a student who works well with others, contributes positively to group tasks, and helps build a strong spirit of collaboration.",
       },
       {
         id: "sm4",
-        name: "Best Team Player",
-        description:
-          "For the student who works excellently with others during group tasks, projects, assignments, and presentations. This person is reliable, cooperative, respectful, and helps the team succeed.",
-      },
-      {
-        id: "sm5",
         name: "Class Contribution Award",
         description:
-          "For the student who has consistently contributed to the progress, unity, organization, and overall experience of the class, whether officially or unofficially.",
+          "Recognizes a student who has made meaningful contributions to class activities, discussions, coordination, and overall class growth.",
       },
     ],
   },
@@ -72,55 +66,61 @@ export const CATEGORY_GROUPS = [
         id: "sr1",
         name: "Best Presenter",
         description:
-          "For the student who delivers presentations with confidence, clarity, good communication, strong delivery, and proper understanding of the topic.",
+          "Recognizes a student with strong presentation skills, confidence, clarity, and the ability to communicate ideas effectively.",
       },
       {
         id: "sr2",
         name: "Most Tech-Savvy Student",
         description:
-          "For the student who demonstrates strong digital, technical, or IT-related skills and is often recognized for understanding technology deeply.",
+          "Celebrates a student who shows strong interest, confidence, and ability in technology, digital tools, and tech-related discussions.",
       },
       {
         id: "sr3",
         name: "Most Innovative Thinker",
         description:
-          "For the student who brings fresh ideas, creative solutions, and a different way of approaching problems, projects, discussions, or class activities.",
+          "Honors a student who brings fresh ideas, creative solutions, and forward-thinking contributions to class or group activities.",
       },
       {
         id: "sr4",
-        name: "Best Problem Solver",
+        name: "The Connector Award",
         description:
-          "For the student who is analytical, calm under pressure, and good at finding solutions during assignments, projects, presentations, or class-related challenges.",
+          "Recognizes a student who naturally brings people together, encourages interaction, and helps strengthen class relationships.",
       },
       {
         id: "sr5",
         name: "Most Enterprising Student",
         description:
-          "For the student who is business-minded, resourceful, and actively involved in running a business, brand, service, side hustle, or professional venture.",
+          "Celebrates a student with business-minded thinking, initiative, drive, and the ability to identify or create opportunities.",
       },
       {
         id: "sr6",
         name: "Best Dressed Male",
         description:
-          "For the male student who consistently shows style, neatness, confidence, and intentional fashion sense.",
+          "Recognizes a male student with outstanding style, neatness, confidence, and consistent fashion presence.",
       },
       {
         id: "sr7",
         name: "Best Dressed Female",
         description:
-          "For the female student who consistently shows style, elegance, confidence, and intentional fashion sense.",
+          "Recognizes a female student with outstanding style, elegance, confidence, and consistent fashion presence.",
       },
       {
         id: "sr8",
         name: "Most Creative Student",
         description:
-          "For the student who brings originality, imagination, and creativity into presentations, ideas, designs, projects, writing, media, or class-related activities.",
+          "Honors a student who demonstrates originality, imagination, and creative expression in class activities or personal presentation.",
       },
       {
         id: "sr9",
         name: "Most Engaging Class Participant",
         description:
-          "For the student who actively contributes to class discussions, asks meaningful questions, responds thoughtfully, and helps make lectures, presentations, or group sessions more interactive.",
+          "Recognizes a student who actively participates, contributes to discussions, and brings positive energy to class interactions.",
+      },
+      {
+        id: "sr10",
+        name: "Charisma Award",
+        description:
+          "Celebrates a student with strong presence, confidence, personality, and the ability to leave a memorable impression.",
       },
     ],
   },
@@ -141,7 +141,7 @@ export const STUDENTS = [
   { id: "s1", name: "Unuigboje Aisagbonhi Ohimai", matric: "840404062" },
   { id: "s2", name: "DIKE SAMUEL CHINWE", matric: "950403029" },
   { id: "s3", name: "Okoh Victor Iduh", matric: "249074104" },
-  { id: "s4", name: "HASSAN ABDULLAHI ADEWALE", matric: "60403042" },
+  { id: "s4", name: "HASSAN ABDULLAHI ADEWALE", matric: "060403042" },
   { id: "s5", name: "Olajide Ronke Opeyemi", matric: "249074097" },
   { id: "s6", name: "Adeyemo David Oluwatosin", matric: "100808017" },
   { id: "s7", name: "ECHEWODOR CHINANU SONIA", matric: "100903065" },

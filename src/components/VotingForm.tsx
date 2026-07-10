@@ -53,7 +53,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sm1",
         name: "Outstanding Student of the Year",
         description:
-          "The student who best embodies excellence across academics, character, participation, and overall contribution to the class.",
+          "Recognizes a student who has shown exceptional academic effort, leadership, class participation, and overall positive impact within the MIT Class of Grit.",
         icon: "🏆",
         isLecturer: false,
         sectionId: "student-merit",
@@ -63,7 +63,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sm2",
         name: "Most Supportive Classmate",
         description:
-          "Always willing to help — sharing notes, explaining concepts, checking up on peers, and making sure no one gets left behind.",
+          "Celebrates a student who consistently supports others, offers help when needed, and contributes to the success and comfort of classmates.",
         icon: "🤝",
         isLecturer: false,
         sectionId: "student-merit",
@@ -73,7 +73,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sm3",
         name: "Best Team Player",
         description:
-          "Works brilliantly with others during group tasks, projects, and presentations — reliable, cooperative, and a true team anchor.",
+          "Honors a student who works well with others, contributes positively to group tasks, and helps build a strong spirit of collaboration.",
         icon: "⚡",
         isLecturer: false,
         sectionId: "student-merit",
@@ -83,7 +83,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sm4",
         name: "Class Contribution Award",
         description:
-          "Consistently contributed to the progress, unity, and organization of the class — officially or unofficially.",
+          "Recognizes a student who has made meaningful contributions to class activities, discussions, coordination, and overall class growth.",
         icon: "🌟",
         isLecturer: false,
         sectionId: "student-merit",
@@ -104,7 +104,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr1",
         name: "Best Presenter",
         description:
-          "Delivers presentations with confidence, clarity, and mastery — turning any topic into an engaging experience.",
+          "Recognizes a student with strong presentation skills, confidence, clarity, and the ability to communicate ideas effectively.",
         icon: "🎤",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -114,7 +114,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr2",
         name: "Most Tech-Savvy Student",
         description:
-          "The go-to person for all things tech — demonstrating deep IT skills and a genuine passion for technology.",
+          "Celebrates a student who shows strong interest, confidence, and ability in technology, digital tools, and tech-related discussions.",
         icon: "💻",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -124,7 +124,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr3",
         name: "Most Innovative Thinker",
         description:
-          "Brings fresh ideas and creative solutions — always approaching problems from a completely different angle.",
+          "Honors a student who brings fresh ideas, creative solutions, and forward-thinking contributions to class or group activities.",
         icon: "💡",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -134,7 +134,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr4",
         name: "The Connector Award",
         description:
-          "The bridge-builder who connects people, facilitates collaborations, and makes the whole class feel more like a community.",
+          "Recognizes a student who naturally brings people together, encourages interaction, and helps strengthen class relationships.",
         icon: "🔗",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -144,7 +144,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr5",
         name: "Most Enterprising Student",
         description:
-          "Business-minded and resourceful — actively running a brand, side hustle, or professional venture while excelling in class.",
+          "Celebrates a student with business-minded thinking, initiative, drive, and the ability to identify or create opportunities.",
         icon: "🚀",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -154,7 +154,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr6",
         name: "Best Dressed Male",
         description:
-          "The male student who consistently shows up with impeccable style, neatness, and intentional fashion sense.",
+          "Recognizes a male student with outstanding style, neatness, confidence, and consistent fashion presence.",
         icon: "👔",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -164,7 +164,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr7",
         name: "Best Dressed Female",
         description:
-          "The female student who consistently brings style, elegance, and grace to every class session.",
+          "Recognizes a female student with outstanding style, elegance, confidence, and consistent fashion presence.",
         icon: "👗",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -174,7 +174,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr8",
         name: "Most Creative Student",
         description:
-          "Originality, imagination, and creativity shine through their presentations, designs, and class activities.",
+          "Honors a student who demonstrates originality, imagination, and creative expression in class activities or personal presentation.",
         icon: "🎨",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -184,7 +184,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr9",
         name: "Most Engaging Class Participant",
         description:
-          "Always in the conversation — asking great questions, responding thoughtfully, and making every session more dynamic.",
+          "Recognizes a student who actively participates, contributes to discussions, and brings positive energy to class interactions.",
         icon: "🙋",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -194,7 +194,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "sr10",
         name: "Charisma Award",
         description:
-          "That undeniable magnetic energy that lights up a room — the person everyone is drawn to.",
+          "Celebrates a student with strong presence, confidence, personality, and the ability to leave a memorable impression.",
         icon: "✨",
         isLecturer: false,
         sectionId: "student-recognition",
@@ -215,7 +215,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "l1",
         name: "Outstanding Lecturer of the Year",
         description:
-          "Consistently demonstrates exceptional teaching quality, deep subject knowledge, and a genuine commitment to student success.",
+          "Recognizes a lecturer who has delivered excellent teaching, strong academic guidance, and outstanding overall impact on students.",
         icon: "🏅",
         isLecturer: true,
         sectionId: "lecturer-awards",
@@ -225,7 +225,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "l2",
         name: "Most Impactful Lecturer of the Year",
         description:
-          "Their influence goes beyond the classroom — lessons and mentorship that have meaningfully shaped how students think and work.",
+          "Honors a lecturer whose teaching, mentorship, and academic support have made a big positive difference to students.",
         icon: "💫",
         isLecturer: true,
         sectionId: "lecturer-awards",
@@ -235,7 +235,7 @@ const VOTE_SECTIONS: VoteSection[] = [
         id: "l3",
         name: "Student Choice Lecturer of the Year",
         description:
-          "A people's award — purely driven by student love. Approachable, fair, supportive, and always in their students' corner.",
+          "Celebrates the lecturer most appreciated by students for teaching style, accessibility, support, and overall student experience.",
         icon: "❤️",
         isLecturer: true,
         sectionId: "lecturer-awards",
