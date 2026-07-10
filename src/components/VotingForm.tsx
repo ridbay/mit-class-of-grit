@@ -255,7 +255,7 @@ const ALL_CATEGORIES: VoteCategory[] = VOTE_SECTIONS.flatMap(
 import avatarMap from '../data/avatarMap.json';
 
 const getAvatarUrl = (name: string, seed: string) => {
-  const idMatch = seed.match(/^(s\d+|l\d+)/);
+  const idMatch = seed.match(/^(s\d+|lec\d+)/);
   if (idMatch) {
     const id = idMatch[1];
     // Check if there is a known mapped file for this ID

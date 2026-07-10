@@ -1121,20 +1121,71 @@ export const SPECIAL_PARTNERSHIPS = [
 ];
 
 export const COMPARISON_TABLE = {
-  columns: ["Bronze ₦100k", "Silver ₦250k", "Gold ₦500k", "Platinum ₦1m", "Headline From ₦3m"],
+  columns: [
+    "Bronze ₦100k",
+    "Silver ₦250k",
+    "Gold ₦500k",
+    "Platinum ₦1m",
+    "Headline From ₦3m",
+  ],
   rows: [
-    { label: "Website recognition", values: ["Yes", "Yes", "Yes", "Yes", "Premium"] },
-    { label: "Logo on digital flyer", values: ["Yes", "Yes", "Yes", "Yes", "Most prominent"] },
-    { label: "Appreciation post", values: ["Yes", "Yes", "Yes", "Yes", "Premium feature"] },
-    { label: "Printed material visibility", values: ["—", "Yes", "Yes", "Yes", "Premium"] },
-    { label: "MC mentions", values: ["—", "2 mentions", "Event segment mentions", "2-minute intro", "Opening acknowledgement"] },
-    { label: "Promo posts", values: ["—", "2 posts", "Multiple mentions", "Weekly mentions", "Priority campaign visibility"] },
-    { label: "Branded reel", values: ["—", "—", "60 seconds", "90 seconds", "Custom feature"] },
-    { label: "Featured website profile", values: ["—", "—", "Yes", "Yes", "Premium brand story"] },
-    { label: "Event access passes", values: ["—", "1 pass", "2 passes", "4 passes", "Custom"] },
-    { label: "Activation stand", values: ["—", "—", "—", "Yes", "Premium activation"] },
+    {
+      label: "Website recognition",
+      values: ["Yes", "Yes", "Yes", "Yes", "Premium"],
+    },
+    {
+      label: "Logo on digital flyer",
+      values: ["Yes", "Yes", "Yes", "Yes", "Most prominent"],
+    },
+    {
+      label: "Appreciation post",
+      values: ["Yes", "Yes", "Yes", "Yes", "Premium feature"],
+    },
+    {
+      label: "Printed material visibility",
+      values: ["—", "Yes", "Yes", "Yes", "Premium"],
+    },
+    {
+      label: "MC mentions",
+      values: [
+        "—",
+        "2 mentions",
+        "Event segment mentions",
+        "2-minute intro",
+        "Opening acknowledgement",
+      ],
+    },
+    {
+      label: "Promo posts",
+      values: [
+        "—",
+        "2 posts",
+        "Multiple mentions",
+        "Weekly mentions",
+        "Priority campaign visibility",
+      ],
+    },
+    {
+      label: "Branded reel",
+      values: ["—", "—", "60 seconds", "90 seconds", "Custom feature"],
+    },
+    {
+      label: "Featured website profile",
+      values: ["—", "—", "Yes", "Yes", "Premium brand story"],
+    },
+    {
+      label: "Event access passes",
+      values: ["—", "1 pass", "2 passes", "4 passes", "Custom"],
+    },
+    {
+      label: "Activation stand",
+      values: ["—", "—", "—", "Yes", "Premium activation"],
+    },
     { label: "Co-branding opportunity", values: ["—", "—", "—", "—", "Yes"] },
-    { label: "Exclusive category", values: ["—", "—", "—", "—", "One slot only"] },
+    {
+      label: "Exclusive category",
+      values: ["—", "—", "—", "—", "One slot only"],
+    },
     { label: "Custom benefits", values: ["—", "—", "—", "Limited", "Yes"] },
   ],
 };
@@ -1161,25 +1212,25 @@ export const FAQS = [
 export const LECTURERS = [
   { id: "lec1", name: "C. O. Yinka-Banjo" },
   { id: "lec2", name: "C. O. Uwadia" },
-  { id: "lec3", name: "A.P. Adewole" },
+  { id: "lec3", name: "A. P. Adewole" },
   { id: "lec4", name: "O. Abass" },
   { id: "lec5", name: "F. A. Oladeji" },
   { id: "lec6", name: "V. T. Odumuyiwa" },
-  { id: "lec7", name: "N.A. Azeez" },
-  { id: "lec8", name: "E.P. Fasina" },
+  { id: "lec7", name: "N. A. Azeez" },
+  { id: "lec8", name: "E. P. Fasina" },
   { id: "lec9", name: "B. A. Sawyerr" },
   { id: "lec10", name: "O. A. Sennaike" },
   { id: "lec11", name: "O. B. Okunoye" },
-  { id: "lec12", name: "A.S. Akinboro" },
-  { id: "lec13", name: "A.U. Rufai" },
+  { id: "lec12", name: "A. S. Akinboro" },
+  { id: "lec13", name: "A. U. Rufai" },
   { id: "lec14", name: "F. O. Alamu" },
   { id: "lec15", name: "A. M. Nwohiri" },
   { id: "lec16", name: "U. C. Ogude" },
   { id: "lec17", name: "R. Isimeto" },
-  { id: "lec18", name: "R.A. Koleoso" },
+  { id: "lec18", name: "R. A. Koleoso" },
   { id: "lec19", name: "L. Ikuvwerha" },
-  { id: "lec20", name: "S.E. Edagbami" },
+  { id: "lec20", name: "S. E. Edagbami" },
   { id: "lec21", name: "C. Ojiako" },
-  { id: "lec22", name: "D.T. Afolabi" },
+  { id: "lec22", name: "D. T. Afolabi" },
   { id: "lec23", name: "R. O. Abass" },
 ];
