@@ -137,8 +137,63 @@ export const AdminDashboard = () => {
       };
     });
 
-    return { totalVoters, votingPercentage, categoryStats };
-  }, [nominations]);
+    // Compute Tightest Races
+    const races = Object.entries(categoryStats).map(([cat, stat]) => {
+      if (stat.nominees.length >= 2) {
+        return { category: cat, margin: stat.nominees[0].votes - stat.nominees[1].votes, leader: stat.nominees[0].name, runnerUp: stat.nominees[1].name };
+      }
+      return null;
+    }).filter(Boolean) as { category: string; margin: number; leader: string; runnerUp: string }[];
+    races.sort((a, b) => a.margin - b.margin);
+    const tightestRaces = races.slice(0, 3);
+
+    // Compute Engagement (Most/Least)
+    const engagement = Object.entries(categoryStats).map(([cat, stat]) => ({ category: cat, votes: stat.totalVotes }));
+    engagement.sort((a, b) => b.votes - a.votes);
+    const mostEngaged = engagement[0];
+    const leastEngaged = engagement[engagement.length - 1];
+
+    // Compute Device Analytics
+    let mobileCount = 0;
+    let desktopCount = 0;
+    const browsers: Record<string, number> = {};
+    const peakHours: Record<string, number> = {};
+
+    deviceLogs.forEach(log => {
+      try {
+        const deviceInfo = typeof log.device_info === "string" ? JSON.parse(log.device_info) : log.device_info;
+        if (deviceInfo) {
+          const type = deviceInfo.device?.type;
+          if (type === 'mobile' || type === 'tablet' || type === 'wearable') mobileCount++;
+          else desktopCount++;
+
+          const browserName = deviceInfo.browser?.name || "Unknown";
+          browsers[browserName] = (browsers[browserName] || 0) + 1;
+        }
+      } catch (e) {}
+      
+      if (log.created_at) {
+        const hour = new Date(log.created_at).getHours();
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const formattedHour = `${hour % 12 || 12} ${ampm}`;
+        peakHours[formattedHour] = (peakHours[formattedHour] || 0) + 1;
+      }
+    });
+
+    const peakHourArr = Object.entries(peakHours).sort((a, b) => b[1] - a[1]);
+    const topPeakHour = peakHourArr.length > 0 ? peakHourArr[0][0] : "N/A";
+
+    return { 
+      totalVoters, 
+      votingPercentage, 
+      categoryStats,
+      tightestRaces,
+      mostEngaged,
+      leastEngaged,
+      deviceStats: { mobile: mobileCount, desktop: desktopCount, browsers },
+      topPeakHour
+    };
+  }, [nominations, deviceLogs]);
 
   if (!isAuthenticated) {
     return (
@@ -250,15 +305,62 @@ export const AdminDashboard = () => {
           <>
             {activeTab === "insights" && (
               <>
-                {/* Top Metrics */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-                  <div className="border border-slate-200 rounded-xl p-6">
+                {/* Top Metrics Row 1 */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm">
                     <p className="text-sm font-medium text-slate-500 mb-2">Total Submissions</p>
-                    <p className="text-3xl font-semibold text-slate-900">{analytics.totalVoters}</p>
+                    <p className="text-3xl font-black text-slate-900">{analytics.totalVoters}</p>
                   </div>
-                  <div className="border border-slate-200 rounded-xl p-6">
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm">
                     <p className="text-sm font-medium text-slate-500 mb-2">Class Turnout</p>
-                    <p className="text-3xl font-semibold text-slate-900">{analytics.votingPercentage}%</p>
+                    <p className="text-3xl font-black text-brand-blue">{analytics.votingPercentage}%</p>
+                  </div>
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm">
+                    <p className="text-sm font-medium text-slate-500 mb-2">Peak Voting Time</p>
+                    <p className="text-3xl font-black text-purple-600">{analytics.topPeakHour}</p>
+                  </div>
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm">
+                    <p className="text-sm font-medium text-slate-500 mb-2">Mobile vs Desktop</p>
+                    <div className="flex items-center gap-2 mt-1">
+                      <span className="text-xl font-bold text-slate-800">{analytics.deviceStats.mobile}</span> <span className="text-xs text-slate-500">Mob</span>
+                      <span className="text-slate-300">/</span>
+                      <span className="text-xl font-bold text-slate-800">{analytics.deviceStats.desktop}</span> <span className="text-xs text-slate-500">Desk</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Insights Row 2 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm">
+                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><TrendingUp size={18} className="text-orange-500"/> Tightest Races</h3>
+                    <div className="space-y-4">
+                      {analytics.tightestRaces.map((race: any, i: number) => (
+                        <div key={i} className="flex flex-col border-b border-slate-100 last:border-0 pb-3 last:pb-0">
+                          <span className="text-xs font-semibold uppercase text-slate-400 mb-1">{race.category}</span>
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm font-medium text-slate-800">{race.leader}</span>
+                            <span className="text-xs font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded-md">+{race.margin} votes</span>
+                          </div>
+                          <span className="text-xs text-slate-500 mt-1">over {race.runnerUp}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm flex flex-col justify-between">
+                    <div>
+                      <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><Award size={18} className="text-emerald-500"/> Engagement Extremes</h3>
+                      <div className="mb-6">
+                        <p className="text-xs font-semibold uppercase text-slate-400 mb-1">Most Voted Category</p>
+                        <p className="text-lg font-bold text-slate-800">{analytics.mostEngaged?.category}</p>
+                        <p className="text-sm text-emerald-600 font-medium">{analytics.mostEngaged?.votes || 0} total votes</p>
+                      </div>
+                      <div>
+                        <p className="text-xs font-semibold uppercase text-slate-400 mb-1">Least Voted Category</p>
+                        <p className="text-lg font-bold text-slate-800">{analytics.leastEngaged?.category}</p>
+                        <p className="text-sm text-red-500 font-medium">{analytics.leastEngaged?.votes || 0} total votes</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
