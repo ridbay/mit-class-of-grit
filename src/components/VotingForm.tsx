@@ -253,7 +253,14 @@ const ALL_CATEGORIES: VoteCategory[] = VOTE_SECTIONS.flatMap(
 // ─── Avatar / Photo Card ───────────────────────────────────────────────────────
 
 const getAvatarUrl = (name: string, seed: string) => {
-  // Using DiceBear avatars — deterministic based on name seed
+  // If you provide a photo in the public/avatars folder named by ID, it will load it.
+  // We extract the ID from the seed (e.g., "s1" from "s1John Doe")
+  // Note: The seed passed here is `nominee.id + nominee.name`.
+  const idMatch = seed.match(/^(s\d+|l\d+)/);
+  if (idMatch) {
+    return `/avatars/${idMatch[1]}.jpg`;
+  }
+
   const encoded = encodeURIComponent(seed);
   return `https://api.dicebear.com/9.x/initials/svg?seed=${encoded}&backgroundColor=1E6FD9,1EC7B6,8B5CF6,F59E0B,10B981,EC4899&backgroundType=gradientLinear&fontSize=36&fontWeight=600`;
 };
