@@ -206,7 +206,7 @@ export const VotePage = ({
       y: Math.random() * 100,
       delay: Math.random() * 4,
       size: 8 + Math.random() * 16,
-    }))
+    })),
   );
 
   // Scroll to top when page loads
@@ -286,8 +286,8 @@ export const VotePage = ({
               key={i}
               className="absolute text-yellow-400 opacity-60 select-none pointer-events-none"
               style={{
-                left: `${5 + (i * 4.8) % 90}%`,
-                top: `${10 + (i * 7.3) % 80}%`,
+                left: `${5 + ((i * 4.8) % 90)}%`,
+                top: `${10 + ((i * 7.3) % 80)}%`,
                 fontSize: `${8 + (i % 4) * 4}px`,
               }}
               animate={{
@@ -387,8 +387,8 @@ export const VotePage = ({
             >
               {[
                 { label: "Award Categories", value: "17" },
-                { label: "Student Nominees", value: "260+" },
-                { label: "Lecturer Nominees", value: "23" },
+                { label: "Student Nominees", value: "53" },
+                { label: "Lecturer Nominees", value: "13" },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl font-black text-yellow-400">
@@ -452,7 +452,9 @@ export const VotePage = ({
                   Vote Cast Successfully!
                 </h2>
                 <p className="text-slate-500 font-medium text-lg mb-8 max-w-lg mx-auto">
-                  Thank you for participating in the MIT Connect &apos;26 Excellence Awards. Your selections have been securely recorded. Multiple submissions are not allowed.
+                  Thank you for participating in the MIT Connect &apos;26
+                  Excellence Awards. Your selections have been securely
+                  recorded. Multiple submissions are not allowed.
                 </p>
                 <button
                   onClick={onLogout}
@@ -483,7 +485,7 @@ export const VotePage = ({
                       .slice(0, 2)
                       .map(
                         (w) =>
-                          w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+                          w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(),
                       )
                       .join(" ")}
                     <button
@@ -497,13 +499,14 @@ export const VotePage = ({
                   </motion.div>
 
                   <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-                    Welcome to the Ballot!{" "}
-                    <span className="text-4xl">🗳️</span>
+                    Welcome to the Ballot! <span className="text-4xl">🗳️</span>
                   </h2>
                   <p className="text-slate-500 font-medium text-lg max-w-xl mx-auto">
                     You&apos;re about to vote across{" "}
-                    <strong className="text-brand-blue">17 award categories</strong> for the MIT
-                    Connect &apos;26 Excellence Awards.
+                    <strong className="text-brand-blue">
+                      17 award categories
+                    </strong>{" "}
+                    for the MIT Connect &apos;26 Excellence Awards.
                   </p>
                 </div>
 
@@ -533,7 +536,7 @@ export const VotePage = ({
                         .map(
                           (w) =>
                             w.charAt(0).toUpperCase() +
-                            w.slice(1).toLowerCase()
+                            w.slice(1).toLowerCase(),
                         )
                         .join(" ")}
                     </span>
