@@ -185,7 +185,7 @@ const VoteLanding = ({ onStart }: { onStart: () => void }) => (
 export const VotePage = ({
   matricNumber,
   studentName,
-  password,
+  // password,
   handleIdentify,
   matricError,
   setMatricError,
@@ -195,7 +195,7 @@ export const VotePage = ({
 }: {
   matricNumber: string;
   studentName?: string;
-  password: string;
+  // password: string;
   handleIdentify: (e: React.FormEvent<HTMLFormElement>) => void;
   matricError: string;
   setMatricError: (err: string) => void;
@@ -229,7 +229,7 @@ export const VotePage = ({
       setEmailError("Please enter a valid email address.");
       return;
     }
-    
+
     setEmailLoading(true);
     setEmailError("");
     try {
@@ -238,8 +238,8 @@ export const VotePage = ({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ matric: matricNumber, email: emailInput }),
       });
-      const data = await response.json() as any;
-      
+      const data = (await response.json()) as any;
+
       if (!response.ok) {
         setEmailError(data.error || "Failed to save email. Please try again.");
       } else {
@@ -469,7 +469,7 @@ export const VotePage = ({
               onSubmit={handleIdentify}
               error={matricError}
               onClearError={() => setMatricError("")}
-              hidePassword={true}
+              // hidePassword={true}
               title="Who goes there? 🎓"
               description="Enter your Full Name and 9-digit Matric Number to access the voting ballot."
             />
@@ -490,11 +490,15 @@ export const VotePage = ({
                 Your Email Address
               </h2>
               <p className="text-slate-500 font-medium">
-                We need your email address to send you important updates regarding MIT Connect &apos;26.
+                We need your email address to send you important updates
+                regarding MIT Connect &apos;26.
               </p>
             </div>
-            
-            <form onSubmit={handleEmailSubmit} className="bg-white p-8 rounded-3xl shadow-xl shadow-brand-blue/5 border border-slate-100">
+
+            <form
+              onSubmit={handleEmailSubmit}
+              className="bg-white p-8 rounded-3xl shadow-xl shadow-brand-blue/5 border border-slate-100"
+            >
               <div className="space-y-4">
                 <div className="relative">
                   <input
@@ -509,7 +513,7 @@ export const VotePage = ({
                     className={`w-full px-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${emailError ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
                   />
                 </div>
-                
+
                 {emailError && (
                   <div className="flex items-start gap-2 p-4 bg-red-50 border border-red-100 text-red-600 text-sm font-medium rounded-xl">
                     <ShieldAlert className="flex-shrink-0 mt-0.5" size={16} />
