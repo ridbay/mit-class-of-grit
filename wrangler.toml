@@ -4,7 +4,7 @@ compatibility_date = "2024-03-20"
 [[d1_databases]]
 binding = "DB"
 database_name = "mit-awards-db"
-database_id = "mit-awards-db" # Update this with the real ID after creating the DB in Cloudflare
+database_id = "0cb3f70f-447c-4202-b768-d3655c666fc1" # Update this with the real ID after creating the DB in Cloudflare
 
 [[r2_buckets]]
 binding = "AVATAR_BUCKET"
