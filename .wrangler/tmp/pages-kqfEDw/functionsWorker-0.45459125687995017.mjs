@@ -1,7 +1,7 @@
 var __defProp = Object.defineProperty;
 var __name = (target, value) => __defProp(target, "name", { value, configurable: true });
 
-// ../.wrangler/tmp/bundle-8DHE0b/checked-fetch.js
+// ../.wrangler/tmp/bundle-t30kFM/checked-fetch.js
 var urls = /* @__PURE__ */ new Set();
 function checkURL(request, init) {
   const url = request instanceof URL ? request : new URL(
@@ -5950,8 +5950,29 @@ var onRequestGet = /* @__PURE__ */ __name(async (context) => {
   }
 }, "onRequestGet");
 
-// api/auth/verify.ts
+// api/auth/update-email.ts
 var onRequestPost = /* @__PURE__ */ __name(async (context) => {
+  const db = drizzle(context.env.DB);
+  try {
+    const { matric, email } = await context.request.json();
+    if (!matric || !email) {
+      return Response.json(
+        { error: "Matric number and email are required." },
+        { status: 400 }
+      );
+    }
+    await db.update(students).set({ email }).where(eq(students.matric, matric));
+    return Response.json({ success: true, email });
+  } catch (err) {
+    return Response.json(
+      { error: "Server error", details: err.message },
+      { status: 500 }
+    );
+  }
+}, "onRequestPost");
+
+// api/auth/verify.ts
+var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
   const db = drizzle(context.env.DB);
   try {
     const { matric, name, email } = await context.request.json();
@@ -5981,9 +6002,6 @@ var onRequestPost = /* @__PURE__ */ __name(async (context) => {
           { status: 400 }
         );
       }
-    }
-    if (email) {
-      await db.update(students).set({ email }).where(eq(students.matric, matric));
     }
     const secretStr = context.env.JWT_SECRET || "fallback-secret-for-dev-only";
     const encoder = new TextEncoder();
@@ -6017,7 +6035,8 @@ var onRequestPost = /* @__PURE__ */ __name(async (context) => {
       token,
       student: {
         matric: student.matric,
-        name: student.name
+        name: student.name,
+        email: student.email
       },
       hasVoted
     });
@@ -7910,7 +7929,7 @@ UAParser.DEVICE = enumerize([MODEL, VENDOR, TYPE, CONSOLE, MOBILE, SMARTTV, TABL
 UAParser.ENGINE = UAParser.OS = enumerize([NAME, VERSION]);
 
 // api/votes.ts
-var onRequestPost2 = /* @__PURE__ */ __name(async (context) => {
+var onRequestPost3 = /* @__PURE__ */ __name(async (context) => {
   const db = drizzle(context.env.DB);
   try {
     const authHeader = context.request.headers.get("Authorization");
@@ -8040,18 +8059,25 @@ var routes = [
     modules: [onRequestGet]
   },
   {
-    routePath: "/api/auth/verify",
+    routePath: "/api/auth/update-email",
     mountPath: "/api/auth",
     method: "POST",
     middlewares: [],
     modules: [onRequestPost]
   },
   {
+    routePath: "/api/auth/verify",
+    mountPath: "/api/auth",
+    method: "POST",
+    middlewares: [],
+    modules: [onRequestPost2]
+  },
+  {
     routePath: "/api/votes",
     mountPath: "/api",
     method: "POST",
     middlewares: [],
-    modules: [onRequestPost2]
+    modules: [onRequestPost3]
   }
 ];
 
@@ -8542,7 +8568,7 @@ var jsonError = /* @__PURE__ */ __name(async (request, env, _ctx, middlewareCtx)
 }, "jsonError");
 var middleware_miniflare3_json_error_default = jsonError;
 
-// ../.wrangler/tmp/bundle-8DHE0b/middleware-insertion-facade.js
+// ../.wrangler/tmp/bundle-t30kFM/middleware-insertion-facade.js
 var __INTERNAL_WRANGLER_MIDDLEWARE__ = [
   middleware_ensure_req_body_drained_default,
   middleware_miniflare3_json_error_default
@@ -8574,7 +8600,7 @@ function __facade_invoke__(request, env, ctx, dispatch, finalMiddleware) {
 }
 __name(__facade_invoke__, "__facade_invoke__");
 
-// ../.wrangler/tmp/bundle-8DHE0b/middleware-loader.entry.ts
+// ../.wrangler/tmp/bundle-t30kFM/middleware-loader.entry.ts
 var __Facade_ScheduledController__ = class ___Facade_ScheduledController__ {
   constructor(scheduledTime, cron, noRetry) {
     this.scheduledTime = scheduledTime;

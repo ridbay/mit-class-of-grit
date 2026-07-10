@@ -18,6 +18,8 @@ export const NominatePage = ({
   matricError: string;
   setMatricError: (err: string) => void;
   onLogout: () => void;
+  hasEmail?: boolean;
+  setHasEmail?: (val: boolean) => void;
 }) => {
   return (
     <section className="py-24 px-6 min-h-[80vh] flex flex-col items-center justify-center text-center">

@@ -6288,6 +6288,25 @@ var onRequestGet = /* @__PURE__ */ __name2(async (context) => {
 var onRequestPost = /* @__PURE__ */ __name2(async (context) => {
   const db = drizzle(context.env.DB);
   try {
+    const { matric, email } = await context.request.json();
+    if (!matric || !email) {
+      return Response.json(
+        { error: "Matric number and email are required." },
+        { status: 400 }
+      );
+    }
+    await db.update(students).set({ email }).where(eq(students.matric, matric));
+    return Response.json({ success: true, email });
+  } catch (err) {
+    return Response.json(
+      { error: "Server error", details: err.message },
+      { status: 500 }
+    );
+  }
+}, "onRequestPost");
+var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
+  const db = drizzle(context.env.DB);
+  try {
     const { matric, name, email } = await context.request.json();
     if (!matric) {
       return Response.json(
@@ -6315,9 +6334,6 @@ var onRequestPost = /* @__PURE__ */ __name2(async (context) => {
           { status: 400 }
         );
       }
-    }
-    if (email) {
-      await db.update(students).set({ email }).where(eq(students.matric, matric));
     }
     const secretStr = context.env.JWT_SECRET || "fallback-secret-for-dev-only";
     const encoder = new TextEncoder();
@@ -6351,7 +6367,8 @@ var onRequestPost = /* @__PURE__ */ __name2(async (context) => {
       token,
       student: {
         matric: student.matric,
-        name: student.name
+        name: student.name,
+        email: student.email
       },
       hasVoted
     });
@@ -8244,7 +8261,7 @@ UAParser.BROWSER = enumerize([NAME, VERSION, MAJOR, TYPE]);
 UAParser.CPU = enumerize([ARCHITECTURE]);
 UAParser.DEVICE = enumerize([MODEL, VENDOR, TYPE, CONSOLE, MOBILE, SMARTTV, TABLET, WEARABLE, EMBEDDED]);
 UAParser.ENGINE = UAParser.OS = enumerize([NAME, VERSION]);
-var onRequestPost2 = /* @__PURE__ */ __name2(async (context) => {
+var onRequestPost3 = /* @__PURE__ */ __name2(async (context) => {
   const db = drizzle(context.env.DB);
   try {
     const authHeader = context.request.headers.get("Authorization");
@@ -8372,18 +8389,25 @@ var routes = [
     modules: [onRequestGet]
   },
   {
-    routePath: "/api/auth/verify",
+    routePath: "/api/auth/update-email",
     mountPath: "/api/auth",
     method: "POST",
     middlewares: [],
     modules: [onRequestPost]
   },
   {
+    routePath: "/api/auth/verify",
+    mountPath: "/api/auth",
+    method: "POST",
+    middlewares: [],
+    modules: [onRequestPost2]
+  },
+  {
     routePath: "/api/votes",
     mountPath: "/api",
     method: "POST",
     middlewares: [],
-    modules: [onRequestPost2]
+    modules: [onRequestPost3]
   }
 ];
 function lexer(str) {

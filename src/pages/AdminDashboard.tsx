@@ -11,6 +11,7 @@ export const AdminDashboard = () => {
 
   const [nominations, setNominations] = useState<any[]>([]);
   const [deviceLogs, setDeviceLogs] = useState<any[]>([]);
+  const [studentsList, setStudentsList] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -83,6 +84,7 @@ export const AdminDashboard = () => {
 
       setNominations(mappedNominations);
       setDeviceLogs(data.deviceLogs || []);
+      setStudentsList(data.students || []);
     } catch (err: any) {
       console.error(err);
       setError(err.message || "Failed to fetch nomination data.");
@@ -432,6 +434,7 @@ export const AdminDashboard = () => {
                     <tr>
                       <th className="px-6 py-4 font-semibold">Submitted at</th>
                       <th className="px-6 py-4 font-semibold">Name</th>
+                      <th className="px-6 py-4 font-semibold">Email</th>
                       <th className="px-6 py-4 font-semibold">Matric Number</th>
                       {CATEGORIES.map(cat => (
                         <th key={cat} className="px-6 py-4 font-semibold text-slate-500 max-w-[200px] truncate" title={cat}>
@@ -443,6 +446,7 @@ export const AdminDashboard = () => {
                   <tbody className="divide-y divide-slate-100">
                     {nominations.map(row => {
                       const student = STUDENTS.find(s => s.matric === row.student_matric);
+                      const dbStudent = studentsList.find((s: any) => s.matric === row.student_matric);
                       const date = row.created_at ? new Date(row.created_at).toLocaleString() : "N/A";
                       const deviceInfo = row.selections?._device_info;
                       
@@ -450,6 +454,7 @@ export const AdminDashboard = () => {
                         <tr key={row.student_matric} className="hover:bg-slate-50 transition-colors">
                           <td className="px-6 py-4 text-slate-500">{date}</td>
                           <td className="px-6 py-4 font-medium text-slate-900">{student?.name || "Unknown"}</td>
+                          <td className="px-6 py-4 text-slate-500">{dbStudent?.email || "-"}</td>
                           <td className="px-6 py-4 text-slate-500">{row.student_matric}</td>
                           {CATEGORIES.map(cat => (
                             <td key={cat} className="px-6 py-4 text-slate-700">

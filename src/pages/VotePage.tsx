@@ -8,6 +8,7 @@ import {
   BookOpen,
   Users,
   Shield,
+  ShieldAlert,
   Sparkles,
 } from "lucide-react";
 import { VotingForm } from "../components/VotingForm";
@@ -189,6 +190,8 @@ export const VotePage = ({
   matricError,
   setMatricError,
   onLogout,
+  hasEmail,
+  setHasEmail,
 }: {
   matricNumber: string;
   studentName?: string;
@@ -197,6 +200,8 @@ export const VotePage = ({
   matricError: string;
   setMatricError: (err: string) => void;
   onLogout: () => void;
+  hasEmail?: boolean;
+  setHasEmail?: (val: boolean) => void;
 }) => {
   const [hasStarted, setHasStarted] = useState(false);
   const [floatingStars] = useState(() =>
@@ -213,6 +218,40 @@ export const VotePage = ({
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  const [emailInput, setEmailInput] = useState("");
+  const [emailLoading, setEmailLoading] = useState(false);
+  const [emailError, setEmailError] = useState("");
+
+  const handleEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailInput || !emailInput.includes("@")) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
+    
+    setEmailLoading(true);
+    setEmailError("");
+    try {
+      const response = await fetch("/api/auth/update-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ matric: matricNumber, email: emailInput }),
+      });
+      const data = await response.json() as any;
+      
+      if (!response.ok) {
+        setEmailError(data.error || "Failed to save email. Please try again.");
+      } else {
+        localStorage.setItem("grit_hasEmail", "true");
+        setHasEmail?.(true);
+      }
+    } catch (err: any) {
+      setEmailError("Network error. Please try again.");
+    } finally {
+      setEmailLoading(false);
+    }
+  };
 
   return (
     <section className="min-h-[80vh] pb-24 relative overflow-hidden">
@@ -434,6 +473,59 @@ export const VotePage = ({
               title="Who goes there? 🎓"
               description="Enter your Full Name and 9-digit Matric Number to access the voting ballot."
             />
+          </motion.div>
+        ) : !hasEmail ? (
+          /* ── Email Collection Gate ────────────────────────────────────── */
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-xl mx-auto"
+          >
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/10 text-brand-blue font-bold text-sm mb-4">
+                <Shield size={16} />
+                One Last Thing
+              </div>
+              <h2 className="text-3xl font-black text-slate-900 mb-3">
+                Your Email Address
+              </h2>
+              <p className="text-slate-500 font-medium">
+                We need your email address to send you important updates regarding MIT Connect &apos;26.
+              </p>
+            </div>
+            
+            <form onSubmit={handleEmailSubmit} className="bg-white p-8 rounded-3xl shadow-xl shadow-brand-blue/5 border border-slate-100">
+              <div className="space-y-4">
+                <div className="relative">
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    value={emailInput}
+                    onChange={(e) => {
+                      setEmailInput(e.target.value);
+                      setEmailError("");
+                    }}
+                    required
+                    className={`w-full px-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${emailError ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
+                  />
+                </div>
+                
+                {emailError && (
+                  <div className="flex items-start gap-2 p-4 bg-red-50 border border-red-100 text-red-600 text-sm font-medium rounded-xl">
+                    <ShieldAlert className="flex-shrink-0 mt-0.5" size={16} />
+                    {emailError}
+                  </div>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={emailLoading}
+                  className="w-full btn-primary py-4 rounded-2xl text-lg mt-2 flex items-center justify-center gap-2"
+                >
+                  {emailLoading ? "Saving..." : "Continue to Voting"}
+                </button>
+              </div>
+            </form>
           </motion.div>
         ) : (
           /* ── Voting Area ──────────────────────────────────────────────── */

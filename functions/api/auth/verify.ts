@@ -54,12 +54,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       }
     }
 
-    if (email) {
-      await db
-        .update(students)
-        .set({ email })
-        .where(eq(students.matric, matric));
-    }
+    // Email is now collected in a separate step, so we just verify identity here.
 
     // Simple stateless token (HMAC SHA-256)
     const secretStr = context.env.JWT_SECRET || "fallback-secret-for-dev-only";
@@ -104,6 +99,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       student: {
         matric: student.matric,
         name: student.name,
+        email: student.email,
       },
       hasVoted,
     });

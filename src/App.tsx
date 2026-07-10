@@ -265,6 +265,7 @@ export default function App() {
   const [studentName, setStudentName] = useState("");
   const [password, setPassword] = useState("");
   const [matricError, setMatricError] = useState("");
+  const [hasEmail, setHasEmail] = useState(false);
 
   // Track scrolling
   useEffect(() => {
@@ -280,13 +281,16 @@ export default function App() {
     const savedMatric = localStorage.getItem("grit_matric");
     const savedName = localStorage.getItem("grit_name");
     const savedPassword = localStorage.getItem("grit_password");
+    const savedHasEmail = localStorage.getItem("grit_hasEmail");
     if (savedMatric && savedPassword) {
       setMatricNumber(savedMatric);
       setPassword(savedPassword);
       if (savedName) setStudentName(savedName);
+      if (savedHasEmail === "true") setHasEmail(true);
     } else if (savedMatric) {
       setMatricNumber(savedMatric);
       if (savedName) setStudentName(savedName);
+      if (savedHasEmail === "true") setHasEmail(true);
     }
   }, []);
 
@@ -295,7 +299,6 @@ export default function App() {
     const formData = new FormData(e.currentTarget);
     const matric = (formData.get("matric") as string)?.trim();
     const name = (formData.get("name") as string)?.trim();
-    const email = (formData.get("email") as string)?.trim();
 
     if (!matric) {
       setMatricError("Hold up! We need your Matric Number to let you in.");
@@ -306,7 +309,7 @@ export default function App() {
       const response = await fetch("/api/auth/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matric, name, email }),
+        body: JSON.stringify({ matric, name }),
       });
 
       const data = (await response.json()) as any;
@@ -319,12 +322,14 @@ export default function App() {
       setMatricError("");
       setMatricNumber(data.student.matric);
       setStudentName(data.student.name);
+      setHasEmail(!!data.student.email);
       
       // Store token and student data
       localStorage.setItem("grit_token", data.token);
       localStorage.setItem("grit_matric", data.student.matric);
       localStorage.setItem("grit_name", data.student.name);
       localStorage.setItem("grit_hasVoted", data.hasVoted ? "true" : "false");
+      localStorage.setItem("grit_hasEmail", data.student.email ? "true" : "false");
 
     } catch (err: any) {
       console.error(err);
@@ -338,10 +343,12 @@ export default function App() {
     setMatricNumber("");
     setStudentName("");
     setPassword("");
+    setHasEmail(false);
     localStorage.removeItem("grit_matric");
     localStorage.removeItem("grit_name");
     localStorage.removeItem("grit_password");
     localStorage.removeItem("grit_hasVoted");
+    localStorage.removeItem("grit_hasEmail");
   };
 
   return (
@@ -372,6 +379,8 @@ export default function App() {
                     matricError={matricError}
                     setMatricError={setMatricError}
                     onLogout={handleLogout}
+                    hasEmail={hasEmail}
+                    setHasEmail={setHasEmail}
                   />
                 }
               />
@@ -386,6 +395,8 @@ export default function App() {
                     matricError={matricError}
                     setMatricError={setMatricError}
                     onLogout={handleLogout}
+                    hasEmail={hasEmail}
+                    setHasEmail={setHasEmail}
                   />
                 }
               />
