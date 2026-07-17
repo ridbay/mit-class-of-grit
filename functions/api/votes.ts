@@ -18,7 +18,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
 
     const token = authHeader.split(" ")[1];
+    if (!token || token === "null" || !token.includes(".")) {
+      return Response.json({ error: "Invalid token format" }, { status: 401 });
+    }
+    
     const [payloadBase64, signatureBase64] = token.split(".");
+
+    if (!payloadBase64 || !signatureBase64) {
+      return Response.json({ error: "Invalid token format" }, { status: 401 });
+    }
 
     // Verify token signature
     const secretStr = context.env.JWT_SECRET || "fallback-secret-for-dev-only";
@@ -33,9 +41,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     let signatureArray;
     try {
-      const signatureStr = atob(
-        signatureBase64.replace(/-/g, "+").replace(/_/g, "/"),
-      );
+      let base64 = signatureBase64.replace(/-/g, "+").replace(/_/g, "/");
+      while (base64.length % 4) {
+        base64 += "=";
+      }
+      const signatureStr = atob(base64);
       signatureArray = new Uint8Array(signatureStr.length);
       for (let i = 0; i < signatureStr.length; i++) {
         signatureArray[i] = signatureStr.charCodeAt(i);
