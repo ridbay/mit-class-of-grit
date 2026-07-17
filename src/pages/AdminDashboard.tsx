@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "motion/react";
-import { ShieldAlert, Users, TrendingUp, BarChart, Medal, Award, LogOut } from "lucide-react";
+import { ShieldAlert, Users, TrendingUp, BarChart, Medal, Award, LogOut, Clock, UserX, Activity } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { CATEGORIES, CATEGORY_GROUPS, STUDENTS } from "../data/constants";
 
 export const AdminDashboard = () => {
@@ -94,7 +95,7 @@ export const AdminDashboard = () => {
   };
 
   // Process data for analytics
-  const [activeTab, setActiveTab] = useState<"insights" | "submissions" | "security">("insights");
+  const [activeTab, setActiveTab] = useState<"insights" | "submissions" | "security" | "pending">("insights");
 
   const analytics = useMemo(() => {
     if (!nominations || nominations.length === 0) return null;
@@ -103,12 +104,35 @@ export const AdminDashboard = () => {
     const votingPercentage = ((totalVoters / TOTAL_STUDENTS) * 100).toFixed(1);
 
     const votesByCategory: Record<string, Record<string, number>> = {};
+    const timelineCounts: Record<string, number> = {};
 
     CATEGORIES.forEach((cat) => {
       votesByCategory[cat] = {};
     });
 
+    const recentActivity = [...nominations]
+      .map(row => ({
+        name: STUDENTS.find(s => s.matric === row.student_matric)?.name || "Unknown",
+        matric: row.student_matric,
+        date: row.created_at ? new Date(row.created_at) : new Date(0)
+      }))
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+      .slice(0, 10);
+
+    const submittedMatrics = new Set(nominations.map(n => n.student_matric));
+    const pendingVoters = STUDENTS.filter(s => !submittedMatrics.has(s.matric));
+
     nominations.forEach((row) => {
+      if (row.created_at) {
+        const date = new Date(row.created_at);
+        const day = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const hour = date.getHours();
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const formattedHour = `${hour % 12 || 12} ${ampm}`;
+        const timeKey = `${day} ${formattedHour}`;
+        timelineCounts[timeKey] = (timelineCounts[timeKey] || 0) + 1;
+      }
+
       const selections = row.selections || {};
       Object.keys(selections).forEach((cat) => {
         const nomineeName = selections[cat];
@@ -185,6 +209,10 @@ export const AdminDashboard = () => {
     const peakHourArr = Object.entries(peakHours).sort((a, b) => b[1] - a[1]);
     const topPeakHour = peakHourArr.length > 0 ? peakHourArr[0][0] : "N/A";
 
+    const timelineData = Object.keys(timelineCounts).length > 0 
+      ? Object.entries(timelineCounts).map(([time, count]) => ({ time, count }))
+      : [{ time: "No Data", count: 0 }];
+
     return { 
       totalVoters, 
       votingPercentage, 
@@ -193,7 +221,10 @@ export const AdminDashboard = () => {
       mostEngaged,
       leastEngaged,
       deviceStats: { mobile: mobileCount, desktop: desktopCount, browsers },
-      topPeakHour
+      topPeakHour,
+      recentActivity,
+      pendingVoters,
+      timelineData
     };
   }, [nominations, deviceLogs]);
 
@@ -280,6 +311,12 @@ export const AdminDashboard = () => {
               >
                 Security Logs
               </button>
+              <button 
+                onClick={() => setActiveTab("pending")}
+                className={`font-semibold pb-2 border-b-2 transition-colors ${activeTab === "pending" ? "border-slate-900 text-slate-900" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+              >
+                Pending Voters
+              </button>
             </div>
           </div>
           <div className="flex gap-3 mb-2">
@@ -327,6 +364,46 @@ export const AdminDashboard = () => {
                       <span className="text-xl font-bold text-slate-800">{analytics.deviceStats.mobile}</span> <span className="text-xs text-slate-500">Mob</span>
                       <span className="text-slate-300">/</span>
                       <span className="text-xl font-bold text-slate-800">{analytics.deviceStats.desktop}</span> <span className="text-xs text-slate-500">Desk</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Voting Timeline & Activity */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                  <div className="lg:col-span-2 border border-slate-200 bg-white rounded-xl p-6 shadow-sm">
+                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><Clock size={18} className="text-brand-blue"/> Voting Trends</h3>
+                    <div className="h-[250px] w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={analytics.timelineData}>
+                          <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                          <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} dy={10} />
+                          <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 12, fill: '#64748b' }} dx={-10} allowDecimals={false} />
+                          <Tooltip 
+                            contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
+                            cursor={{ stroke: '#e2e8f0', strokeWidth: 2, strokeDasharray: '3 3' }}
+                          />
+                          <Line type="monotone" dataKey="count" stroke="#0052CC" strokeWidth={3} dot={{ r: 4, fill: '#0052CC', strokeWidth: 0 }} activeDot={{ r: 6, strokeWidth: 0 }} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
+                  </div>
+                  
+                  <div className="border border-slate-200 bg-white rounded-xl p-6 shadow-sm flex flex-col h-full">
+                    <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><Activity size={18} className="text-brand-blue"/> Recent Activity</h3>
+                    <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+                      {analytics.recentActivity.length === 0 ? (
+                        <p className="text-sm text-slate-400">No recent activity.</p>
+                      ) : (
+                        analytics.recentActivity.map((act, i) => (
+                          <div key={i} className="flex flex-col border-b border-slate-100 last:border-0 pb-3 last:pb-0">
+                            <span className="text-sm font-semibold text-slate-800">{act.name}</span>
+                            <div className="flex justify-between items-center mt-1">
+                              <span className="text-xs text-slate-500">{act.matric}</span>
+                              <span className="text-xs font-medium text-slate-400">{act.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                            </div>
+                          </div>
+                        ))
+                      )}
                     </div>
                   </div>
                 </div>
@@ -473,6 +550,44 @@ export const AdminDashboard = () => {
                     )}
                   </tbody>
                 </table>
+              </div>
+            )}
+
+            {activeTab === "pending" && (
+              <div className="bg-white border border-slate-200 rounded-xl shadow-sm pb-4">
+                <div className="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50 rounded-t-xl">
+                  <div>
+                    <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                      <UserX size={20} className="text-orange-500" /> Pending Voters
+                    </h2>
+                    <p className="text-sm text-slate-500 mt-1">{analytics.pendingVoters.length} students have not voted yet.</p>
+                  </div>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm whitespace-nowrap">
+                    <thead className="bg-slate-50 text-slate-600 font-medium border-b border-slate-200">
+                      <tr>
+                        <th className="px-6 py-4 font-semibold">Name</th>
+                        <th className="px-6 py-4 font-semibold">Matric Number</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {analytics.pendingVoters.map((student) => (
+                        <tr key={student.matric} className="hover:bg-slate-50 transition-colors">
+                          <td className="px-6 py-4 font-medium text-slate-900">{student.name}</td>
+                          <td className="px-6 py-4 text-slate-500">{student.matric}</td>
+                        </tr>
+                      ))}
+                      {analytics.pendingVoters.length === 0 && (
+                        <tr>
+                          <td colSpan={2} className="px-6 py-12 text-center text-slate-400">
+                            All students have voted!
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             )}
 
