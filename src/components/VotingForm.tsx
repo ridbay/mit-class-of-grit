@@ -751,7 +751,8 @@ export const VotingForm = ({
   };
 
   const handleSubmitVotes = async () => {
-    setIsSubmitting(true);
+    setError("Voting has ended. Submissions are now closed.");
+    return;
     try {
       // Map IDs to names for storage
       const allNominees = [...LECTURERS, ...STUDENTS];

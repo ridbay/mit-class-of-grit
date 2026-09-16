@@ -271,19 +271,18 @@ export const HomePage = () => {
       {/* Voting Section */}
       <section className="py-24 px-6 relative z-10 bg-white/30 border-y border-white/20 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="section-title">Fair. Verified. Transparent.</h2>
+          <h2 className="section-title">Voting Has Officially Ended</h2>
           <p className="text-slate-600 font-medium leading-relaxed text-base sm:text-lg mb-10">
-            Voting will be handled through a secure process designed to
-            protect fairness, credibility, and class trust. Eligible voters
-            will access the voting portal using approved credentials, and
-            final award outcomes will combine community participation with
-            review where required.
+            The voting period for the MIT Connect &rsquo;26 Excellence Awards has
+            officially concluded. Thank you to everyone who participated in
+            casting their votes to recognize exceptional leadership and brilliance
+            across the Class of Grit. Winners will be celebrated live at the grand gala!
           </p>
           <button
             onClick={() => navigate("/vote")}
             className="btn-primary inline-flex items-center gap-2"
           >
-            Go to Voting Portal <ChevronRight size={20} />
+            Check Voting Status <ChevronRight size={20} />
           </button>
         </div>
       </section>

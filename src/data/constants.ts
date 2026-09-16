@@ -1197,7 +1197,7 @@ export const FAQS = [
   },
   {
     q: "Can I change my vote after submission?",
-    a: "Yes, you can change your selection at any time before the voting deadline by re-identifying yourself and updating your choices.",
+    a: "Voting for the MIT Connect '26 Excellence Awards has officially ended. Submissions and vote changes are now closed.",
   },
   {
     q: "What is the dress code for the night?",

@@ -9,6 +9,12 @@ export interface Env {
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
+  // Voting has officially ended - reject all new submissions
+  return Response.json(
+    { error: "Voting has ended. Submissions are now closed." },
+    { status: 403 },
+  );
+
   const db = drizzle(context.env.DB);
 
   try {

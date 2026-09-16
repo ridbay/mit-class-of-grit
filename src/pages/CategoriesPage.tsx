@@ -106,7 +106,7 @@ export const CategoriesPage = () => {
               onClick={() => navigate("/vote")}
               className="px-10 py-4 font-black text-slate-700 border-2 border-slate-200 rounded-full hover:bg-slate-50 transition-colors w-full sm:w-auto whitespace-nowrap"
             >
-              Vote When Voting Opens
+              Voting Has Ended
             </button>
           </motion.div>
         </div>

@@ -1,209 +1,34 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import {
   Trophy,
+  Lock,
   LogOut,
   ChevronRight,
-  Star,
-  BookOpen,
-  Users,
-  Shield,
-  ShieldAlert,
   Sparkles,
+  Award,
+  ShieldCheck,
+  Calendar,
+  Image,
 } from "lucide-react";
-import { VotingForm } from "../components/VotingForm";
-import { IdentificationForm } from "../components/IdentificationForm";
-
-// ─── Award sections summary displayed on the landing ─────────────────────────
-
-const AWARD_SECTIONS = [
-  {
-    icon: <Trophy size={20} />,
-    name: "Student Merit Awards",
-    count: 4,
-    color: "#F59E0B",
-    bg: "bg-amber-50",
-    border: "border-amber-200",
-    textColor: "text-amber-700",
-    awards: [
-      "Outstanding Student of the Year",
-      "Most Supportive Classmate",
-      "Best Team Player",
-      "Class Contribution Award",
-    ],
-  },
-  {
-    icon: <Star size={20} />,
-    name: "Student Recognition Awards",
-    count: 10,
-    color: "#8B5CF6",
-    bg: "bg-violet-50",
-    border: "border-violet-200",
-    textColor: "text-violet-700",
-    awards: [
-      "Best Presenter",
-      "Most Tech-Savvy Student",
-      "Most Innovative Thinker",
-      "The Connector Award",
-      "Most Enterprising Student",
-      "Best Dressed Male & Female",
-      "Most Creative Student",
-      "Most Engaging Participant",
-      "Charisma Award",
-    ],
-  },
-  {
-    icon: <BookOpen size={20} />,
-    name: "Lecturer Awards",
-    count: 3,
-    color: "#10B981",
-    bg: "bg-emerald-50",
-    border: "border-emerald-200",
-    textColor: "text-emerald-700",
-    awards: [
-      "Outstanding Lecturer of the Year",
-      "Most Impactful Lecturer of the Year",
-      "Student Choice Lecturer of the Year",
-    ],
-  },
-];
-
-// ─── Landing / intro before voting starts ─────────────────────────────────────
-
-const VoteLanding = ({ onStart }: { onStart: () => void }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    className="w-full max-w-4xl mx-auto"
-  >
-    {/* Intro blurb */}
-    <div className="text-center mb-10">
-      <p className="text-slate-500 font-medium text-lg leading-relaxed max-w-2xl mx-auto">
-        You have{" "}
-        <span className="text-brand-blue font-black">17 categories</span> to
-        vote in across 3 award sections. For each category, browse nominees and
-        click on a photo card to cast your vote.
-      </p>
-    </div>
-
-    {/* Section cards */}
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
-      {AWARD_SECTIONS.map((section, i) => (
-        <motion.div
-          key={section.name}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: i * 0.1 }}
-          className={`rounded-2xl border-2 ${section.border} ${section.bg} p-6`}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md"
-              style={{ background: section.color }}
-            >
-              {section.icon}
-            </div>
-            <div>
-              <h3 className={`font-black text-sm ${section.textColor}`}>
-                {section.name}
-              </h3>
-              <span className="text-xs text-slate-500 font-bold">
-                {section.count} categories
-              </span>
-            </div>
-          </div>
-          <ul className="space-y-1.5">
-            {section.awards.map((award) => (
-              <li
-                key={award}
-                className="flex items-center gap-2 text-xs text-slate-600 font-medium"
-              >
-                <div
-                  className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                  style={{ background: section.color }}
-                />
-                {award}
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-      ))}
-    </div>
-
-    {/* Rules */}
-    <div className="glass-card p-6 border-blue-100 mb-8">
-      <h3 className="font-black text-slate-900 mb-3 flex items-center gap-2">
-        <Shield size={18} className="text-brand-blue" /> Voting Rules
-      </h3>
-      <ul className="grid sm:grid-cols-2 gap-2">
-        {[
-          "Each student may vote once per category",
-          "You can skip categories if you choose",
-          "You can go back to change a selection",
-          "All votes are saved automatically",
-          "Results are announced at the event",
-          "Voting is strictly for MIT Connect '26 students",
-        ].map((rule) => (
-          <li
-            key={rule}
-            className="flex items-center gap-2 text-sm text-slate-600 font-medium"
-          >
-            <div className="w-1.5 h-1.5 rounded-full bg-brand-teal flex-shrink-0" />
-            {rule}
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    {/* CTA */}
-    <div className="text-center">
-      <motion.button
-        id="start-voting-btn"
-        whileHover={{ scale: 1.04, y: -2 }}
-        whileTap={{ scale: 0.97 }}
-        onClick={onStart}
-        className="inline-flex items-center gap-3 px-10 py-4 rounded-2xl text-white font-black text-lg shadow-xl transition-all"
-        style={{
-          background: "linear-gradient(135deg, #1E6FD9, #1EC7B6)",
-          boxShadow: "0 12px 40px rgba(30,111,217,0.35)",
-        }}
-      >
-        <Sparkles size={22} />
-        Start Voting Now
-        <ChevronRight size={22} />
-      </motion.button>
-      <p className="text-slate-400 text-sm font-medium mt-4">
-        17 categories · Takes about 5–8 minutes
-      </p>
-    </div>
-  </motion.div>
-);
-
-// ─── Main VotePage ─────────────────────────────────────────────────────────────
 
 export const VotePage = ({
   matricNumber,
   studentName,
-  password,
-  handleIdentify,
-  matricError,
-  setMatricError,
   onLogout,
-  hasEmail,
-  setHasEmail,
 }: {
   matricNumber: string;
   studentName?: string;
-  password: string;
-  handleIdentify: (e: React.FormEvent<HTMLFormElement>) => void;
-  matricError: string;
-  setMatricError: (err: string) => void;
+  password?: string;
+  handleIdentify?: (e: React.FormEvent<HTMLFormElement>) => void;
+  matricError?: string;
+  setMatricError?: (err: string) => void;
   onLogout: () => void;
   hasEmail?: boolean;
   setHasEmail?: (val: boolean) => void;
 }) => {
-  const [hasStarted, setHasStarted] = useState(false);
+  const navigate = useNavigate();
   const [floatingStars] = useState(() =>
     Array.from({ length: 12 }, (_, i) => ({
       id: i,
@@ -218,42 +43,6 @@ export const VotePage = ({
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
-
-  console.log("[VotePage.tsx] Rendering with matricNumber:", matricNumber, "hasEmail:", hasEmail);
-
-  const [emailInput, setEmailInput] = useState("");
-  const [emailLoading, setEmailLoading] = useState(false);
-  const [emailError, setEmailError] = useState("");
-
-  const handleEmailSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!emailInput || !emailInput.includes("@")) {
-      setEmailError("Please enter a valid email address.");
-      return;
-    }
-
-    setEmailLoading(true);
-    setEmailError("");
-    try {
-      const response = await fetch("/api/auth/update-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ matric: matricNumber, email: emailInput }),
-      });
-      const data = (await response.json()) as any;
-
-      if (!response.ok) {
-        setEmailError(data.error || "Failed to save email. Please try again.");
-      } else {
-        localStorage.setItem("grit_hasEmail", "true");
-        setHasEmail?.(true);
-      }
-    } catch (err: any) {
-      setEmailError("Network error. Please try again.");
-    } finally {
-      setEmailLoading(false);
-    }
-  };
 
   return (
     <section className="min-h-[80vh] pb-24 relative overflow-hidden">
@@ -404,7 +193,7 @@ export const VotePage = ({
               transition={{ delay: 0.5 }}
               className="text-white/60 font-bold text-sm uppercase tracking-[0.3em]"
             >
-              🏆 Cast Your Vote · Shape the Legacy 🏆
+              🏆 Voting Concluded · Celebrating Excellence 🏆
             </motion.p>
 
             {/* Golden divider */}
@@ -445,217 +234,127 @@ export const VotePage = ({
         </div>
       </div>
 
-      {/* ── Main Content ────────────────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 mt-12">
-        {!matricNumber ? (
-          /* ── Auth Gate ────────────────────────────────────────────────── */
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-xl mx-auto"
-          >
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/10 text-brand-blue font-bold text-sm mb-4">
-                <Shield size={16} />
-                Secure Voting Portal
+      {/* ── Main Content: Voting Ended State ────────────────────────────── */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 mt-12">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="glass-card p-8 sm:p-14 border-red-500/20 shadow-2xl shadow-red-500/5 text-center relative overflow-hidden"
+        >
+          {/* Top subtle glow */}
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-80 h-80 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-red-50 border border-red-200 text-red-600 font-black text-sm mb-6 shadow-sm">
+            <Lock size={16} className="text-red-500" />
+            Voting Period Closed
+          </div>
+
+          {/* Large Title */}
+          <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-5 font-display tracking-tight">
+            Voting Has <span className="text-red-500">Ended</span>
+          </h2>
+
+          {/* Descriptive Body */}
+          <p className="text-slate-600 text-base sm:text-lg font-medium leading-relaxed max-w-2xl mx-auto mb-10">
+            The voting period for the{" "}
+            <strong className="text-slate-900">MIT Connect &apos;26 Excellence Awards</strong> has
+            officially drawn to a close. Thank you to every student and faculty member who
+            participated and cast their votes to honor the hard work, brilliance, and spirit of
+            the Class of Grit!
+          </p>
+
+          {/* Info Feature Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 text-left">
+            <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 hover:border-amber-300 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 mb-3 shadow-xs">
+                <Trophy size={20} />
               </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-3">
-                Verify Your Identity
-              </h2>
-              <p className="text-slate-500 font-medium">
-                Only registered MIT Connect &apos;26 students can vote. Enter
-                your details to access the ballot.
-              </p>
-            </div>
-            <IdentificationForm
-              onSubmit={handleIdentify}
-              error={matricError}
-              onClearError={() => setMatricError("")}
-              hidePassword={true}
-              title="Who goes there? 🎓"
-              description="Enter your Full Name and 9-digit Matric Number to access the voting ballot."
-            />
-          </motion.div>
-        ) : !hasEmail ? (
-          /* ── Email Collection Gate ────────────────────────────────────── */
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-xl mx-auto"
-          >
-            <div className="text-center mb-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-blue/10 text-brand-blue font-bold text-sm mb-4">
-                <Shield size={16} />
-                One Last Thing
-              </div>
-              <h2 className="text-3xl font-black text-slate-900 mb-3">
-                Your Email Address
-              </h2>
-              <p className="text-slate-500 font-medium">
-                We need your email address to send you important updates
-                regarding MIT Connect &apos;26.
+              <h4 className="font-black text-slate-900 text-sm mb-1">
+                17 Categories
+              </h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Votes cast across Student Merit, Recognition, and Lecturer honors.
               </p>
             </div>
 
-            <form
-              onSubmit={handleEmailSubmit}
-              className="bg-white p-8 rounded-3xl shadow-xl shadow-brand-blue/5 border border-slate-100"
+            <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 hover:border-emerald-300 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 mb-3 shadow-xs">
+                <ShieldCheck size={20} />
+              </div>
+              <h4 className="font-black text-slate-900 text-sm mb-1">
+                Audited & Verified
+              </h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                All submissions are securely sealed and audited for complete fairness.
+              </p>
+            </div>
+
+            <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 hover:border-purple-300 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center text-purple-600 mb-3 shadow-xs">
+                <Sparkles size={20} />
+              </div>
+              <h4 className="font-black text-slate-900 text-sm mb-1">
+                Gala Night Reveal
+              </h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Winners will be officially revealed and celebrated live on stage!
+              </p>
+            </div>
+          </div>
+
+          {/* Action CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+              onClick={() => navigate("/categories")}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl text-white font-black text-base shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98]"
+              style={{
+                background: "linear-gradient(135deg, #1E6FD9, #1EC7B6)",
+                boxShadow: "0 10px 30px rgba(30,111,217,0.3)",
+              }}
             >
-              <div className="space-y-4">
-                <div className="relative">
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    value={emailInput}
-                    onChange={(e) => {
-                      setEmailInput(e.target.value);
-                      setEmailError("");
-                    }}
-                    required
-                    className={`w-full px-4 py-4 rounded-2xl bg-slate-50 border-2 outline-none transition-all font-bold text-slate-900 ${emailError ? "border-red-500 bg-red-50" : "border-transparent focus:border-brand-blue focus:bg-white"}`}
-                  />
-                </div>
+              <Award size={18} />
+              View Award Categories
+              <ChevronRight size={18} />
+            </button>
 
-                {emailError && (
-                  <div className="flex items-start gap-2 p-4 bg-red-50 border border-red-100 text-red-600 text-sm font-medium rounded-xl">
-                    <ShieldAlert className="flex-shrink-0 mt-0.5" size={16} />
-                    {emailError}
-                  </div>
-                )}
+            <button
+              onClick={() => navigate("/payment")}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl bg-slate-900 text-white font-black text-base hover:bg-slate-800 transition-colors"
+            >
+              <Calendar size={18} />
+              Get Gala Tickets
+            </button>
 
-                <button
-                  type="submit"
-                  disabled={emailLoading}
-                  className="w-full btn-primary py-4 rounded-2xl text-lg mt-2 flex items-center justify-center gap-2"
-                >
-                  {emailLoading ? "Saving..." : "Continue to Voting"}
-                </button>
-              </div>
-            </form>
-          </motion.div>
-        ) : (
-          /* ── Voting Area ──────────────────────────────────────────────── */
-          <AnimatePresence mode="wait">
-            {localStorage.getItem("grit_hasVoted") === "true" ? (
-              <motion.div
-                key="already_voted"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="max-w-2xl mx-auto text-center py-20"
+            <button
+              onClick={() => navigate("/gallery")}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl border-2 border-slate-200 text-slate-700 font-black text-base hover:bg-slate-50 transition-colors"
+            >
+              <Image size={18} />
+              View Gallery
+            </button>
+          </div>
+
+          {/* User Session status footer if previously logged in */}
+          {matricNumber && (
+            <div className="mt-10 pt-6 border-t border-slate-100 flex items-center justify-center gap-3 text-xs text-slate-500 font-medium">
+              <span>
+                Identified as:{" "}
+                <strong className="text-slate-800">
+                  {studentName || matricNumber}
+                </strong>
+              </span>
+              <button
+                onClick={onLogout}
+                className="text-red-500 hover:text-red-700 transition-colors flex items-center gap-1 font-bold ml-2"
+                title="Sign out"
               >
-                <div className="w-24 h-24 bg-brand-blue/10 rounded-full flex items-center justify-center mx-auto mb-6 text-brand-blue">
-                  <Trophy size={48} />
-                </div>
-                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">
-                  Vote Cast Successfully!
-                </h2>
-                <p className="text-slate-500 font-medium text-lg mb-8 max-w-lg mx-auto">
-                  Thank you for participating in the MIT Connect &apos;26
-                  Excellence Awards. Your selections have been securely
-                  recorded. Multiple submissions are not allowed.
-                </p>
-                <button
-                  onClick={onLogout}
-                  className="px-8 py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
-                >
-                  Log out securely
-                </button>
-              </motion.div>
-            ) : !hasStarted ? (
-              <motion.div
-                key="landing"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                {/* Welcome header */}
-                <div className="text-center mb-10">
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ type: "spring" }}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-green-50 text-green-700 border border-green-200 font-black text-sm mb-5 shadow-sm"
-                  >
-                    <Users size={16} />
-                    Voting as:{" "}
-                    {studentName
-                      ?.split(" ")
-                      .slice(0, 2)
-                      .map(
-                        (w) =>
-                          w.charAt(0).toUpperCase() + w.slice(1).toLowerCase(),
-                      )
-                      .join(" ")}
-                    <button
-                      id="logout-vote-btn"
-                      onClick={onLogout}
-                      className="ml-2 text-slate-400 hover:text-red-500 transition-colors"
-                      title="Log out"
-                    >
-                      <LogOut size={14} />
-                    </button>
-                  </motion.div>
-
-                  <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-4">
-                    Welcome to the Ballot! <span className="text-4xl">🗳️</span>
-                  </h2>
-                  <p className="text-slate-500 font-medium text-lg max-w-xl mx-auto">
-                    You&apos;re about to vote across{" "}
-                    <strong className="text-brand-blue">
-                      17 award categories
-                    </strong>{" "}
-                    for the MIT Connect &apos;26 Excellence Awards.
-                  </p>
-                </div>
-
-                <VoteLanding onStart={() => setHasStarted(true)} />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="voting"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                {/* Voting header */}
-                <div className="flex items-center justify-between mb-8">
-                  <div>
-                    <h2 className="text-2xl font-black text-slate-900">
-                      Cast Your Votes
-                    </h2>
-                    <p className="text-slate-400 font-medium text-sm">
-                      MIT Connect &apos;26 Excellence Awards
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm font-bold text-slate-500 hidden sm:block">
-                      {studentName
-                        ?.split(" ")
-                        .slice(0, 2)
-                        .map(
-                          (w) =>
-                            w.charAt(0).toUpperCase() +
-                            w.slice(1).toLowerCase(),
-                        )
-                        .join(" ")}
-                    </span>
-                    <button
-                      id="logout-voting-btn"
-                      onClick={onLogout}
-                      className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-slate-500 hover:bg-red-50 hover:text-red-500 transition-all text-sm font-bold border border-slate-200"
-                    >
-                      <LogOut size={14} /> Log out
-                    </button>
-                  </div>
-                </div>
-
-                <VotingForm
-                  matricNumber={matricNumber}
-                  studentName={studentName}
-                />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
+                <LogOut size={12} /> Sign out
+              </button>
+            </div>
+          )}
+        </motion.div>
       </div>
     </section>
   );
