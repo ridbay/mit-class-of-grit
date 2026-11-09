@@ -122,14 +122,14 @@ export const SponsorsPage = () => {
                   .join("")
                   .substring(0, 2)
                   .toUpperCase();
-                const cardContent = (
+                const cardInner = (
                   <>
                     <div className="h-20 sm:h-24 w-full flex items-center justify-center mb-4">
                       {s.logo ? (
                         <img
                           src={s.logo}
                           alt={s.name}
-                          className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
+                          className="w-full h-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
                         />
                       ) : (
                         <span className="text-xl font-bold text-brand-teal tracking-wide">
@@ -143,24 +143,22 @@ export const SponsorsPage = () => {
                   </>
                 );
 
-                return s.url ? (
-                  <motion.a
-                    key={i}
-                    href={s.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variants={fadeUp}
-                    className="group bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:border-brand-teal/30 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
-                  >
-                    {cardContent}
-                  </motion.a>
-                ) : (
-                  <motion.div
-                    key={i}
-                    variants={fadeUp}
-                    className="group bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:border-brand-teal/30 hover:-translate-y-1.5 transition-all duration-300"
-                  >
-                    {cardContent}
+                return (
+                  <motion.div key={s.name || i} variants={fadeUp} className="flex">
+                    {s.url ? (
+                      <a
+                        href={s.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group w-full bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:border-brand-teal/30 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
+                      >
+                        {cardInner}
+                      </a>
+                    ) : (
+                      <div className="group w-full bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:border-brand-teal/30 hover:-translate-y-1.5 transition-all duration-300">
+                        {cardInner}
+                      </div>
+                    )}
                   </motion.div>
                 );
               })}

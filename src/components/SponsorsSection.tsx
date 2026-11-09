@@ -12,12 +12,12 @@ export const SponsorsSection = () => (
           .substring(0, 2)
           .toUpperCase();
         const content = (
-          <div className="h-20 sm:h-24 w-auto max-w-[180px] sm:max-w-[220px] flex-shrink-0 overflow-hidden flex items-center justify-center rounded-xl">
+          <div className="w-48 sm:w-64 h-28 sm:h-36 flex-shrink-0 overflow-hidden flex items-center justify-center rounded-xl">
             {s.logo ? (
               <img
                 src={s.logo}
                 alt={s.name}
-                className="h-full w-auto max-w-full object-contain rounded-xl"
+                className="w-full h-full object-contain rounded-xl"
               />
             ) : (
               <span className="text-lg font-bold text-brand-teal tracking-wide">
