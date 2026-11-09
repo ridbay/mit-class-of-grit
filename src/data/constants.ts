@@ -967,16 +967,16 @@ export const EVENT_DETAILS = {
 };
 
 export const SPONSORS = [
-  { name: "University of Lagos", logo: "/unilag_logo.jpeg" },
-  { name: "Bmoni", logo: "/bmoni_logo.jpg" },
-  // { name: "Tech Corp", logo: "https://picsum.photos/seed/techcorp/200/100" },
-  // { name: "Innovation Labs", logo: "https://picsum.photos/seed/inno/200/100" },
-  // { name: "Future Systems", logo: "https://picsum.photos/seed/future/200/100" },
-  // {
-  //   name: "Digital Ventures",
-  //   logo: "https://picsum.photos/seed/global/200/100",
-  // },
-  // { name: "Smart Solutions", logo: "https://picsum.photos/seed/nexus/200/100" },
+  { name: "University of Lagos", logo: "/sponsors/unilag.png" },
+  { name: "Class of Grit", logo: "/sponsors/class-of-grit.png" },
+  { name: "Oak Pensions", logo: "/sponsors/oak-pensions.png" },
+  { name: "Superflux International Limited", logo: "/sponsors/superflux.png" },
+  { name: "Kweba Tech Hub", logo: "/sponsors/kweba-tech-hub.png" },
+  { name: "Five Digit Autos", logo: "/sponsors/five-digit-autos.png" },
+  { name: "Yousewire", logo: "/sponsors/yousewire.png" },
+  { name: "CelebrateNG", logo: "/sponsors/celebrateng.png" },
+  { name: "Bipsol Group", logo: "/sponsors/bipsol-group.jpg" },
+  { name: "My-Crown", logo: "/sponsors/my-crown.jpeg" },
 ];
 
 export const SPONSORSHIP_TIERS = [
