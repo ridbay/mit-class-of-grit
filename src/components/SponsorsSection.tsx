@@ -11,25 +11,40 @@ export const SponsorsSection = () => (
           .join("")
           .substring(0, 2)
           .toUpperCase();
-        return (
+        const content = (
+          <div className="h-20 sm:h-24 w-auto max-w-[180px] sm:max-w-[220px] flex-shrink-0 overflow-hidden flex items-center justify-center rounded-xl">
+            {s.logo ? (
+              <img
+                src={s.logo}
+                alt={s.name}
+                className="h-full w-auto max-w-full object-contain rounded-xl"
+              />
+            ) : (
+              <span className="text-lg font-bold text-brand-teal tracking-wide">
+                {initials}
+              </span>
+            )}
+          </div>
+        );
+
+        return s.url ? (
+          <a
+            key={i}
+            href={s.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={s.name}
+            className="flex items-center justify-center cursor-pointer transition-all duration-300 hover:-translate-y-2 group"
+          >
+            {content}
+          </a>
+        ) : (
           <div
             key={i}
             title={s.name}
             className="flex items-center justify-center cursor-pointer transition-all duration-300 hover:-translate-y-2 group"
           >
-            <div className="h-20 sm:h-24 w-auto max-w-[180px] sm:max-w-[220px] flex-shrink-0 overflow-hidden flex items-center justify-center rounded-xl">
-              {s.logo ? (
-                <img
-                  src={s.logo}
-                  alt={s.name}
-                  className="h-full w-auto max-w-full object-contain rounded-xl"
-                />
-              ) : (
-                <span className="text-lg font-bold text-brand-teal tracking-wide">
-                  {initials}
-                </span>
-              )}
-            </div>
+            {content}
           </div>
         );
       })}

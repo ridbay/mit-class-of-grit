@@ -9,7 +9,6 @@ import {
   COMPARISON_TABLE,
 } from "../data/constants";
 import { SponsorshipTierCard } from "../components/SponsorshipTierCard";
-import { SponsorsSection } from "../components/SponsorsSection";
 
 const staggerContainer = {
   hidden: {},
@@ -104,7 +103,7 @@ export const SponsorsPage = () => {
 
       {/* Current Sponsors */}
       {SPONSORS.length > 0 && (
-        <section className="py-12 px-4 sm:px-6">
+        <section className="py-16 px-4 sm:px-6 bg-slate-50/60 border-y border-slate-100">
           <div className="max-w-7xl mx-auto text-center">
             <h4 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 mb-10">
               Already Standing With Us
@@ -114,10 +113,57 @@ export const SponsorsPage = () => {
               whileInView="visible"
               viewport={{ once: true, margin: "-50px" }}
               variants={staggerContainer}
-              className="flex flex-wrap justify-center gap-10 sm:gap-16"
+              className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8"
             >
-             			<SponsorsSection />
-						 
+              {SPONSORS.map((s, i) => {
+                const initials = s.name
+                  .split(" ")
+                  .map((w) => w[0])
+                  .join("")
+                  .substring(0, 2)
+                  .toUpperCase();
+                const cardContent = (
+                  <>
+                    <div className="h-20 sm:h-24 w-full flex items-center justify-center mb-4">
+                      {s.logo ? (
+                        <img
+                          src={s.logo}
+                          alt={s.name}
+                          className="max-h-full max-w-full object-contain rounded-lg transition-transform duration-300 group-hover:scale-105"
+                        />
+                      ) : (
+                        <span className="text-xl font-bold text-brand-teal tracking-wide">
+                          {initials}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-slate-700 group-hover:text-brand-blue transition-colors line-clamp-2">
+                      {s.name}
+                    </p>
+                  </>
+                );
+
+                return s.url ? (
+                  <motion.a
+                    key={i}
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variants={fadeUp}
+                    className="group bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:border-brand-teal/30 hover:-translate-y-1.5 transition-all duration-300 cursor-pointer"
+                  >
+                    {cardContent}
+                  </motion.a>
+                ) : (
+                  <motion.div
+                    key={i}
+                    variants={fadeUp}
+                    className="group bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl hover:border-brand-teal/30 hover:-translate-y-1.5 transition-all duration-300"
+                  >
+                    {cardContent}
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
         </section>

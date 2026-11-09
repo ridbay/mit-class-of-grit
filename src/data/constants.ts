@@ -966,14 +966,14 @@ export const EVENT_DETAILS = {
   ],
 };
 
-export const SPONSORS = [
+export const SPONSORS: { name: string; logo: string; url?: string }[] = [
   { name: "University of Lagos", logo: "/sponsors/unilag.png" },
   { name: "Class of Grit", logo: "/sponsors/class-of-grit.png" },
   { name: "Oak Pensions", logo: "/sponsors/oak-pensions.png" },
   { name: "Superflux International Limited", logo: "/sponsors/superflux.png" },
   { name: "Kweba Tech Hub", logo: "/sponsors/kweba-tech-hub.png" },
   { name: "Five Digit Autos", logo: "/sponsors/five-digit-autos.png" },
-  { name: "Yousewire", logo: "/sponsors/yousewire.png" },
+  { name: "Yousewire", logo: "/sponsors/yousewire.png", url: "https://yousewire.com/" },
   { name: "CelebrateNG", logo: "/sponsors/celebrateng.png" },
   { name: "Bipsol Group", logo: "/sponsors/bipsol-group.jpg" },
   { name: "My-Crown", logo: "/sponsors/my-crown.jpeg" },
