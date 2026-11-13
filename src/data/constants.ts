@@ -971,7 +971,7 @@ export const SPONSORS: { name: string; logo: string; url?: string }[] = [
   { name: "Class of Grit", logo: "/sponsors/class-of-grit.png" },
   { name: "Oak Pensions", logo: "/sponsors/oak-pensions.png" },
   { name: "Superflux International Limited", logo: "/sponsors/superflux.png" },
-  { name: "Kweba Tech Hub", logo: "/sponsors/kweba-tech-hub.png" },
+  { name: "Kweba Tech Hub", logo: "/sponsors/kweba-tech-hub.png", url: "https://kwebatechhub.com" },
   { name: "Five Digit Autos", logo: "/sponsors/five-digit-autos.png" },
   { name: "Yousewire", logo: "/sponsors/yousewire.png", url: "https://yousewire.com/" },
   { name: "CelebrateNG", logo: "/sponsors/celebrateng.png" },
